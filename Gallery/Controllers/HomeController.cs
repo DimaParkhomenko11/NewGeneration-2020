@@ -12,17 +12,15 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using System.Windows;
+using System.Web.Configuration;
+using System.Configuration;
 
 namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        public static string title;
-        public static string manufacturer;
-        public static string modelOfCamera;
-        public static string fileSize;
-        public static string dateCreation;
-        public static string dateUpload;
+        
 
         //
         // Hash-Function
@@ -93,74 +91,8 @@ namespace Gallery.Controllers
 
         public static void LoadExifData(string LoadExifPath)
         {
-            try
-            {
-                FileInfo fileInfo = new FileInfo(LoadExifPath);
-                FileStream fs = new FileStream(LoadExifPath, FileMode.Open);
-
-                BitmapSource img = BitmapFrame.Create(fs);
-                BitmapMetadata md = (BitmapMetadata)img.Metadata;
-
-                
-                //
-                //title from FileInfo
-                if (string.IsNullOrEmpty(fileInfo.Name))
-                    title = "Data not found";
-                else
-                    title = fileInfo.Name;
-
-
-                //
-                //manufacturer from EXIF
-                if (string.IsNullOrEmpty(md.CameraManufacturer))
-                    manufacturer = "Data not found";
-                else
-                    manufacturer = md.CameraManufacturer;
-
-
-                //
-                //modelOfCamera from EXIF
-                if (string.IsNullOrEmpty(md.CameraModel))
-                    modelOfCamera = "Data not found";
-                else
-                    modelOfCamera = md.CameraModel;
-
-
-                //
-                //FileSize from FileInfo
-                if (fileInfo.Length >= 1024)
-                {
-                    fileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
-                    if ((fileInfo.Length / 1024f) >= 1024f)
-                        fileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
-                }
-                else
-                    fileSize = fileInfo.Length.ToString() + " B";
-
-
-                //
-                //DateUpload from FileInfo
-                if (fileInfo.CreationTime == null)
-                    dateUpload = "Data not found";
-                else
-                    dateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
-
-
-                //
-                //DateCreation from EXIF
-                if (string.IsNullOrEmpty(md.DateTaken))
-                    dateCreation = "Data not found";
-                else
-                    dateCreation = md.DateTaken;
-                fs.Close();
-            }
-            catch(Exception err)
-            {
-               
-                // need to static errors
-            }
-       
-            
+            LoadExifData loadExif = new LoadExifData();
+            loadExif.LoadExif(LoadExifPath);
         }
         //Picture picture = new Picture();
         //[HttpGet]
@@ -205,17 +137,19 @@ namespace Gallery.Controllers
             return View();
         }
 
+      
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase files)
-        {
+        {  
             try
             {
                 if (files != null)
                 {
                     if (!string.IsNullOrEmpty(User.Identity.Name))
                     {
-                        if (files.ContentType == "image/jpeg")
+                        //if (files.ContentType == "image/jpeg")
+                        if (WebConfigurationManager.AppSettings["myFile"].Contains(files.ContentType))
                         {
                             FileStream TempFileStream;
                             // Verify that the user selected a file and User is logged in
@@ -236,59 +170,65 @@ namespace Gallery.Controllers
                                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
                                 var DateTaken = md.DateTaken;
                                 TempFileStream.Close();
-
-                                if (!string.IsNullOrEmpty(DateTaken))
-                                {
-                                    if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1))
+                                MessageBox.Show(DateTaken);
+                                //
+                                //fix this code in future
+                                if (DateTaken == null)
+                                    DateTaken = "06.06.2066";
+                                    if (!string.IsNullOrEmpty(DateTaken))
                                     {
-                                        TempFileStream = new FileStream(TempPath, FileMode.Open);
-                                        Bitmap TempBmp = new Bitmap(TempFileStream);
-                                        TempBmp = new Bitmap(TempBmp, 64, 64);
-                                        TempFileStream.Close();
-
-                                        // List of all Directories names
-                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
-
-                                        FileStream CheckFileStream;
-                                        Bitmap CheckBmp;
-
-                                        List<string> filesname;
-
-                                        // foreach inside foreach in order to check a new photo for its copies in all folders of all users
-                                        foreach (string dir in dirsname)
+                                        if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1))
                                         {
-                                            filesname = Directory.GetFiles(dir).ToList<string>();
-                                            foreach (string fl in filesname)
+                                            TempFileStream = new FileStream(TempPath, FileMode.Open);
+                                            Bitmap TempBmp = new Bitmap(TempFileStream);
+                                            TempBmp = new Bitmap(TempBmp, 64, 64);
+                                            TempFileStream.Close();
+
+                                            // List of all Directories names
+                                            List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
+
+                                            FileStream CheckFileStream;
+                                            Bitmap CheckBmp;
+
+                                            List<string> filesname;
+
+                                            // foreach inside foreach in order to check a new photo for its copies in all folders of all users
+                                            foreach (string dir in dirsname)
                                             {
-                                                CheckFileStream = new FileStream(fl, FileMode.Open);
-                                                CheckBmp = new Bitmap(CheckFileStream);
-                                                CheckBmp = new Bitmap(CheckBmp, 64, 64);
-
-                                                CheckFileStream.Close();
-
-                                                if (CompareBitmapsFast(TempBmp, CheckBmp))
+                                                filesname = Directory.GetFiles(dir).ToList<string>();
+                                                foreach (string fl in filesname)
                                                 {
-                                                    IsLoad = false;
-                                                    ViewBag.Error = "Photo already exists!";
-                                                    CheckBmp.Dispose();
-                                                    break;
+                                                    CheckFileStream = new FileStream(fl, FileMode.Open);
+                                                    CheckBmp = new Bitmap(CheckFileStream);
+                                                    CheckBmp = new Bitmap(CheckBmp, 64, 64);
+
+                                                    CheckFileStream.Close();
+
+                                                    if (CompareBitmapsFast(TempBmp, CheckBmp))
+                                                    {
+                                                        IsLoad = false;
+                                                        ViewBag.Error = "Photo already exists!";
+                                                        CheckBmp.Dispose();
+                                                        break;
+                                                    }
+                                                    else
+                                                        CheckBmp.Dispose();
                                                 }
-                                                else
-                                                    CheckBmp.Dispose();
                                             }
+                                        }
+                                        else
+                                        {
+                                            ViewBag.Error = "Photo created more than a year ago!";
+                                            IsLoad = false;
                                         }
                                     }
                                     else
                                     {
-                                        ViewBag.Error = "Photo created more than a year ago!";
+                                        ViewBag.Error = "Photo creation date not found!";
                                         IsLoad = false;
                                     }
-                                }
-                                else
-                                {
-                                    ViewBag.Error = "Photo creation date not found!";
-                                    IsLoad = false;
-                                }
+                                
+
 
                                 if (IsLoad)
                                 {
@@ -336,8 +276,8 @@ namespace Gallery.Controllers
             catch (Exception err)
             {
 
-                //ViewBag.Error = "Unexpected error: " + err.Message;
-                //return View("Error");
+                ViewBag.Error = "Unexpected error: " + err.Message;
+                return View("Error");
 
             }
             return RedirectToAction("Index");
