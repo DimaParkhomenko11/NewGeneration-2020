@@ -629,3 +629,4 @@ C:\Users\User\Desktop\SITE GALLERY\NewGeneration2020\Gallery\bin\ru\Microsoft.Ow
 C:\Users\User\Desktop\SITE GALLERY\NewGeneration2020\Gallery\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 C:\Users\User\Desktop\SITE GALLERY\NewGeneration2020\Gallery\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 C:\Users\User\Desktop\SITE GALLERY\NewGeneration2020\Gallery\obj\Debug\Gallery.csproj.CopyComplete
+D:\GitHub\NG2020\NewGeneration2020\Gallery\bin\WindowsBase.dll
