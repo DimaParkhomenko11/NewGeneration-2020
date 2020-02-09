@@ -14,14 +14,17 @@ using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.Windows;
 using System.Web.Configuration;
-using System.Configuration;
+
 
 namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        
 
+        
+       public static string pathToPhotos = WebConfigurationManager.AppSettings["PathToPhotos"];
+       public static string fileExtensions = WebConfigurationManager.AppSettings["FileExtensions"];
+       
         //
         // Hash-Function
         // Input: String
@@ -103,7 +106,7 @@ namespace Gallery.Controllers
         {
             try
             {
-                if (T.Replace("/Content/Images/", "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                if (T.Replace(pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
                 {
                     if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
                         System.IO.File.Delete(Server.MapPath(T));
@@ -141,24 +144,25 @@ namespace Gallery.Controllers
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase files)
-        {  
+        {
+           
             try
             {
                 if (files != null)
                 {
                     if (!string.IsNullOrEmpty(User.Identity.Name))
                     {
-                        //if (files.ContentType == "image/jpeg")
-                        if (WebConfigurationManager.AppSettings["myFile"].Contains(files.ContentType))
+                        
+                        
+                        if (fileExtensions.Contains(files.ContentType))
                         {
                             FileStream TempFileStream;
                             // Verify that the user selected a file and User is logged in
                             if (files.ContentLength > 0)
                             {
                                 bool IsLoad = true;
-
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath("~/Content/Images/") + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(pathToPhotos) + ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
@@ -170,11 +174,17 @@ namespace Gallery.Controllers
                                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
                                 var DateTaken = md.DateTaken;
                                 TempFileStream.Close();
-                                MessageBox.Show(DateTaken);
+
+
+
+                                //MessageBox.Show(DateTaken);
+
                                 //
                                 //fix this code in future
                                 if (DateTaken == null)
                                     DateTaken = "06.06.2066";
+
+
                                     if (!string.IsNullOrEmpty(DateTaken))
                                     {
                                         if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1))
@@ -185,7 +195,7 @@ namespace Gallery.Controllers
                                             TempFileStream.Close();
 
                                             // List of all Directories names
-                                            List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
+                                            List<string> dirsname = Directory.GetDirectories(Server.MapPath(pathToPhotos)).ToList<string>();
 
                                             FileStream CheckFileStream;
                                             Bitmap CheckBmp;
