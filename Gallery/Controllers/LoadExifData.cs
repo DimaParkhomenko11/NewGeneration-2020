@@ -54,12 +54,12 @@ namespace Gallery.Controllers
                     fileSize = fileInfo.Length.ToString() + " B";
 
 
-                if (LoadExifPath.Contains(".png"))
+                if (!LoadExifPath.Contains(".jpg"))
                 {
                     cameraManufacturer = "Data not found";
                     modelOfCamera = "Data not found";
                     dateCreation = "Data not found";
-                     
+                   // MessageBox.Show("aaa"); 
                 }
                 else
                 {
