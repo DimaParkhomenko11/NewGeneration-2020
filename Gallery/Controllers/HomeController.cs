@@ -13,23 +13,21 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.Windows;
+using Gallery.ConfigManagement;
 using System.Web.Configuration;
-
+using Gallery.Exif;
 
 namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
 
+        Configuration_Management Config = new Configuration_Management();
         
-       public static string pathToPhotos = WebConfigurationManager.AppSettings["PathToPhotos"];
-       public static string fileExtensions = WebConfigurationManager.AppSettings["FileExtensions"];
-       
         //
         // Hash-Function
         // Input: String
         // Otput: String with ShaHash
-        //
         public static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
@@ -97,8 +95,6 @@ namespace Gallery.Controllers
             LoadExifData loadExif = new LoadExifData();
             loadExif.LoadExif(LoadExifPath);
         }
-        //Picture picture = new Picture();
-        //[HttpGet]
 
         
         [HttpGet]
@@ -106,7 +102,8 @@ namespace Gallery.Controllers
         {
             try
             {
-                if (T.Replace(pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                
+                if (T.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
                 {
                     if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
                         System.IO.File.Delete(Server.MapPath(T));
@@ -151,7 +148,7 @@ namespace Gallery.Controllers
                 {
                     if (!string.IsNullOrEmpty(User.Identity.Name))
                     {
-                        if (fileExtensions.Contains(files.ContentType))
+                        if (Config.fileExtensions.Contains(files.ContentType))
                         {
                             FileStream TempFileStream;
                             // Verify that the user selected a file and User is logged in
@@ -159,7 +156,7 @@ namespace Gallery.Controllers
                             {
                                 bool IsLoad = true;
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(pathToPhotos) + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(Config.pathToPhotos) + ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
@@ -182,7 +179,7 @@ namespace Gallery.Controllers
                                         TempFileStream.Close();
 
                                         // List of all Directories names
-                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(pathToPhotos)).ToList<string>();
+                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.pathToPhotos)).ToList<string>();
 
                                         FileStream CheckFileStream;
                                         Bitmap CheckBmp;
