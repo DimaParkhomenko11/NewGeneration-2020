@@ -16,6 +16,7 @@ using System.Windows;
 using Gallery.ConfigManagement;
 using System.Web.Configuration;
 using Gallery.Exif;
+using Gallery.Core;
 
 namespace Gallery.Controllers
 {
@@ -23,12 +24,13 @@ namespace Gallery.Controllers
     {
 
         Configuration_Management Config = new Configuration_Management();
+        Core.Core core = new Core.Core();
         
         //
         // Hash-Function
         // Input: String
         // Otput: String with ShaHash
-        public static string ComputeSha256Hash(string rawData)
+        /*public static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())
@@ -44,7 +46,7 @@ namespace Gallery.Controllers
                 }
                 return builder.ToString();
             }
-        }
+        }*/
 
         //
         // check for equality of pictures
@@ -103,7 +105,7 @@ namespace Gallery.Controllers
             try
             {
                 
-                if (T.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                if (T.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == core.ComputeSha256Hash(User.Identity.Name))
                 {
                     if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
                         System.IO.File.Delete(Server.MapPath(T));
@@ -156,7 +158,7 @@ namespace Gallery.Controllers
                             {
                                 bool IsLoad = true;
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(Config.pathToPhotos) + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(Config.pathToPhotos) + core.ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
