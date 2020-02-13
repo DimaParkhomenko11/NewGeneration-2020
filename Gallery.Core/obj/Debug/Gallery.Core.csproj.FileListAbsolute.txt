@@ -1,0 +1,5 @@
+D:\GitHub\NG2020\NewGeneration2020\Gallery.Core\bin\Debug\Gallery.Core.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery.Core\bin\Debug\Gallery.Core.pdb
+D:\GitHub\NG2020\NewGeneration2020\Gallery.Core\obj\Debug\Gallery.Core.csprojAssemblyReference.cache
+D:\GitHub\NG2020\NewGeneration2020\Gallery.Core\obj\Debug\Gallery.Core.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery.Core\obj\Debug\Gallery.Core.pdb
