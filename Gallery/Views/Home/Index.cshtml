@@ -103,9 +103,9 @@
                 <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
             </a>
         </ul>
-            @using (Html.BeginForm("Delete", "Home", FormMethod.Get, new { enctype = "string" }))
+            @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { enctype = "string" }))
             {  
-                <input type="text" name="T" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
+                <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
                 if (dir.Replace(Server.MapPath(Config.pathToPhotos), "") == core.ComputeSha256Hash(User.Identity.Name))
                 {

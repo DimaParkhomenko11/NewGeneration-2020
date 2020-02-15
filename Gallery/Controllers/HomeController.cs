@@ -99,16 +99,16 @@ namespace Gallery.Controllers
         }
 
         
-        [HttpGet]
-        public ActionResult Delete(string T = "")
+        [HttpPost]
+        public ActionResult Delete(string PathFileDelete = "")
         {
             try
             {
                 
-                if (T.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(T), "").Replace("/", "") == core.ComputeSha256Hash(User.Identity.Name))
+                if (PathFileDelete.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == core.ComputeSha256Hash(User.Identity.Name))
                 {
-                    if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
-                        System.IO.File.Delete(Server.MapPath(T));
+                    if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
+                        System.IO.File.Delete(Server.MapPath(PathFileDelete));
                     else
                     {
                         ViewBag.Error = "File not found!";
