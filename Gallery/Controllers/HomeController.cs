@@ -24,7 +24,7 @@ namespace Gallery.Controllers
     {
 
         Configuration_Management Config = new Configuration_Management();
-        Core.Core core = new Core.Core();
+        Core.Service service = new Core.Service();
         
         //
         // Hash-Function
@@ -105,7 +105,7 @@ namespace Gallery.Controllers
             try
             {
                 
-                if (PathFileDelete.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == core.ComputeSha256Hash(User.Identity.Name))
+                if (PathFileDelete.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == service.ComputeSha256Hash(User.Identity.Name))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));
@@ -158,7 +158,7 @@ namespace Gallery.Controllers
                             {
                                 bool IsLoad = true;
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(Config.pathToPhotos) + core.ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(Config.pathToPhotos) + service.ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);

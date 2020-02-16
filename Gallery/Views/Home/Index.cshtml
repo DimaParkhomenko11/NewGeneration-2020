@@ -15,13 +15,13 @@
 @using Gallery.Core
 @{
     Configuration_Management Config = new Configuration_Management();
-    Core core = new Core();
+    Service service = new Service();
     
     // Directory path with all User's directories
     string ImagesDirPath = Server.MapPath(Config.pathToPhotos);
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.pathToPhotos) + core.ComputeSha256Hash(User.Identity.Name);
+    string DirPath = Server.MapPath(Config.pathToPhotos) + service.ComputeSha256Hash(User.Identity.Name);
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -107,7 +107,7 @@
             {  
                 <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                if (dir.Replace(Server.MapPath(Config.pathToPhotos), "") == core.ComputeSha256Hash(User.Identity.Name))
+                if (dir.Replace(Server.MapPath(Config.pathToPhotos), "") == service.ComputeSha256Hash(User.Identity.Name))
                 {
                     <button type="submit" class="pictureDelete" aria-label="Delete">
 
