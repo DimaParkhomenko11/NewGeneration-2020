@@ -2,13 +2,6 @@
     ViewBag.Title = "Home Page";
 }
 
-
-
-   
-
-
-
-
 @using Gallery.Controllers
 @using Gallery.ConfigManagement
 @using Gallery.Exif
@@ -18,10 +11,10 @@
     Service service = new Service();
     
     // Directory path with all User's directories
-    string ImagesDirPath = Server.MapPath(Config.pathToPhotos);
+    string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.pathToPhotos) + service.ComputeSha256Hash(User.Identity.Name);
+    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + service.ComputeSha256Hash(User.Identity.Name);
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -41,7 +34,7 @@
         Directory.CreateDirectory(DirPath);
     }
 
-    List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.pathToPhotos)).ToList<string>();
+    List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
     List<string> filesname;
     int i = 0;
 
@@ -96,18 +89,18 @@
 
     <div class="hov">
         <a class="picture">
-            <img id="@i" class="pictureIMG" src="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
+            <img id="@i" class="pictureIMG" src="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
         </a>
         <ul class="pictureDownload">
-            <a href="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" download>
+            <a href="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" download>
                 <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
             </a>
         </ul>
             @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { enctype = "string" }))
             {  
-                <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.pathToPhotos), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
+                <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                if (dir.Replace(Server.MapPath(Config.pathToPhotos), "") == service.ComputeSha256Hash(User.Identity.Name))
+                if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == service.ComputeSha256Hash(User.Identity.Name))
                 {
                     <button type="submit" class="pictureDelete" aria-label="Delete">
 
@@ -118,13 +111,6 @@
             }
 
         </div>
-
-
-
-
-
-
-
 
     <script>
             // Get the image and insert it inside the modal - use its "alt" text as a caption

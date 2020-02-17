@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Web;
@@ -19,30 +20,73 @@ namespace Gallery.ConfigManagement
         private const string defaultValuePathToPhotos = "/Content/Images/";
         private const string defaultValueFileExtensions = "image/jpeg;image/png";
 
-        public static void AddDefaultValueAppSettings(string key, string value)//Adding a default value  
-        {  
-            try  
+        public string СheckValuePathToPhotos()//Adding a default value PathToPhotos
+        {
+            System.Configuration.Configuration configFile = null;
+            if (System.Web.HttpContext.Current != null)
             {
-                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                var settings = configFile.AppSettings.Settings;
-                if (settings[key] == null)
+                configFile = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            }
+            else
+            {
+                configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            var settings = configFile.AppSettings.Settings;
+            if (settings["PathToPhotos"] == null)
+            {
+                settings.Add("PathToPhotos",defaultValuePathToPhotos);
+
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+                return defaultValuePathToPhotos;
+            }
+            else
+            {
+                if (settings["PathToPhotos"].Value == "")
                 {
-                    settings.Add(key, value);
-                }
-                else
-                {
-                    if (settings[key].Value == "")
-                    {
-                        settings[key].Value = value;
-                    }
+                    settings["PathToPhotos"].Value = defaultValuePathToPhotos;
+                    return defaultValuePathToPhotos;
                 }
                 configFile.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-            }  
-            catch (ConfigurationErrorsException)  
-            {
-                //Add error
+                return pathToPhotos;
             }
-        } 
+            
+        }
+
+        public string СheckValueFileExtensions()//Adding a default value PathToPhotos
+        {
+            System.Configuration.Configuration configFile = null;
+            if (System.Web.HttpContext.Current != null)
+            {
+                configFile = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            }
+            else
+            {
+                configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            var settings = configFile.AppSettings.Settings;
+            if (settings["FileExtensions"] == null)
+            {
+                settings.Add("FileExtensions", defaultValueFileExtensions);
+
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+                return defaultValueFileExtensions;
+            }
+            else
+            {
+                if (settings["FileExtensions"].Value == "")
+                {
+                    settings["FileExtensions"].Value = defaultValueFileExtensions;
+                    return defaultValueFileExtensions;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+                return fileExtensions;
+            }
+            
+        }
     }
 }
+ 

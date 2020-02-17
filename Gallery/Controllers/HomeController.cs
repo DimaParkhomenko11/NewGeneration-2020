@@ -83,7 +83,7 @@ namespace Gallery.Controllers
             try
             {
                 
-                if (PathFileDelete.Replace(Config.pathToPhotos, "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == service.ComputeSha256Hash(User.Identity.Name))
+                if (PathFileDelete.Replace(Config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == service.ComputeSha256Hash(User.Identity.Name))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));
@@ -128,7 +128,7 @@ namespace Gallery.Controllers
                 {
                     if (!string.IsNullOrEmpty(User.Identity.Name))
                     {
-                        if (Config.fileExtensions.Contains(files.ContentType))
+                        if (Config.СheckValueFileExtensions().Contains(files.ContentType))
                         {
                             FileStream TempFileStream;
                             // Verify that the user selected a file and User is logged in
@@ -136,7 +136,7 @@ namespace Gallery.Controllers
                             {
                                 bool IsLoad = true;
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(Config.pathToPhotos) + service.ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + service.ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
@@ -159,7 +159,7 @@ namespace Gallery.Controllers
                                         TempFileStream.Close();
 
                                         // List of all Directories names
-                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.pathToPhotos)).ToList<string>();
+                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
 
                                         FileStream CheckFileStream;
                                         Bitmap CheckBmp;
