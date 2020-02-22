@@ -83,3 +83,4 @@ D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery\obj\Debug\Gallery.csprojAssem
 D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery\obj\Debug\Gallery.csproj.CopyComplete
 D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery\obj\Debug\Gallery.dll
 D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery\obj\Debug\Gallery.pdb
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery\bin\WindowsBase.dll
