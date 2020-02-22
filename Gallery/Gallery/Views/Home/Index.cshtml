@@ -5,8 +5,8 @@
 @using Gallery.Controllers
 @using Gallery.ConfigManagement
 @{
-    ConfigurationManagement Config = new ConfigurationManagement();
- 
+   ConfigurationManagement Config = new ConfigurationManagement();
+
     // Directory path with all User's directories
     string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
@@ -32,7 +32,6 @@
     }
 
     
-   
     int i = 0;
 
     //The Modal
@@ -52,8 +51,8 @@
             modal.style.display = "none";
         }
     </script>
-    
-       List<string> filesname = Directory.GetFiles(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
+        List<string> filesname = Directory.GetFiles(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
+        
 
         foreach (string fl in filesname)
         {
@@ -87,6 +86,11 @@
                     <a class="picture">
                         <img id="@i" class="pictureIMG" src="~/Content/Images/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
                     </a>
+                    <ul class="pictureDownload">
+                        <a href="~/Content/Images/@Path.GetFileName(fl)" download>
+                            <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
+                        </a>
+                    </ul>
                     
                 </div>
 
@@ -101,6 +105,7 @@
                 captionText.innerHTML = this.alt;
             }
                 </script>
+
 
 
             </div>

@@ -31,8 +31,6 @@ namespace Gallery.Controllers
         }
 
 
-
-
         //
         // Hash-Function
         // Input: String
@@ -164,6 +162,32 @@ namespace Gallery.Controllers
             fileStream.Close();
 
         }
+
+        /* [HttpPost]
+         public ActionResult Delete(string PathFileDelete = "")
+         {
+             try
+             {
+                 if (PathFileDelete != "")
+                 { 
+                     System.IO.File.Delete(Server.MapPath(PathFileDelete));
+                 }
+                 else
+                 {
+                     ViewBag.Error = "File not found!";
+                     return View("Error");
+                 }
+
+             }
+             catch (Exception err)
+             {
+                 ViewBag.Error = "Unexpected error: " + err.Message;
+                 return View("Error");
+             }
+             return RedirectToAction("Index");
+         }*/
+
+
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase files)
