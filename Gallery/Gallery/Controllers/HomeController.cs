@@ -215,58 +215,6 @@ namespace Gallery.Controllers
                         var DateTaken = bitmapMetadata.DateTaken;
                         TempFileStream.Close();
 
-                        if (!string.IsNullOrEmpty(DateTaken) || files.ContentType != "image/jpeg")
-                        {
-                            if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1) || files.ContentType != "image/jpeg")
-                            {
-                                TempFileStream = new FileStream(TempPath, FileMode.Open);
-                                Bitmap TempBmp = new Bitmap(TempFileStream);
-                                TempBmp = new Bitmap(TempBmp, 64, 64);
-                                TempFileStream.Close();
-
-                                // List of all Directories names
-                                List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
-
-                                FileStream CheckFileStream;
-                                Bitmap CheckBmp;
-
-                                List<string> filesname;
-
-                                // foreach inside foreach in order to check a new photo for its copies in all folders of all users
-                                foreach (string dir in dirsname)
-                                {
-                                    filesname = Directory.GetFiles(dir).ToList<string>();
-                                    foreach (string fl in filesname)
-                                    {
-                                        CheckFileStream = new FileStream(fl, FileMode.Open);
-                                        CheckBmp = new Bitmap(CheckFileStream);
-                                        CheckBmp = new Bitmap(CheckBmp, 64, 64);
-
-                                        CheckFileStream.Close();
-
-                                        if (CompareBitmapsFast(TempBmp, CheckBmp))
-                                        {
-                                            IsLoad = false;
-                                            ViewBag.Error = "Photo already exists!";
-                                            CheckBmp.Dispose();
-                                            break;
-                                        }
-                                        else
-                                            CheckBmp.Dispose();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                ViewBag.Error = "Photo created more than a year ago!";
-                                IsLoad = false;
-                            }
-                        }
-                        else
-                        {
-                            ViewBag.Error = "Photo creation date not found!";
-                            IsLoad = false;
-                        }
 
                         if (IsLoad)
                         {
