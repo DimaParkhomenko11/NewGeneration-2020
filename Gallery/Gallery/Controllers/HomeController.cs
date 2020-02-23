@@ -16,12 +16,12 @@ namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        public static string title;
-        public static string dateCreation;
-        public static string dateUpload;
-        public static string cameraManufacturer;
-        public static string modelOfCamera;
-        public static string fileSize;
+        public static string title { get; set; }
+        public static string dateCreation { get; set; }
+        public static string dateUpload { get; set; }
+        public static string cameraManufacturer { get; set; }
+        public static string modelOfCamera { get; set; }
+        public static string fileSize { get; set; }
 
         private ConfigurationManagement Config = new ConfigurationManagement();
 
@@ -163,7 +163,7 @@ namespace Gallery.Controllers
 
         }
 
-        /* [HttpPost]
+         [HttpPost]
          public ActionResult Delete(string PathFileDelete = "")
          {
              try
@@ -185,7 +185,7 @@ namespace Gallery.Controllers
                  return View("Error");
              }
              return RedirectToAction("Index");
-         }*/
+         }
 
 
 

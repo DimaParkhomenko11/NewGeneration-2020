@@ -5,13 +5,13 @@
 @using Gallery.Controllers
 @using Gallery.ConfigManagement
 @{
-   ConfigurationManagement Config = new ConfigurationManagement();
+    ConfigurationManagement Config = new ConfigurationManagement();
 
     // Directory path with all User's directories
     string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) ;
+    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -26,12 +26,12 @@
         Directory.CreateDirectory(TempDirPath);
     }
 
-    if (!Directory.Exists(DirPath) )
+    if (!Directory.Exists(DirPath))
     {
         Directory.CreateDirectory(DirPath);
     }
 
-    
+
     int i = 0;
 
     //The Modal
@@ -51,50 +51,60 @@
             modal.style.display = "none";
         }
     </script>
-        List<string> filesname = Directory.GetFiles(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
-        
+    List<string> filesname = Directory.GetFiles(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
 
-        foreach (string fl in filesname)
-        {
-            i++;
-            HomeController.LoadExifData(fl);
 
-            <div class="body">
-                <div class="bodyT">
+    foreach (string fl in filesname)
+    {
+        i++;
+        HomeController.LoadExifData(fl);
 
-                    <p class="textT">
-                        <b>Photo title: @HomeController.title</b>
-                    </p>
-                    <p class="textT">
-                        <b>Manufacturer of the camera: @HomeController.cameraManufacturer</b>
-                    </p>
-                    <p class="textT">
-                        <b>Model of the camera: @HomeController.modelOfCamera</b>
-                    </p>
-                    <p class="textT">
-                        <b>File size: @HomeController.fileSize</b>
-                    </p>
-                    <p class="textT">
-                        <b>Date of creation of the photo: @HomeController.dateCreation</b>
-                    </p>
-                    <p class="textT">
-                        <b>Date of uploading of the photo: @HomeController.dateUpload</b>
-                    </p>
-                </div>
+        <div class="body">
+            <div class="bodyT">
 
-                <div class="hov">
-                    <a class="picture">
-                        <img id="@i" class="pictureIMG" src="~/Content/Images/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
+                <p class="textT">
+                    <b>Photo title: @HomeController.title</b>
+                </p>
+                <p class="textT">
+                    <b>Manufacturer of the camera: @HomeController.cameraManufacturer</b>
+                </p>
+                <p class="textT">
+                    <b>Model of the camera: @HomeController.modelOfCamera</b>
+                </p>
+                <p class="textT">
+                    <b>File size: @HomeController.fileSize</b>
+                </p>
+                <p class="textT">
+                    <b>Date of creation of the photo: @HomeController.dateCreation</b>
+                </p>
+                <p class="textT">
+                    <b>Date of uploading of the photo: @HomeController.dateUpload</b>
+                </p>
+            </div>
+
+            <div class="hov">
+                <a class="picture">
+                    <img id="@i" class="pictureIMG" src="~/Content/Images/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
+                </a>
+                <ul class="pictureDownload">
+                    <a href="~/Content/Images/@Path.GetFileName(fl)" download>
+                        <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
                     </a>
-                    <ul class="pictureDownload">
-                        <a href="~/Content/Images/@Path.GetFileName(fl)" download>
-                            <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
-                        </a>
-                    </ul>
-                    
-                </div>
+                </ul>
+                @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { enctype = "string" }))
+                {
+                    <input type="text" name="PathFileDelete" value="~/Content/Images/@Path.GetFileName(fl)" hidden />
 
-                <script>
+                    <button type="submit" class="pictureDelete" aria-label="Delete">
+
+                        <i class="fa fa-trash" style="color:darkred; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
+
+                    </button>
+                }
+
+            </div>
+
+            <script>
             // Get the image and insert it inside the modal - use its "alt" text as a caption
             var img = document.getElementById("@i");
             var modalImg = document.getElementById("img01");
@@ -104,11 +114,11 @@
                 modalImg.src = this.src;
                 captionText.innerHTML = this.alt;
             }
-                </script>
+            </script>
 
 
 
-            </div>
-        }
-    
+        </div>
+    }
+
 }
