@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -16,14 +14,14 @@ namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        public static string title { get; set; }
-        public static string dateCreation { get; set; }
-        public static string dateUpload { get; set; }
-        public static string cameraManufacturer { get; set; }
-        public static string modelOfCamera { get; set; }
-        public static string fileSize { get; set; }
+        public static string Title { get; set; }
+        public static string DateCreation { get; set; }
+        public static string DateUpload { get; set; }
+        public static string CameraManufacturer { get; set; }
+        public static string ModelOfCamera { get; set; }
+        public static string FileSize { get; set; }
 
-        private ConfigurationManagement Config = new ConfigurationManagement();
+        private readonly ConfigurationManagement Config = new ConfigurationManagement();
 
         public ActionResult Index()
         {
@@ -31,10 +29,10 @@ namespace Gallery.Controllers
         }
 
 
-        //
-        // Hash-Function
-        // Input: String
-        // Otput: String with ShaHash
+
+        //Hash-Function
+        //Input: String
+        //Output: String with ShaHash
         public string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
@@ -90,74 +88,66 @@ namespace Gallery.Controllers
             return result;
         }
 
-
-
-
+        
 
         public static void LoadExifData(string LoadExifPath)
         {
             FileInfo fileInfo = new FileInfo(LoadExifPath);
-
             FileStream fileStream = new FileStream(LoadExifPath, FileMode.Open);
             BitmapSource bitmapSource = BitmapFrame.Create(fileStream);
             BitmapMetadata bitmapMetadata = (BitmapMetadata)bitmapSource.Metadata;
 
-
-            //
             //title from FileInfo
             if (string.IsNullOrEmpty(fileInfo.Name))
-                title = "Data not found";
+                Title = "Data not found";
             else
-                title = fileInfo.Name;
-            //
+                Title = fileInfo.Name;
+
             //DateUpload from FileInfo
             if (fileInfo.CreationTime == null)
-                dateUpload = "Data not found";
+                DateUpload = "Data not found";
             else
-                dateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
-            //
+                DateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
+            
             //FileSize from FileInfo
             if (fileInfo.Length >= 1024)
             {
-                fileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
+                FileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
                 if ((fileInfo.Length / 1024f) >= 1024f)
-                    fileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
+                    FileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
             }
             else
-                fileSize = fileInfo.Length.ToString() + " B";
-
+            {
+                FileSize = fileInfo.Length.ToString() + " B";
+            }
 
             if (!LoadExifPath.Contains(".jpg"))
             {
-                cameraManufacturer = "Data not found";
-                modelOfCamera = "Data not found";
-                dateCreation = "Data not found";
+                CameraManufacturer = "Data not found";
+                ModelOfCamera = "Data not found";
+                DateCreation = "Data not found";
                 // MessageBox.Show("aaa"); 
             }
             else
             {
-                //
+                
                 //manufacturer from EXIF
                 if (string.IsNullOrEmpty(bitmapMetadata.CameraManufacturer))
-                    cameraManufacturer = "Data not found";
+                    CameraManufacturer = "Data not found";
                 else
-                    cameraManufacturer = bitmapMetadata.CameraManufacturer;
-
-
-                //
+                    CameraManufacturer = bitmapMetadata.CameraManufacturer;
+                
                 //modelOfCamera from EXIF
                 if (string.IsNullOrEmpty(bitmapMetadata.CameraModel))
-                    modelOfCamera = "Data not found";
+                    ModelOfCamera = "Data not found";
                 else
-                    modelOfCamera = bitmapMetadata.CameraModel;
-
-
-                //
+                    ModelOfCamera = bitmapMetadata.CameraModel;
+                
                 //DateCreation from EXIF
                 if (string.IsNullOrEmpty(bitmapMetadata.DateTaken))
-                    dateCreation = "Data not found";
+                    DateCreation = "Data not found";
                 else
-                    dateCreation = bitmapMetadata.DateTaken;
+                    DateCreation = bitmapMetadata.DateTaken;
             }
             fileStream.Close();
 
@@ -177,7 +167,6 @@ namespace Gallery.Controllers
                      ViewBag.Error = "File not found!";
                      return View("Error");
                  }
-
              }
              catch (Exception err)
              {
@@ -239,23 +228,18 @@ namespace Gallery.Controllers
                         return View("Error");
                     }
                     // redirect back to the index action to show the form once again
-
                 }
                 else
                 {
                     ViewBag.Error = "Inappropriate format!";
                     return View("Error");
                 }
-
-
             }
             else
             {
 
                 return View();
             }
-
-
             return RedirectToAction("Index");
         }
 
