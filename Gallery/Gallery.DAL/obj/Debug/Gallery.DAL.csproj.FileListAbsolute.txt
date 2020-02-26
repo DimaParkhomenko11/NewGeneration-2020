@@ -1,0 +1,13 @@
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\Data\Database.mdf
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\Data\Database_log.ldf
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\Gallery.DAL.dll.config
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\Gallery.DAL.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\Gallery.DAL.pdb
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\EntityFramework.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\EntityFramework.xml
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\obj\Debug\Gallery.DAL.csprojAssemblyReference.cache
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\obj\Debug\Gallery.DAL.csproj.CopyComplete
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\obj\Debug\Gallery.DAL.dll
+D:\GitHub\NG2020\NewGeneration2020\Gallery\Gallery.DAL\obj\Debug\Gallery.DAL.pdb
