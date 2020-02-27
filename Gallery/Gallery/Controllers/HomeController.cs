@@ -257,7 +257,7 @@ namespace Gallery.Controllers
         }
 
 
-
+      
     }
 
 }

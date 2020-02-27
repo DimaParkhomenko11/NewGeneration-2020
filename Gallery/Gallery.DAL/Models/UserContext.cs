@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL.Models
 {
-    class UserContext : DbContext
+    public class UserContext : DbContext
     {
         public UserContext() : base("DefaultConnection")
         { }

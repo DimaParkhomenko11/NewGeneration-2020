@@ -9,7 +9,7 @@ namespace Gallery.DAL
     public class User
     {
         public int Id { get; set; }
-        public int Email { get; set; }
-        public int Password { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
