@@ -243,7 +243,7 @@ namespace Gallery.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize]
         public ActionResult Upload()
         {
             return View();
