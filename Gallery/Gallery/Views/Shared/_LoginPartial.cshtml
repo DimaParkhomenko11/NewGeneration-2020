@@ -1,0 +1,11 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+    <li>@Html.ActionLink("Hi" + User.Identity.Name + "!","Index")</li>
+    <li>@Html.ActionLink("Sign out", "LoginOut", "Account")</li>
+}
+else
+{
+    <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
+    <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
+}

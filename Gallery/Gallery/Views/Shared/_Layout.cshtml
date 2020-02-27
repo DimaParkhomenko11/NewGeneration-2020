@@ -11,6 +11,7 @@
     <script src="https://kit.fontawesome.com/c27b8f18b9.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -25,9 +26,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Upload photo", "Upload", "Home")</li>
-                    <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
-                    <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
+                    @Html.Partial("_LoginPartial")
                 </ul>
+               
             </div>
         </div>
     </div>

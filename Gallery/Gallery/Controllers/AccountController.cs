@@ -18,7 +18,7 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(RegisterModel model)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -27,7 +27,6 @@ namespace Gallery.Controllers
                 {
                     user = database.Users.FirstOrDefault(u => u.Email == model.Name && u.Password == model.Password);
                 }
-
 
 
                 if (user != null)
@@ -43,22 +42,11 @@ namespace Gallery.Controllers
             return View(model);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        public ActionResult LoginOut()
+        {
+            return View();
+        }
 
         public ActionResult Register()
         {
