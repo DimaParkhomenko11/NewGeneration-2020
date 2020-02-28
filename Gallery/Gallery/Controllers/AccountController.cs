@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Gallery.DAL;
 using Gallery.DAL.Models;
+using Gallery.DAL.DatabaseInteraction;
 
 namespace Gallery.Controllers
 {
@@ -22,12 +23,9 @@ namespace Gallery.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = null;
-                using (UserContext database = new UserContext())
-                {
-                    user = database.Users.FirstOrDefault(u => u.Email == model.Name && u.Password == model.Password);
-                }
+                DatabaseInteraction authorization = new DatabaseInteraction();
 
+                User user = authorization.AuthorizationInteraction(model);
 
                 if (user != null)
                 {
@@ -38,11 +36,12 @@ namespace Gallery.Controllers
                 {
                     ModelState.AddModelError("", "User is not found");
                 }
+
             }
             return View(model);
         }
 
-        
+
         public ActionResult LoginOut()
         {
             return View();
@@ -59,22 +58,15 @@ namespace Gallery.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = null;
-                using (UserContext database = new UserContext())
-                {
-                    user = database.Users.FirstOrDefault(u => u.Email == model.Name);
-                }
+                DatabaseInteraction authorization = new DatabaseInteraction();
+
+                User user = authorization.RegistrationInteraction(model);
 
                 if (user == null)
                 {
                     //Create a new user
-                    using (UserContext database = new UserContext())
-                    {
-                        database.Users.Add(new User { Email = model.Name, Password = model.Password });
-                        database.SaveChanges();
-                        user = database.Users.Where(u => u.Email == model.Name && u.Password == model.Password)
-                            .FirstOrDefault();
-                    }
+                    
+                    user = authorization.CreateNewUser(user, model);
 
                     if (user != null)
                     {
