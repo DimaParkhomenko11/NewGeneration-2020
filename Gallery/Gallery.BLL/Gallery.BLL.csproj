@@ -44,17 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Contract\UserDto.cs" />
+    <Compile Include="Interfaces\IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Gallery\Gallery.WEB.csproj">
-      <Project>{e76e5688-d1bf-4a32-a1f7-a60fde241936}</Project>
-      <Name>Gallery.WEB</Name>
-    </ProjectReference>
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gallery.DAL\Gallery.DAL.csproj">
+      <Project>{5e2f7b68-9a3d-4218-80cf-5b5b4e61430c}</Project>
+      <Name>Gallery.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

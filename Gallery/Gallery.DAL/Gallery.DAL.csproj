@@ -66,7 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseInteraction\Account.cs" />
+    <Compile Include="InterfaceImplementation\UsersRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />

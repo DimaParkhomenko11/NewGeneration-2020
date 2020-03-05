@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Gallery.BLL.Interfaces;
+using Gallery.BLL.Services;
 using Gallery.DAL;
 using Gallery.DAL.Models;
-using Gallery.DAL.DatabaseInteraction;
+using Gallery.DAL.InterfaceImplementation;
 
 namespace Gallery.Controllers
 {
     public class AccountController : Controller
     {
+        private IUsersService _usersService;
+
+        public AccountController(IUsersService usersService)
+        {
+            _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
+        }
+
+        public AccountController() : this(new UserService(new UsersRepository(new UserContext()))) { }
+
+
         public ActionResult Login()
         {
             return View();
@@ -19,15 +32,13 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                DatabaseInteraction authorization = new DatabaseInteraction();
+                var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
 
-                User user = authorization.AuthorizationInteraction(model);
-
-                if (user != null)
+                if (canAuthorize)
                 {
                     FormsAuthentication.SetAuthCookie(model.Name, true);
                     return RedirectToAction("Index", "Home");
@@ -58,15 +69,23 @@ namespace Gallery.Controllers
         {
             if (ModelState.IsValid)
             {
-                DatabaseInteraction authorization = new DatabaseInteraction();
-
-                User user = authorization.RegistrationInteraction(model);
+                User user = null;
+                using (UserContext database = new UserContext())
+                {
+                    user = database.Users.FirstOrDefault(u => u.Email == model.Name);
+                }
 
                 if (user == null)
                 {
                     //Create a new user
-                    
-                    user = authorization.CreateNewUser(user, model);
+
+                    using (UserContext database = new UserContext())
+                    {
+                        database.Users.Add(new User { Email = model.Name, Password = model.Password });
+                        database.SaveChanges();
+                        user = database.Users.Where(u => u.Email == model.Name && u.Password == model.Password)
+                            .FirstOrDefault();
+                    }
 
                     if (user != null)
                     {

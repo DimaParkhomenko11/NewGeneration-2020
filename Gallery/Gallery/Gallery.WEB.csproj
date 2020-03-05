@@ -191,6 +191,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
+      <Project>{1c1497c5-c9e9-4a17-bb85-18425c6d31c3}</Project>
+      <Name>Gallery.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.DAL\Gallery.DAL.csproj">
       <Project>{5e2f7b68-9a3d-4218-80cf-5b5b4e61430c}</Project>
       <Name>Gallery.DAL</Name>
