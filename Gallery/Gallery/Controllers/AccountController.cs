@@ -65,17 +65,14 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = null;
-                using (UserContext database = new UserContext())
-                {
-                    user = database.Users.FirstOrDefault(u => u.Email == model.Name);
-                }
 
-                if (user == null)
+                var IfUserExist = await _usersService.IsUserExistAsync(model.Name, model.Password);
+
+                if (IfUserExist == false)
                 {
                     //Create a new user
 
@@ -83,15 +80,10 @@ namespace Gallery.Controllers
                     {
                         database.Users.Add(new User { Email = model.Name, Password = model.Password });
                         database.SaveChanges();
-                        user = database.Users.Where(u => u.Email == model.Name && u.Password == model.Password)
-                            .FirstOrDefault();
                     }
+                    FormsAuthentication.SetAuthCookie(model.Name, true);
+                    return RedirectToAction("Index", "Home");
 
-                    if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(model.Name, true);
-                        return RedirectToAction("Index", "Home");
-                    }
                 }
                 else
                 {
