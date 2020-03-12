@@ -25,5 +25,11 @@ namespace Gallery.DAL.InterfaceImplementation
             return await _context.Users.AnyAsync(u => u.Email == username.Trim().ToLower() && u.Password == plainPassword.Trim());
             
         }
+
+        public async Task AddUserToDatabase(string username, string plainPassword)
+        { 
+            _context.Users.Add(new User { Email = username, Password = plainPassword });
+            _context.SaveChanges();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
 using Gallery.DAL;
@@ -75,12 +76,9 @@ namespace Gallery.Controllers
                 if (IfUserExist == false)
                 {
                     //Create a new user
+                    AddUserDto userDto = new AddUserDto(model.Name, model.Password);
 
-                    using (UserContext database = new UserContext())
-                    {
-                        database.Users.Add(new User { Email = model.Name, Password = model.Password });
-                        database.SaveChanges();
-                    }
+                    await _usersService.AddUser(userDto);
                     FormsAuthentication.SetAuthCookie(model.Name, true);
                     return RedirectToAction("Index", "Home");
 
