@@ -28,6 +28,9 @@ namespace Gallery.BLL.Services
             throw new NotImplementedException();
         }
 
-        
+        public Task<AddUserDto> AddUser(AddUserDto dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

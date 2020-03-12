@@ -14,7 +14,6 @@ namespace Gallery.BLL.Contract
 
         public string Username { get; set; }
 
-
     }
 
 }

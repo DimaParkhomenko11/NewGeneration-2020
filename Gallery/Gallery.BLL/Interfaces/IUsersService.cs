@@ -12,5 +12,7 @@ namespace Gallery.BLL.Interfaces
         Task<bool> IsUserExistAsync(string username, string plainPassword);
 
         Task<UserDto> FindUserAsync(string username, string plainPassword);
+
+        Task<AddUserDto> AddUser(AddUserDto dto);
     }
 }
