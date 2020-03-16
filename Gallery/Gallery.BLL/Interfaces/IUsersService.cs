@@ -14,5 +14,7 @@ namespace Gallery.BLL.Interfaces
         Task<UserDto> FindUserAsync(string username, string plainPassword);
 
         Task AddUser(AddUserDto dto);
+
+        int GetIdUsers(string username);
     }
 }

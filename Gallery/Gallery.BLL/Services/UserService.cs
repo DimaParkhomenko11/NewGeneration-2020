@@ -32,5 +32,12 @@ namespace Gallery.BLL.Services
         {
             await _repository.AddUserToDatabase(dto.Username, dto.PlainPassword);
         }
+
+        public int GetIdUsers(string username)
+        {
+            return _repository.GetIdUsers(username);
+        }
+
+
     }
 }
