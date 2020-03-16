@@ -2,3 +2,8 @@
 /packages
 /Gallery/obj
 /Gallery/bin
+/Gallery.BLL/bin
+/Gallery.BLL/obj
+/Gallery.DAL/bin
+/Gallery.DAL/obj
+/.vs
