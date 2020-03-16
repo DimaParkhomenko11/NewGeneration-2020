@@ -9,13 +9,8 @@ namespace Gallery.DAL.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Field must be set")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Line length must be between 3 and 30 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Field must be set")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Line length must be between 3 and 30 characters")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 

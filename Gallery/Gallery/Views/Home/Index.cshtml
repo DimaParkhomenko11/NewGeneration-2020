@@ -2,16 +2,20 @@
     ViewBag.Title = "Home Page";
 }
 
+@using Gallery.BLL.Interfaces
+@using Gallery.BLL.Services
 @using Gallery.Controllers
 @using Gallery.ConfigManagement
 @{
     ConfigurationManagement Config = new ConfigurationManagement();
+    IHashService _hashService = new HashService();
+    IExifDataService _exifDataService = new ExifDataService();
 
     // Directory path with all User's directories
     string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + HomeController.ComputeSha256Hash(User.Identity.Name);
+    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -26,7 +30,7 @@
         Directory.CreateDirectory(TempDirPath);
     }
 
-    if (!Directory.Exists(DirPath) && User.Identity.Name != "")
+    if (User.Identity.IsAuthenticated)
     {
         Directory.CreateDirectory(DirPath);
     }
@@ -59,28 +63,28 @@
         foreach (string fl in filesname)
         {
             i++;
-            HomeController.LoadExifData(fl);
+            _exifDataService.LoadExifData(fl);
 
             <div class="body">
                 <div class="bodyT">
 
                     <p class="textT">
-                        <b>Photo title: @HomeController.Title</b>
+                        <b>Photo title: @ExifDataService.Title</b>
                     </p>
                     <p class="textT">
-                        <b>Manufacturer of the camera: @HomeController.CameraManufacturer</b>
+                        <b>Manufacturer of the camera: @ExifDataService.CameraManufacturer</b>
                     </p>
                     <p class="textT">
-                        <b>Model of the camera: @HomeController.ModelOfCamera</b>
+                        <b>Model of the camera: @ExifDataService.ModelOfCamera</b>
                     </p>
                     <p class="textT">
-                        <b>File size: @HomeController.FileSize</b>
+                        <b>File size: @ExifDataService.FileSize</b>
                     </p>
                     <p class="textT">
-                        <b>Date of creation of the photo: @HomeController.DateCreation</b>
+                        <b>Date of creation of the photo: @ExifDataService.DateCreation</b>
                     </p>
                     <p class="textT">
-                        <b>Date of uploading of the photo: @HomeController.DateUpload</b>
+                        <b>Date of uploading of the photo: @ExifDataService.DateUpload</b>
                     </p>
                 </div>
 
@@ -97,7 +101,7 @@
                     {
                         <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == HomeController.ComputeSha256Hash(User.Identity.Name))
+                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == _hashService.ComputeSha256Hash("Dima"))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 

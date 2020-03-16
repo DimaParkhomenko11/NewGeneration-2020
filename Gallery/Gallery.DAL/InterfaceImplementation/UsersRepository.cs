@@ -11,7 +11,7 @@ namespace Gallery.DAL.InterfaceImplementation
 {
     public class UsersRepository : IRepository
     {
-        private readonly UserContext _context;
+        private readonly UserContext _context = new UserContext();
 
         public UsersRepository(UserContext context)
         {
@@ -23,13 +23,18 @@ namespace Gallery.DAL.InterfaceImplementation
         {
 
             return await _context.Users.AnyAsync(u => u.Email == username.Trim().ToLower() && u.Password == plainPassword.Trim());
-            
+
         }
 
         public async Task AddUserToDatabase(string username, string plainPassword)
-        { 
+        {
             _context.Users.Add(new User { Email = username, Password = plainPassword });
             _context.SaveChanges();
+        }
+
+        public int GetIdUsers(string username)
+        {
+            return _context.Users.Where(u => u.Email == username).Select(u => u.Id).FirstOrDefault();
         }
     }
 }
