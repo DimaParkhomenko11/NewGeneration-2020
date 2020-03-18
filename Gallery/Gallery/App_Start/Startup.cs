@@ -17,8 +17,8 @@ namespace Gallery.App_Start
             {
                 AuthenticationType = "ApplicationCookie",
                 LoginPath = new PathString("/Account/Login"),
-                SlidingExpiration = false,
-                ExpireTimeSpan = TimeSpan.FromMinutes(30)
+                SlidingExpiration = true,
+                ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
 
         }
