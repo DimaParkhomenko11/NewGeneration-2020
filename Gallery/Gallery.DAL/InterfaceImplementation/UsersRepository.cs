@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,20 @@ namespace Gallery.DAL.InterfaceImplementation
         public int GetIdUsers(string username)
         {
             return _context.Users.Where(u => u.Email == username).Select(u => u.Id).FirstOrDefault();
+        }
+
+        public async Task<bool> IsConnectionAvailable()
+        {
+            try
+            {
+                await _context.Database.Connection.OpenAsync();
+                _context.Database.Connection.Close();
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

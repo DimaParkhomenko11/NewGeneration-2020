@@ -16,5 +16,7 @@ namespace Gallery.BLL.Interfaces
         Task AddUser(AddUserDto dto);
 
         int GetIdUsers(string username);
+
+        Task<bool> IsConnectionAvailable();
     }
 }

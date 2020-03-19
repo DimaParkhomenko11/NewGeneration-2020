@@ -22,7 +22,7 @@ namespace Gallery.Controllers
 
         private IUsersService _usersService;
         private IAuthenticationService _authenticationService = new AuthenticationService();
-        
+
         public AccountController(IUsersService usersService)
         {
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
@@ -47,26 +47,37 @@ namespace Gallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            bool isConnection = await _usersService.IsConnectionAvailable();
+            if (isConnection)
             {
-                var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
-                
-               
-                
-                if (canAuthorize)
-                {
-                    var userId = _usersService.GetIdUsers(model.Name).ToString();
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
-                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
-                   
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "User is not found");
-                }
 
+                if (ModelState.IsValid)
+                {
+                    var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
+
+
+
+                    if (canAuthorize)
+                    {
+                        var userId = _usersService.GetIdUsers(model.Name).ToString();
+                        var claim = _authenticationService.ClaimTypesСreation(userId);
+                        _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "User is not found");
+                    }
+
+                }
+            }
+            else
+            {
+                ViewBag.Error = "No database connection!";
+                return View("Error");
             }
             return View(model);
         }
@@ -87,28 +98,37 @@ namespace Gallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            bool isConnection = await _usersService.IsConnectionAvailable();
+            if (isConnection)
             {
-
-                var IfUserExist = await _usersService.IsUserExistAsync(model.Name, model.Password);
-
-                if (IfUserExist == false)
+                if (ModelState.IsValid)
                 {
-                    //Create a new user
-                    AddUserDto userDto = new AddUserDto(model.Name, model.Password);
-                    await _usersService.AddUser(userDto);
 
-                    var userId = _usersService.GetIdUsers(model.Name).ToString();
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
-                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+                    var IfUserExist = await _usersService.IsUserExistAsync(model.Name, model.Password);
 
-                    return RedirectToAction("Index", "Home");
+                    if (IfUserExist == false)
+                    {
+                        //Create a new user
+                        AddUserDto userDto = new AddUserDto(model.Name, model.Password);
+                        await _usersService.AddUser(userDto);
 
+                        var userId = _usersService.GetIdUsers(model.Name).ToString();
+                        var claim = _authenticationService.ClaimTypesСreation(userId);
+                        _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "User already exists");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "User already exists");
-                }
+            }
+            else
+            {
+                ViewBag.Error = "No database connection!";
+                return View("Error");
             }
             return View(model);
         }

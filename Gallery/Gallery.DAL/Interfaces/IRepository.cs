@@ -13,5 +13,7 @@ namespace Gallery.DAL.Interfaces
         Task AddUserToDatabase(string username, string plainPassword);
 
         int GetIdUsers(string username);
+
+        Task<bool> IsConnectionAvailable();
     }
 }

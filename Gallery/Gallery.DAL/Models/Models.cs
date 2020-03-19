@@ -11,6 +11,7 @@ namespace Gallery.DAL.Models
     {
         public string Name { get; set; }
 
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 
