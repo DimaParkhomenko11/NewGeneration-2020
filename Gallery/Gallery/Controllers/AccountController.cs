@@ -1,41 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
-using Gallery.DAL;
 using Gallery.DAL.Models;
 using Gallery.DAL.InterfaceImplementation;
-using System.Security.Claims;
-using Gallery.DAL.Interfaces;
-using Microsoft.Owin.Security;
 
 namespace Gallery.Controllers
 {
     public class AccountController : Controller
     {
 
-        private IUsersService _usersService;
-        private IAuthenticationService _authenticationService = new AuthenticationService();
+        private readonly IUsersService _usersService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public AccountController(IUsersService usersService)
+        public AccountController(IUsersService usersService, IAuthenticationService authenticationService)
         {
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
-        }
-
-        public AccountController() : this(new UserService(new UsersRepository(new UserContext()))) { }
-
-
-        public AccountController(IAuthenticationService authenticationService)
-        {
             _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
         }
-
 
 
         public ActionResult Login()

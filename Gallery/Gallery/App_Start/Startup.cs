@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.RightsManagement;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
@@ -20,6 +21,7 @@ namespace Gallery.App_Start
                 SlidingExpiration = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
+            DIConfig.Configure(new HttpConfiguration());
 
         }
     }
