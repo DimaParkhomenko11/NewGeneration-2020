@@ -15,6 +15,7 @@ namespace Gallery.App_Start.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            //AccountController
             builder.RegisterType<UserContext>()
                 .AsSelf();
             builder.RegisterType<UsersRepository>()
@@ -24,6 +25,14 @@ namespace Gallery.App_Start.Modules
 
             builder.RegisterType<AuthenticationService>()
                 .As<IAuthenticationService>();
+
+            //HomeController
+            builder.RegisterType<ImageServices>()
+                .As<IImagesService>();
+
+            builder.RegisterType<HashService>()
+                .As<IHashService>();
+
         }
     }
 }

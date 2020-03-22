@@ -18,146 +18,36 @@ namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        private IHashService _hashService = new HashService();
+
+        private IHashService _hashService;
+        private IImagesService _imagesService;
         private readonly ConfigurationManagement Config = new ConfigurationManagement();
 
-        private IImagesService _imagesService;
-        public HomeController(IImagesService imageService)
+        public HomeController(IImagesService imageService, IHashService hashService)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
+            _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
         }
-        public HomeController() : this(new ImageServices()) { }
+       
+
 
         public ActionResult Index()
         {
             return View();
         }
 
-
-
-        //Hash-Function
-        //Input: String
-        //Output: String with ShaHash
-        /* public static string ComputeSha256Hash(string rawData)
-         {
-             // Create a SHA256   
-             using (SHA256 sha256Hash = SHA256.Create())
-             {
-                 // ComputeHash - returns byte array  
-                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-
-                 // Convert byte array to a string   
-                 StringBuilder builder = new StringBuilder();
-                 for (int i = 0; i < bytes.Length; i++)
-                 {
-                     builder.Append(bytes[i].ToString("x2"));
-                 }
-                 return builder.ToString();
-             }
-         }*/
-
-
-        /*public static bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
+        [Authorize]
+        public ActionResult Upload()
         {
-            if (bmp1 == null || bmp2 == null)
-                return false;
-            if (object.Equals(bmp1, bmp2))
-                return true;
-            if (!bmp1.Size.Equals(bmp2.Size) || !bmp1.PixelFormat.Equals(bmp2.PixelFormat))
-                return false;
+            return View();
+        }
 
-            int bytes = bmp1.Width * bmp1.Height * (Image.GetPixelFormatSize(bmp1.PixelFormat) / 8);
-
-            bool result = true;
-            byte[] b1bytes = new byte[bytes];
-            byte[] b2bytes = new byte[bytes];
-
-            BitmapData bitmapData1 = bmp1.LockBits(new Rectangle(0, 0, bmp1.Width, bmp1.Height), ImageLockMode.ReadOnly, bmp1.PixelFormat);
-            BitmapData bitmapData2 = bmp2.LockBits(new Rectangle(0, 0, bmp2.Width, bmp2.Height), ImageLockMode.ReadOnly, bmp2.PixelFormat);
-
-            Marshal.Copy(bitmapData1.Scan0, b1bytes, 0, bytes);
-            Marshal.Copy(bitmapData2.Scan0, b2bytes, 0, bytes);
-
-            for (int n = 0; n <= bytes - 1; n++)
-            {
-                if (b1bytes[n] != b2bytes[n])
-                {
-                    result = false;
-                    break;
-                }
-            }
-
-            bmp1.UnlockBits(bitmapData1);
-            bmp2.UnlockBits(bitmapData2);
-
-            return result;
-        }*/
-
-
-
-        /*public static void LoadExifData(string LoadExifPath)
+        public ActionResult Contact()
         {
-            
-            FileInfo fileInfo = new FileInfo(LoadExifPath);
-            FileStream fileStream = new FileStream(LoadExifPath, FileMode.Open);
-            BitmapSource bitmapSource = BitmapFrame.Create(fileStream);
-            BitmapMetadata bitmapMetadata = (BitmapMetadata)bitmapSource.Metadata;
+            ViewBag.Message = "Your contact page.";
 
-            //title from FileInfo
-            if (string.IsNullOrEmpty(fileInfo.Name))
-                ExifDataService.Title = "Data not found";
-            else
-                ExifDataService.Title = fileInfo.Name;
-
-            //DateUpload from FileInfo
-            if (fileInfo.CreationTime == null)
-                ExifDataService.DateUpload = "Data not found";
-            else
-                ExifDataService.DateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
-            
-            //FileSize from FileInfo
-            if (fileInfo.Length >= 1024)
-            {
-                ExifDataService.FileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
-                if ((fileInfo.Length / 1024f) >= 1024f) ExifDataService.FileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
-            }
-            else
-            {
-                ExifDataService.FileSize = fileInfo.Length.ToString() + " B";
-            }
-
-            if (!LoadExifPath.Contains(".jpg"))
-            {
-                ExifDataService.CameraManufacturer = "Data not found";
-                ExifDataService.ModelOfCamera = "Data not found";
-                ExifDataService.DateCreation = "Data not found";
-                // MessageBox.Show("aaa"); 
-            }
-            else
-            {
-                
-                //manufacturer from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.CameraManufacturer))
-                    ExifDataService.CameraManufacturer = "Data not found";
-                else
-                    ExifDataService.CameraManufacturer = bitmapMetadata.CameraManufacturer;
-                
-                //modelOfCamera from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.CameraModel))
-                    ExifDataService.ModelOfCamera = "Data not found";
-                else
-                    ExifDataService.ModelOfCamera = bitmapMetadata.CameraModel;
-                
-                //DateCreation from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.DateTaken))
-                    ExifDataService.DateCreation = "Data not found";
-                else
-                    ExifDataService.DateCreation = bitmapMetadata.DateTaken;
-            }
-            fileStream.Close();
-            
-        }*/
-
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Delete(string PathFileDelete = "")
@@ -320,22 +210,5 @@ namespace Gallery.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        [Authorize]
-        public ActionResult Upload()
-        {
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-
-
     }
-
 }
