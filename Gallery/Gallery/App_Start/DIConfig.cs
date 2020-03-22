@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Gallery.App_Start.Modules;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
 using Gallery.DAL.InterfaceImplementation;
@@ -20,18 +21,9 @@ namespace Gallery.App_Start
         {
             var builder = new ContainerBuilder();
 
-            
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            builder.RegisterType<UserContext>()
-                .AsSelf();
-            builder.RegisterType<UsersRepository>()
-                .As<IRepository>();
-            builder.RegisterType<UserService>()
-                .As<IUsersService>();
-
-            builder.RegisterType<AuthenticationService>()
-                .As<IAuthenticationService>();
+            builder.RegisterModule<ControllersModule>();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
