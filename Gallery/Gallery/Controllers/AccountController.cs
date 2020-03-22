@@ -4,9 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
-using Gallery.BLL.Services;
 using Gallery.DAL.Models;
-using Gallery.DAL.InterfaceImplementation;
 
 namespace Gallery.Controllers
 {
