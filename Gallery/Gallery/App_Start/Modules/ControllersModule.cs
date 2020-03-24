@@ -5,6 +5,7 @@ using System.Web;
 using Autofac;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
+using Gallery.ConfigManagement;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
@@ -32,6 +33,9 @@ namespace Gallery.App_Start.Modules
 
             builder.RegisterType<HashService>()
                 .As<IHashService>();
+
+            builder.RegisterType<ConfigurationManagement>()
+                .AsSelf();
 
         }
     }

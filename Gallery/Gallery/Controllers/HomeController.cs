@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Gallery.ConfigManagement;
@@ -12,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using Gallery.BLL.Interfaces;
-using Gallery.BLL.Services;
 
 namespace Gallery.Controllers
 {
@@ -21,12 +18,13 @@ namespace Gallery.Controllers
 
         private IHashService _hashService;
         private IImagesService _imagesService;
-        private readonly ConfigurationManagement Config = new ConfigurationManagement();
-
-        public HomeController(IImagesService imageService, IHashService hashService)
+        private readonly ConfigurationManagement _config;
+        
+        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
+            _config = config ?? throw new ArgumentNullException(nameof(config));
         }
        
 
@@ -55,7 +53,7 @@ namespace Gallery.Controllers
             try
             {
 
-                if (PathFileDelete.Replace(Config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash("Dima"))
+                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash("Dima"))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));
@@ -89,7 +87,7 @@ namespace Gallery.Controllers
             {
                 if (files != null)
                 {
-                    if (Config.СheckValueFileExtensions().Contains(files.ContentType))
+                    if (_config.СheckValueFileExtensions().Contains(files.ContentType))
                     {
                         FileStream TempFileStream;
                         // Verify that the user selected a file and User is logged in
@@ -97,7 +95,7 @@ namespace Gallery.Controllers
                         {
                             bool IsLoad = true;
                             // Encrypted User's directory path
-                            string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
 
                             // extract only the filename
                             var fileName = Path.GetFileName(files.FileName);
@@ -120,7 +118,7 @@ namespace Gallery.Controllers
                                     TempFileStream.Close();
 
                                     // List of all Directories names
-                                    List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
+                                    List<string> dirsname = Directory.GetDirectories(Server.MapPath(_config.СheckValuePathToPhotos())).ToList<string>();
 
                                     FileStream CheckFileStream;
                                     Bitmap CheckBmp;
