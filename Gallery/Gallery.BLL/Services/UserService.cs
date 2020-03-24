@@ -28,9 +28,9 @@ namespace Gallery.BLL.Services
             throw new NotImplementedException();
         }
 
-        public async Task AddUser(AddUserDto dto)
+        public async Task AddUserAsync(AddUserDto dto)
         {
-            await _repository.AddUserToDatabase(dto.Username, dto.PlainPassword);
+            await _repository.AddUserToDatabaseAsync(dto.Username, dto.PlainPassword);
         }
 
         public int GetIdUsers(string username)
@@ -38,9 +38,9 @@ namespace Gallery.BLL.Services
             return _repository.GetIdUsers(username);
         }
 
-        public async Task<bool> IsConnectionAvailable()
+        public async Task<bool> IsConnectionAvailableAsync()
         {
-            return await _repository.IsConnectionAvailable();
+            return await _repository.IsConnectionAvailableAsync();
         }
     }
 }

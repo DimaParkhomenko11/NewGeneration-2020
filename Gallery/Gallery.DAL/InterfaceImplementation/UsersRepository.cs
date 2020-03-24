@@ -27,7 +27,7 @@ namespace Gallery.DAL.InterfaceImplementation
 
         }
 
-        public async Task AddUserToDatabase(string username, string plainPassword)
+        public async Task AddUserToDatabaseAsync(string username, string plainPassword)
         {
             _context.Users.Add(new User { Email = username, Password = plainPassword });
             _context.SaveChanges();
@@ -38,7 +38,7 @@ namespace Gallery.DAL.InterfaceImplementation
             return _context.Users.Where(u => u.Email == username).Select(u => u.Id).FirstOrDefault();
         }
 
-        public async Task<bool> IsConnectionAvailable()
+        public async Task<bool> IsConnectionAvailableAsync()
         {
             try
             {

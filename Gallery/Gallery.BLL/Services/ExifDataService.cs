@@ -18,7 +18,7 @@ namespace Gallery.BLL.Services
         public static string ModelOfCamera { get; set; }
         public static string FileSize { get; set; }
 
-        public async Task LoadExifData(string LoadExifPath)
+        public async Task LoadExifDataAsync(string LoadExifPath)
         {
             FileInfo fileInfo = new FileInfo(LoadExifPath);
             FileStream fileStream = new FileStream(LoadExifPath, FileMode.Open);

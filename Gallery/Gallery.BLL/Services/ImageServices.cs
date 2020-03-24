@@ -49,7 +49,7 @@ namespace Gallery.BLL.Services
             return result;
         }
         //modify
-        public Task UploadImage(HttpPostedFileBase File)
+        public Task UploadImageAsync(HttpPostedFileBase File)
         {
             throw new NotImplementedException();
         }

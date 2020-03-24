@@ -12,7 +12,7 @@ namespace Gallery.BLL.Interfaces
     {
         bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2);
 
-        Task UploadImage(HttpPostedFileBase File);
+        Task UploadImageAsync(HttpPostedFileBase File);
 
     }
 }

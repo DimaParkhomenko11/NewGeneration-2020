@@ -30,7 +30,7 @@ namespace Gallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            bool isConnection = await _usersService.IsConnectionAvailable();
+            bool isConnection = await _usersService.IsConnectionAvailableAsync();
             if (isConnection)
             {
 
@@ -81,7 +81,7 @@ namespace Gallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
-            bool isConnection = await _usersService.IsConnectionAvailable();
+            bool isConnection = await _usersService.IsConnectionAvailableAsync();
             if (isConnection)
             {
                 if (ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace Gallery.Controllers
                     {
                         //Create a new user
                         AddUserDto userDto = new AddUserDto(model.Name, model.Password);
-                        await _usersService.AddUser(userDto);
+                        await _usersService.AddUserAsync(userDto);
 
                         var userId = _usersService.GetIdUsers(model.Name).ToString();
                         var claim = _authenticationService.ClaimTypesСreation(userId);
