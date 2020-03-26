@@ -27,7 +27,7 @@ namespace Gallery.BLL.Services
         public ClaimsIdentity ClaimTypesСreation(string userId)
         {
             ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId, ClaimValueTypes.String));
+            claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, userId, ClaimValueTypes.String));
             claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
                 "OWIN Provider", ClaimValueTypes.String));
             return claim;

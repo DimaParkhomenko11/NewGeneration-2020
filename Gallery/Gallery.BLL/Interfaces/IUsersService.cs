@@ -17,6 +17,8 @@ namespace Gallery.BLL.Interfaces
 
         int GetIdUsers(string username);
 
+        //string GetNameUsers()
+
         Task<bool> IsConnectionAvailableAsync();
     }
 }

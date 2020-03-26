@@ -33,28 +33,22 @@ namespace Gallery.Controllers
             bool isConnection = await _usersService.IsConnectionAvailableAsync();
             if (isConnection)
             {
-
-
                 if (ModelState.IsValid)
                 {
                     var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
-
-
-
                     if (canAuthorize)
                     {
                         var userId = _usersService.GetIdUsers(model.Name).ToString();
                         var claim = _authenticationService.ClaimTypesСreation(userId);
                         _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
-
-
+                        
                         return RedirectToAction("Index", "Home");
+
                     }
                     else
                     {
                         ModelState.AddModelError("", "User is not found");
                     }
-
                 }
             }
             else
