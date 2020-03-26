@@ -38,7 +38,7 @@ namespace Gallery.BLL.Services
             return _repository.GetIdUsers(username);
         }
 
-        public string GetNameUsers(string id)
+        public string GetNameUsers(int id)
         {
             return _repository.GetNameUsers(id);
         }

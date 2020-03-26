@@ -18,13 +18,15 @@ namespace Gallery.Controllers
 
         private IHashService _hashService;
         private IImagesService _imagesService;
+        private IUsersService _usersService;
         private readonly ConfigurationManagement _config;
         
-        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config)
+        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _config = config ?? throw new ArgumentNullException(nameof(config));
+            _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
         }
        
 
@@ -89,6 +91,7 @@ namespace Gallery.Controllers
                 {
                     if (_config.СheckValueFileExtensions().Contains(files.ContentType))
                     {
+                        var Name = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
                         FileStream TempFileStream;
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)

@@ -42,6 +42,7 @@ namespace Gallery.Controllers
                         var claim = _authenticationService.ClaimTypesСreation(userId);
                         _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
                         
+                        
                         return RedirectToAction("Index", "Home");
 
                     }
