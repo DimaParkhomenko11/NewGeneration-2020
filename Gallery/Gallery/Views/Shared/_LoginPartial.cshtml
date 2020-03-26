@@ -1,7 +1,13 @@
-﻿
+﻿@using Gallery.BLL.Interfaces
+@using Gallery.BLL.Services
+@using Gallery.DAL.InterfaceImplementation
+@using Gallery.DAL.Models
 @if (User.Identity.IsAuthenticated)
 {
-    <li>@Html.ActionLink("Hi, " + User.Identity.Name + "!","Index")</li>
+    IUsersService _usersService = new UserService(new UsersRepository(new UserContext()));
+    var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+
+    <li>@Html.ActionLink("Hi, " + userName + "!", "Index")</li>
     <li>@Html.ActionLink("Sign out", "LoginOut", "Account")</li>
 }
 else

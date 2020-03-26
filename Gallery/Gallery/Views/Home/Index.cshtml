@@ -5,16 +5,23 @@
 @using Gallery.BLL.Interfaces
 @using Gallery.BLL.Services
 @using Gallery.ConfigManagement
+@using Gallery.DAL.InterfaceImplementation
+@using Gallery.DAL.Models
 @{
     ConfigurationManagement Config = new ConfigurationManagement();
     IHashService _hashService = new HashService();
     IExifDataService _exifDataService = new ExifDataService();
-
+    IUsersService _usersService = new UserService(new UsersRepository(new UserContext()));
+    string userName = "Dima";
+    if (User.Identity.Name != "")
+    {
+        userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+    }
     // Directory path with all User's directories
     string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(userName);
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -100,7 +107,7 @@
                     {
                         <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == _hashService.ComputeSha256Hash("Dima"))
+                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == _hashService.ComputeSha256Hash(userName))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 

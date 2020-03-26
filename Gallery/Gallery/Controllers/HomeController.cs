@@ -20,7 +20,7 @@ namespace Gallery.Controllers
         private IImagesService _imagesService;
         private IUsersService _usersService;
         private readonly ConfigurationManagement _config;
-        
+
         public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
@@ -28,7 +28,6 @@ namespace Gallery.Controllers
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
         }
-       
 
 
         public ActionResult Index()
@@ -54,8 +53,8 @@ namespace Gallery.Controllers
         {
             try
             {
-
-                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash("Dima"))
+                var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash(userName))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));
@@ -91,14 +90,14 @@ namespace Gallery.Controllers
                 {
                     if (_config.СheckValueFileExtensions().Contains(files.ContentType))
                     {
-                        var Name = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+                        var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
                         FileStream TempFileStream;
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
                         {
                             bool IsLoad = true;
                             // Encrypted User's directory path
-                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(userName);
 
                             // extract only the filename
                             var fileName = Path.GetFileName(files.FileName);
