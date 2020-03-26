@@ -38,6 +38,11 @@ namespace Gallery.BLL.Services
             return _repository.GetIdUsers(username);
         }
 
+        public string GetNameUsers(string id)
+        {
+            return _repository.GetNameUsers(id);
+        }
+
         public async Task<bool> IsConnectionAvailableAsync()
         {
             return await _repository.IsConnectionAvailableAsync();

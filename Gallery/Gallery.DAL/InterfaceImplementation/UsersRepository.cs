@@ -38,6 +38,11 @@ namespace Gallery.DAL.InterfaceImplementation
             return _context.Users.Where(u => u.Email == username).Select(u => u.Id).FirstOrDefault();
         }
 
+        public string GetNameUsers(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> IsConnectionAvailableAsync()
         {
             try

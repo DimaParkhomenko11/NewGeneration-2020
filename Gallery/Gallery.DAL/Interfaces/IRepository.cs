@@ -14,6 +14,8 @@ namespace Gallery.DAL.Interfaces
 
         int GetIdUsers(string username);
 
+        string GetNameUsers(string id);
+
         Task<bool> IsConnectionAvailableAsync();
     }
 }
