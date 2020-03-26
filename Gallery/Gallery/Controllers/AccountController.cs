@@ -35,10 +35,10 @@ namespace Gallery.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
+                    var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
                     if (canAuthorize)
                     {
-                        var userId = _usersService.GetIdUsers(model.Name).ToString();
+                        var userId = _usersService.GetIdUsers(model.Email).ToString();
                         var claim = _authenticationService.ClaimTypesСreation(userId);
                         _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
                         
@@ -81,15 +81,15 @@ namespace Gallery.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var IfUserExist = await _usersService.IsUserExistAsync(model.Name, model.Password);
+                    var IfUserExist = await _usersService.IsUserExistAsync(model.Email, model.Password);
 
                     if (IfUserExist == false)
                     {
                         //Create a new user
-                        AddUserDto userDto = new AddUserDto(model.Name, model.Password);
+                        AddUserDto userDto = new AddUserDto(model.Email, model.Password);
                         await _usersService.AddUserAsync(userDto);
 
-                        var userId = _usersService.GetIdUsers(model.Name).ToString();
+                        var userId = _usersService.GetIdUsers(model.Email).ToString();
                         var claim = _authenticationService.ClaimTypesСreation(userId);
                         _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
