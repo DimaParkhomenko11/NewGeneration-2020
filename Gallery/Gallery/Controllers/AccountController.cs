@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Models;
+using Gallery.Filters;
 
 namespace Gallery.Controllers
 {
@@ -28,6 +29,7 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateModelState]
         public async Task<ActionResult> Login(LoginModel model)
         {
             bool isConnection = await _usersService.IsConnectionAvailableAsync();
@@ -74,6 +76,7 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateModelState]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             bool isConnection = await _usersService.IsConnectionAvailableAsync();
