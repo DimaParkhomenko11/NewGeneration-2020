@@ -63,7 +63,6 @@ namespace Gallery.Controllers
             return View(model);
         }
 
-
         public ActionResult LoginOut()
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
