@@ -26,10 +26,11 @@ namespace Gallery.Controllers
         {
             return View();
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateModelState]
+        [LogFilter]
         public async Task<ActionResult> Login(LoginModel model)
         {
             bool isConnection = await _usersService.IsConnectionAvailableAsync();

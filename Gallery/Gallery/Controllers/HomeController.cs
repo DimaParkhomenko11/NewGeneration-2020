@@ -53,8 +53,8 @@ namespace Gallery.Controllers
         {
             try
             {
-                var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
-                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash(userName))
+                //var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash("Dima"))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));
@@ -90,14 +90,14 @@ namespace Gallery.Controllers
                 {
                     if (_config.СheckValueFileExtensions().Contains(files.ContentType))
                     {
-                        var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
+                       // var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
                         FileStream TempFileStream;
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
                         {
                             bool IsLoad = true;
                             // Encrypted User's directory path
-                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(userName);
+                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
 
                             // extract only the filename
                             var fileName = Path.GetFileName(files.FileName);
