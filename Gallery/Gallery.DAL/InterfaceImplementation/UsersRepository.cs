@@ -43,18 +43,5 @@ namespace Gallery.DAL.InterfaceImplementation
             return _context.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
         }
 
-        public async Task<bool> IsConnectionAvailableAsync()
-        {
-            try
-            {
-                await _context.Database.Connection.OpenAsync();
-                _context.Database.Connection.Close();
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }
