@@ -34,7 +34,7 @@ namespace Gallery.Controllers
         public async Task<ActionResult> Login(LoginModel model)
         {
             bool isConnection = await _usersService.IsConnectionAvailableAsync();
-            if (isConnection)
+            if (true)
             {
                 if (ModelState.IsValid)
                 {
