@@ -21,7 +21,7 @@ namespace Gallery.Controllers
             _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
         }
 
-
+        
         public ActionResult Login()
         {
             return View();
