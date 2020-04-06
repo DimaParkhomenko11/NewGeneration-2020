@@ -33,7 +33,16 @@ namespace Gallery.Filters
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            var response = filterContext.HttpContext.Response;
+
+            var status= response.Status;
+            var headers = response.Headers;
+            
+
+            var logMessage = "\nStatusCode and StatusDescription = " + status + "\nHeaders = " + headers;
+            Logger.Info(logMessage);
             base.OnActionExecuted(filterContext);
         }
+
     }
 }
