@@ -192,6 +192,7 @@
     </Compile>
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Models\AccountModels\Models.cs" />
+    <Compile Include="Models\RoleModels\RoleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
   </ItemGroup>

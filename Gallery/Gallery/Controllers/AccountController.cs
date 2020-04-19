@@ -6,6 +6,7 @@ using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Models;
 using Gallery.Filters;
+using Gallery.Models.AccountModels;
 
 namespace Gallery.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Gallery.DAL.Models
+namespace Gallery.Models.AccountModels
 {
     public class LoginModel
     {
