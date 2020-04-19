@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="InterfaceImplementation\UsersRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
