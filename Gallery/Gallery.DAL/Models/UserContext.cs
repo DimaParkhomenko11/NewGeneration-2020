@@ -12,6 +12,7 @@ namespace Gallery.DAL.Models
         public UserContext() : base("DefaultConnection")
         { }
         public DbSet<User>Users { get; set; }
-            
+        public DbSet<Role>Roles { get; set; }
+
     }
 }
