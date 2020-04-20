@@ -30,7 +30,7 @@ namespace Gallery.BLL.Services
 
         public async Task AddUserAsync(AddUserDto dto)
         {
-            await _repository.AddUserToDatabaseAsync(dto.Username, dto.PlainPassword);
+            await _repository.AddUserToDatabaseAsync(dto.Username, dto.PlainPassword, dto.RoleId);
         }
 
         public int GetIdUsers(string username)

@@ -10,7 +10,7 @@ namespace Gallery.DAL.Interfaces
     {
         Task<bool> IsUserExistAsync(string username, string plainPassword);
 
-        Task AddUserToDatabaseAsync(string username, string plainPassword);
+        Task AddUserToDatabaseAsync(string username, string plainPassword, int roleId);
 
         int GetIdUsers(string username);
 

@@ -81,7 +81,7 @@ namespace Gallery.Controllers
                 if (IfUserExist == false)
                 {
                     //Create a new user
-                    AddUserDto userDto = new AddUserDto(model.Email, model.Password);
+                    AddUserDto userDto = new AddUserDto(model.Email, model.Password, 2);
                     await _usersService.AddUserAsync(userDto);
 
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
