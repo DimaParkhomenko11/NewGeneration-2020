@@ -31,6 +31,7 @@ namespace Gallery.BLL.Services
             claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
                 "OWIN Provider", ClaimValueTypes.String));
             return claim;
+
         }
     }
 }

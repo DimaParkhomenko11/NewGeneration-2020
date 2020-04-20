@@ -12,7 +12,7 @@ namespace Gallery.Controllers
 {
     public class AccountController : Controller
     {
-
+        
         private readonly IUsersService _usersService;
         private readonly IAuthenticationService _authenticationService;
 
