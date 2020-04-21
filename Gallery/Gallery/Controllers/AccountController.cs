@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
+using Gallery.DAL;
 using Gallery.DAL.Models;
 using Gallery.Filters;
 using Gallery.Models.AccountModels;
@@ -39,8 +41,11 @@ namespace Gallery.Controllers
                 var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
                 if (canAuthorize)
                 {
+                    int userRole = 2;
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
+                    UserContext db = new UserContext();
+                    User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
 
@@ -81,11 +86,14 @@ namespace Gallery.Controllers
                 if (IfUserExist == false)
                 {
                     //Create a new user
-                    AddUserDto userDto = new AddUserDto(model.Email, model.Password, 2);
+                    int userRole = 2;
+                    AddUserDto userDto = new AddUserDto(model.Email, model.Password, userRole);
                     await _usersService.AddUserAsync(userDto);
-
+                    
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
+                    UserContext db = new UserContext();
+                    User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
                     return RedirectToAction("Index", "Home");

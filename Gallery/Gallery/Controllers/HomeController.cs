@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using Gallery.BLL.Interfaces;
+using Gallery.DAL.Models;
 
 namespace Gallery.Controllers
 {
@@ -36,9 +37,11 @@ namespace Gallery.Controllers
         }
 
         [Authorize]
+        [Authorize(Roles = "admin")]
         public ActionResult Upload()
         {
-            return View();
+            ViewBag.Message = User.Identity.GetUserRole();
+                return View();
         }
 
         public ActionResult Contact()
@@ -77,7 +80,6 @@ namespace Gallery.Controllers
             }
             return RedirectToAction("Index");
         }
-
 
 
         [HttpPost]
