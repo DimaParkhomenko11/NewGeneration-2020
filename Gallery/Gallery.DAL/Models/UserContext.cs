@@ -5,12 +5,10 @@ namespace Gallery.DAL.Models
 {
     public class UserContext : DbContext
     {
-
-        public UserContext() : base("SQLDB")
+        public UserContext(string connectionString) : base(connectionString)
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-
     }
 
     public class UserDbInitializer : DropCreateDatabaseAlways<UserContext>
