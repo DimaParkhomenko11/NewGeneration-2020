@@ -41,7 +41,7 @@ namespace Gallery.DAL.Providers
         public override string[] GetRolesForUser(string username)
         {
             string[] roles = new string[] { };
-            UserContext db = new UserContext();
+            UserContext db = new UserContext("SQLDB");
 
             // Получаем пользователя
             User user = db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == username);
@@ -60,7 +60,7 @@ namespace Gallery.DAL.Providers
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            UserContext db = new UserContext();
+            UserContext db = new UserContext("SQLDB");
 
             // Получаем пользователя
             User user = db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == username);

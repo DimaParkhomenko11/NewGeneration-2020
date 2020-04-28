@@ -12,7 +12,7 @@ namespace Gallery.DAL.InterfaceImplementation
 {
     public class UsersRepository : IRepository
     {
-        private readonly UserContext _context = new UserContext();
+        private readonly UserContext _context;
 
         public UsersRepository(UserContext context)
         {
@@ -30,7 +30,7 @@ namespace Gallery.DAL.InterfaceImplementation
         public async Task AddUserToDatabaseAsync(string username, string plainPassword, int roleId)
         {
             _context.Users.Add(new User { Email = username, Password = plainPassword, RoleId = roleId});
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public int GetIdUsers(string username)

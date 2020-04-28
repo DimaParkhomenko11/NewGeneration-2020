@@ -14,8 +14,6 @@ namespace Gallery.Modules
         protected override void Load(ContainerBuilder builder)
         {
             //AccountController
-
-           
             var connectionString = ConfigurationManagement.DBConnectionString();
             builder.Register(ctx => new UserContext(connectionString)).AsSelf();
 

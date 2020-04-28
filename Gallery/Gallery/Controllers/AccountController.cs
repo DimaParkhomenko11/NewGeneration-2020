@@ -43,7 +43,7 @@ namespace Gallery.Controllers
                 {
                     int userRole = 2;
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    UserContext db = new UserContext();
+                    UserContext db = new UserContext("SQLDB");
                     User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                     var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
@@ -91,7 +91,7 @@ namespace Gallery.Controllers
                     await _usersService.AddUserAsync(userDto);
                     
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    UserContext db = new UserContext();
+                    UserContext db = new UserContext("SQLDB");
                     User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                     var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
