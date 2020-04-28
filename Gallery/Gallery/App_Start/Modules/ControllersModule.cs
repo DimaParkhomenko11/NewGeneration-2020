@@ -14,8 +14,11 @@ namespace Gallery.Modules
         protected override void Load(ContainerBuilder builder)
         {
             //AccountController
-            builder.RegisterType<UserContext>()
-                .AsSelf();
+
+           
+            var connectionString = ConfigurationManagement.DBConnectionString();
+            builder.Register(ctx => new UserContext(connectionString)).AsSelf();
+
             builder.RegisterType<UsersRepository>()
                 .As<IRepository>();
             builder.RegisterType<UserService>()
