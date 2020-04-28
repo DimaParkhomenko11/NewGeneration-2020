@@ -37,7 +37,6 @@ namespace Gallery.Controllers
         }
 
         [Authorize]
-        [Authorize(Roles = "admin")]
         public ActionResult Upload()
         {
             ViewBag.Message = User.Identity.GetUserRole();

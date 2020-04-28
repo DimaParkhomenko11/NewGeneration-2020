@@ -6,12 +6,12 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Gallery.App_Start.Modules;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
+using Gallery.Modules;
 
 namespace Gallery.App_Start
 {

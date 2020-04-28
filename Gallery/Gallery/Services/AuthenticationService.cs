@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Gallery.BLL.Interfaces;
-using Microsoft.Owin.Security;
-using System.Security.Claims;
 using Gallery.DAL;
-using Gallery.DAL.Models;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 
-
-namespace Gallery.BLL.Services
+namespace Gallery.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
