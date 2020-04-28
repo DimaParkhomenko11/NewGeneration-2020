@@ -84,5 +84,11 @@ namespace Gallery.ConfigManagement
                 return fileExtensions;
             }
         }
+
+        public static string DBConnectionString()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
+            return connectionString.ToString();
+        }
     }
 }
