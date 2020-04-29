@@ -8,17 +8,14 @@ namespace Gallery.BLL.Contract
 {
     public class AddUserDto
     {
-        public AddUserDto(string username, string plainPassword, int role)
+        public AddUserDto(string username, string plainPassword)
         {
             Username = username;
             PlainPassword = plainPassword;
-            RoleId = role;
         }
 
         public string Username { get;  }
 
         public string PlainPassword { get;  }
-
-        public int RoleId { get; }
     }
 }

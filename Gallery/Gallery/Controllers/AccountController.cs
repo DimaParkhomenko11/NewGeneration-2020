@@ -41,11 +41,10 @@ namespace Gallery.Controllers
                 var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
                 if (canAuthorize)
                 {
-                    int userRole = 2;
+                   
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    UserContext db = new UserContext("SQLDB");
-                    User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-                    var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
+                    
+                    var claim = _authenticationService.ClaimTypesСreation(userId);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
 
@@ -86,14 +85,13 @@ namespace Gallery.Controllers
                 if (IfUserExist == false)
                 {
                     //Create a new user
-                    int userRole = 2;
-                    AddUserDto userDto = new AddUserDto(model.Email, model.Password, userRole);
+                    
+                    AddUserDto userDto = new AddUserDto(model.Email, model.Password);
                     await _usersService.AddUserAsync(userDto);
                     
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    UserContext db = new UserContext("SQLDB");
-                    User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-                    var claim = _authenticationService.ClaimTypesСreation(userId, userRole, user);
+                    
+                    var claim = _authenticationService.ClaimTypesСreation(userId);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
                     return RedirectToAction("Index", "Home");

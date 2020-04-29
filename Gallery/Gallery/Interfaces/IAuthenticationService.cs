@@ -13,6 +13,6 @@ namespace Gallery.BLL.Interfaces
     {
         void OwinCookieAuthentication(IOwinContext owinContext, ClaimsIdentity claim);
 
-        ClaimsIdentity ClaimTypesСreation(string userId, int role, User user);
+        ClaimsIdentity ClaimTypesСreation(string userId);
     }
 }

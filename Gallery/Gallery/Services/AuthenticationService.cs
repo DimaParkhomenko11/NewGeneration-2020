@@ -18,13 +18,10 @@ namespace Gallery.Services
            
         }
 
-        public ClaimsIdentity ClaimTypesСreation(string userId, int role , User user)
+        public ClaimsIdentity ClaimTypesСreation(string userId)
         {
             ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, userId, ClaimValueTypes.String));
-
-            if (user.Role != null)
-                claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name, ClaimValueTypes.String));
             return claim;
 
         }

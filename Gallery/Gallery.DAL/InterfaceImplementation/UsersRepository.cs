@@ -27,9 +27,9 @@ namespace Gallery.DAL.InterfaceImplementation
 
         }
 
-        public async Task AddUserToDatabaseAsync(string username, string plainPassword, int roleId)
+        public async Task AddUserToDatabaseAsync(string username, string plainPassword)
         {
-            _context.Users.Add(new User { Email = username, Password = plainPassword, RoleId = roleId});
+            _context.Users.Add(new User { Email = username, Password = plainPassword});
             await _context.SaveChangesAsync();
         }
 
