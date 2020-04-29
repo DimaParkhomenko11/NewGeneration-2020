@@ -1,4 +1,5 @@
-﻿using Gallery.DAL.Models;
+﻿using System.Collections.Generic;
+using Gallery.DAL.Models;
 
 namespace Gallery.DAL
 {
@@ -7,8 +8,12 @@ namespace Gallery.DAL
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public Role Role { get; set; }
-        public int RoleId { get; set; }
+        public ICollection<Role> Roles { get; set; }
+
+        public User()
+        {
+            Roles = new List<Role>();
+        }
 
     }
 }
