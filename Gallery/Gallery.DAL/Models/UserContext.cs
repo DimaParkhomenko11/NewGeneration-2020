@@ -24,11 +24,14 @@ namespace Gallery.DAL.Models
             db.SaveChanges();
 
             Role role1 = new Role { Name = "admin" };
-            role1.Users.Add(user2);
             Role role2 = new Role { Name = "user" };
+            Role role3 = new Role { Name = "user_premium" };
+            role1.Users.Add(user2);
             role2.Users.Add(user1);
+            role3.Users.Add(user1);
             db.Roles.Add(role1);
             db.Roles.Add(role2);
+            db.Roles.Add(role3);
             db.SaveChanges();
         }
     }
