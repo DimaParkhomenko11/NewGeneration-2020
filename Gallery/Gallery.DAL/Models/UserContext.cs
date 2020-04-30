@@ -12,6 +12,7 @@ namespace Gallery.DAL.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Media> Medias { get; set; }
+        public DbSet<MediaType> MediaTypes { get; set; }
     }
 
     public class UserDbInitializer : DropCreateDatabaseAlways<UserContext>
@@ -44,6 +45,12 @@ namespace Gallery.DAL.Models
             Media pl2 = new Media { Name = "Media2", User = user }; 
             Media pl3 = new Media { Name = "Media3", User = user };
             db.Medias.AddRange(new List<Media> { pl1, pl2, pl3 });
+            db.SaveChanges();
+
+            MediaType mt1 = new MediaType {Image = "Image1", Video = "Video1", Sound = "Sound1", Media = pl1 };
+            MediaType mt2 = new MediaType { Image = "Image2", Video = "Video2", Sound = "Sound2", Media = pl1 };
+            MediaType mt3 = new MediaType { Image = "Image3", Video = "Video3", Sound = "Sound3", Media = pl2 };
+            db.MediaTypes.AddRange(new List<MediaType> { mt1, mt2, mt3 });
             db.SaveChanges();
 
         }

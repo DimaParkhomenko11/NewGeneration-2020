@@ -14,5 +14,10 @@ namespace Gallery.DAL.Models
         public int? UserId { get; set; }
         public User User { get; set; }
 
+        public ICollection<MediaType> MediaTypes { get; set; }
+        public Media()
+        {
+            MediaTypes = new List<MediaType>();
+        }
     }
 }
