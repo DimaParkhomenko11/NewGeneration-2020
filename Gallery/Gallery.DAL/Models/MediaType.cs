@@ -15,7 +15,7 @@ namespace Gallery.DAL.Models
     public class MediaType
     {
         public int Id { get; set; }
-        public Type Type { get; set; }
+        public string Type { get; set; }
 
         public ICollection<Media> Medias { get; set; }
 

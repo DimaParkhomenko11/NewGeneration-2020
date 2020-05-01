@@ -34,10 +34,9 @@ namespace Gallery.DAL.Models
             db.Roles.AddRange(new List<Role>{role1, role2, role3});
             db.SaveChanges();
 
-
-            MediaType mt1 = new MediaType { Type = Type.Image};
-            MediaType mt2 = new MediaType { Type = Type.Sound };
-            MediaType mt3 = new MediaType { Type = Type.Video };
+            MediaType mt1 = new MediaType { Type = Type.Image.ToString()};
+            MediaType mt2 = new MediaType { Type = Type.Sound.ToString()};
+            MediaType mt3 = new MediaType { Type = Type.Video.ToString()};
             db.MediaTypes.AddRange(new List<MediaType> { mt1, mt2, mt3 });
             db.SaveChanges();
 
@@ -46,8 +45,6 @@ namespace Gallery.DAL.Models
             Media md3 = new Media { PathToMedia = "Path3", User = user2, MediaType = mt2 };
             db.Medias.AddRange(new List<Media> { md1, md2, md3 });
             db.SaveChanges();
-
-            
 
         }
     }
