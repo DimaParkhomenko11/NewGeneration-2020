@@ -20,7 +20,7 @@ namespace Gallery.DAL.Models
         protected override void Seed(UserContext db)
         {
             User user1 = new User { Id = 1, Email = "dima@ukr.net", Password = "123"};
-            User user2 = new User { Id = 1, Email = "admin@ukr.net", Password = "123" };
+            User user2 = new User { Id = 2, Email = "admin@ukr.net", Password = "123" };
 
             db.Users.AddRange(new List<User> { user1, user2});
             db.SaveChanges();
@@ -34,17 +34,20 @@ namespace Gallery.DAL.Models
             db.Roles.AddRange(new List<Role>{role1, role2, role3});
             db.SaveChanges();
 
-            Media pl1 = new Media {Name = "Media1", User = user1 };
-            Media pl2 = new Media { Name = "Media2", User = user2 }; 
-            Media pl3 = new Media { Name = "Media3", User = user2 };
-            db.Medias.AddRange(new List<Media> { pl1, pl2, pl3 });
-            db.SaveChanges();
 
-            MediaType mt1 = new MediaType {Image = "Image1", Video = "Video1", Sound = "Sound1", Media = pl1 };
-            MediaType mt2 = new MediaType { Image = "Image2", Video = "Video2", Sound = "Sound2", Media = pl1 };
-            MediaType mt3 = new MediaType { Image = "Image3", Video = "Video3", Sound = "Sound3", Media = pl2 };
+            MediaType mt1 = new MediaType { Type = Type.Image};
+            MediaType mt2 = new MediaType { Type = Type.Sound };
+            MediaType mt3 = new MediaType { Type = Type.Video };
             db.MediaTypes.AddRange(new List<MediaType> { mt1, mt2, mt3 });
             db.SaveChanges();
+
+            Media md1 = new Media {PathToMedia = "Path1", User = user1, MediaType = mt1};
+            Media md2 = new Media { PathToMedia = "Path2", User = user2, MediaType = mt1 }; 
+            Media md3 = new Media { PathToMedia = "Path3", User = user2, MediaType = mt2 };
+            db.Medias.AddRange(new List<Media> { md1, md2, md3 });
+            db.SaveChanges();
+
+            
 
         }
     }

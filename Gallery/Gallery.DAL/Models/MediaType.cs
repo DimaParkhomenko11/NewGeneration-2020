@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL.Models
 {
+    public enum Type
+    {
+        Video,
+        Sound,
+        Image
+    }
     public class MediaType
     {
         public int Id { get; set; }
-        public string Image { get; set; }
-        public string Video { get; set; }
-        public string Sound { get; set; }
+        public Type Type { get; set; }
 
-        public int? MediaId { get; set; }
-        public Media Media { get; set; }
+        public ICollection<Media> Medias { get; set; }
+
+        public MediaType()
+        {
+            Medias = new List<Media>();
+        }
+
     }
 }
