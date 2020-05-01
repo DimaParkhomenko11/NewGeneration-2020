@@ -10,11 +10,7 @@ namespace Gallery.DAL.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; } = new List<User>();
 
-        public Role()
-        {
-            Users = new List<User>();
-        }
     }
 }
