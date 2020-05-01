@@ -76,6 +76,14 @@
   <ItemGroup>
     <Compile Include="InterfaceImplementation\UsersRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Migrations\202005011536014_InitialCreate.cs" />
+    <Compile Include="Migrations\202005011536014_InitialCreate.designer.cs">
+      <DependentUpon>202005011536014_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005012114335_Migration-v1.cs" />
+    <Compile Include="Migrations\202005012114335_Migration-v1.designer.cs">
+      <DependentUpon>202005012114335_Migration-v1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\Media.cs" />
@@ -103,6 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005011536014_InitialCreate.resx">
+      <DependentUpon>202005011536014_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005012114335_Migration-v1.resx">
+      <DependentUpon>202005012114335_Migration-v1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
