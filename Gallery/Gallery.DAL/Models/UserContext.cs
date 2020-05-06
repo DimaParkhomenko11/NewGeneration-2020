@@ -29,6 +29,9 @@ namespace Gallery.DAL.Models
             modelBuilder.Entity<Media>().HasKey(p => p.Id);
             modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
 
+            modelBuilder.Entity<User>().Property(p => p.Id).IsRequired();
+            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
+            modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
 
             base.OnModelCreating(modelBuilder);
         }
