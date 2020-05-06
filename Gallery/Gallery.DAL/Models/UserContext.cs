@@ -14,9 +14,21 @@ namespace Gallery.DAL.Models
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Media> Medias { get; set; }
+        public DbSet<Media> Media { get; set; }
         public DbSet<MediaType> MediaTypes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<Media>().ToTable("Media");
+            modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
+
+    
 
     public class UserDbInitializer : DropCreateDatabaseAlways<UserContext>
     {
@@ -46,7 +58,7 @@ namespace Gallery.DAL.Models
             Media md1 = new Media {PathToMedia = "Path1", User = user1, MediaType = mt1};
             Media md2 = new Media { PathToMedia = "Path2", User = user2, MediaType = mt1 }; 
             Media md3 = new Media { PathToMedia = "Path3", User = user2, MediaType = mt2 };
-            db.Medias.AddRange(new List<Media> { md1, md2, md3 });
+            db.Media.AddRange(new List<Media> { md1, md2, md3 });
             db.SaveChanges();
 
         }
