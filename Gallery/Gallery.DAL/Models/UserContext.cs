@@ -33,6 +33,12 @@ namespace Gallery.DAL.Models
             modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
             modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
 
+            modelBuilder.Entity<User>().Property(p => p.Email).HasMaxLength(25);
+            modelBuilder.Entity<User>().Property(p => p.Password).HasMaxLength(50);
+            modelBuilder.Entity<Role>().Property(p => p.Name).HasMaxLength(30);
+            modelBuilder.Entity<MediaType>().Property(p => p.Type).HasMaxLength(25);
+            modelBuilder.Entity<Media>().Property(p => p.PathToMedia).HasMaxLength(25);
+
             base.OnModelCreating(modelBuilder);
         }
     }
