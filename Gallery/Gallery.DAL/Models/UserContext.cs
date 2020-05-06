@@ -50,7 +50,12 @@ namespace Gallery.DAL.Models
                 .HasMany(p => p.Roles)
                 .WithMany(c => c.Users);
 
-
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Medias)
+                .WithRequired(p => p.User);
+            modelBuilder.Entity<MediaType>()
+                .HasMany(p => p.Media)
+                .WithRequired(p => p.MediaType);
 
 
             base.OnModelCreating(modelBuilder);
