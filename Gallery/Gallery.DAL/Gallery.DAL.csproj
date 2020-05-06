@@ -84,6 +84,10 @@
     <Compile Include="Migrations\202005012114335_Migration-v1.designer.cs">
       <DependentUpon>202005012114335_Migration-v1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005062121005_Migration-v2.cs" />
+    <Compile Include="Migrations\202005062121005_Migration-v2.designer.cs">
+      <DependentUpon>202005062121005_Migration-v2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\Media.cs" />
@@ -118,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005012114335_Migration-v1.resx">
       <DependentUpon>202005012114335_Migration-v1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005062121005_Migration-v2.resx">
+      <DependentUpon>202005062121005_Migration-v2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
