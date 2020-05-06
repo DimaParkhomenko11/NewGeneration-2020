@@ -46,6 +46,13 @@ namespace Gallery.DAL.Models
             modelBuilder.Entity<Media>().Property(p => p.PathToMedia).HasColumnType("varchar");
 
 
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Roles)
+                .WithMany(c => c.Users);
+
+
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
