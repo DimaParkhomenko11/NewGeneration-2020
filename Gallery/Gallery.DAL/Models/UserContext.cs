@@ -24,6 +24,12 @@ namespace Gallery.DAL.Models
             modelBuilder.Entity<Media>().ToTable("Media");
             modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
 
+            modelBuilder.Entity<User>().HasKey(p => p.Id);
+            modelBuilder.Entity<Role>().HasKey(p => p.Id);
+            modelBuilder.Entity<Media>().HasKey(p => p.Id);
+            modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
