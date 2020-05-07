@@ -89,6 +89,7 @@
       <DependentUpon>202005062121005_Migration-v2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Attemp.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />

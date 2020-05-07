@@ -13,12 +13,5 @@
             ContextKey = "Gallery.DAL.Models.UserContext";
         }
 
-        protected override void Seed(Gallery.DAL.Models.UserContext context)
-        {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
-        }
     }
 }
