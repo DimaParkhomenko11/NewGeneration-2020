@@ -88,8 +88,12 @@
     <Compile Include="Migrations\202005062121005_Migration-v2.designer.cs">
       <DependentUpon>202005062121005_Migration-v2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005072329394_Migration-v3.cs" />
+    <Compile Include="Migrations\202005072329394_Migration-v3.designer.cs">
+      <DependentUpon>202005072329394_Migration-v3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Attemp.cs" />
+    <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005062121005_Migration-v2.resx">
       <DependentUpon>202005062121005_Migration-v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005072329394_Migration-v3.resx">
+      <DependentUpon>202005072329394_Migration-v3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
