@@ -10,7 +10,7 @@ namespace Gallery.DAL
         public string Password { get; set; }
         public ICollection<Role> Roles { get; set; } = new List<Role>();
         public ICollection<Media> Media { get; set; } = new List<Media>();
-        public ICollection<Attemp> Attemps { get; set; } = new List<Attemp>();
+        public ICollection<Attempt> Attempts { get; set; } = new List<Attempt>();
 
     }
 }

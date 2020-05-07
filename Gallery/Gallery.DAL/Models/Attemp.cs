@@ -13,5 +13,7 @@ namespace Gallery.DAL.Models
         public bool Success { get; set; }
         public string IpAddress { get; set; }
 
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }
