@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Gallery.BLL.Contract;
+using Gallery.DAL.Models;
 
 namespace Gallery.BLL.Interfaces
 {
@@ -19,6 +20,6 @@ namespace Gallery.BLL.Interfaces
 
         string GetNameUsers(int id);
 
-       
+        Task AddAttemptAsync(string email, string ipAddress, bool isSuccess);
     }
 }

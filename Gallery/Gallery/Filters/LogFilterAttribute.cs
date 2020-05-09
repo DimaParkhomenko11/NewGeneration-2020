@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace Gallery.Filters
 {
-    public class LogFilterAttribute : ActionFilterAttribute/*, IExceptionFilter*/
+    public class LogFilterAttribute : ActionFilterAttribute, IExceptionFilter
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -47,8 +47,8 @@ namespace Gallery.Filters
             base.OnActionExecuted(filterContext);
         }
 
-       /*public void OnException(ExceptionContext filterContext)
-        {
+       public void OnException(ExceptionContext filterContext) 
+       {
              if (!filterContext.ExceptionHandled)
              {
                  filterContext.ExceptionHandled = true;
@@ -59,6 +59,6 @@ namespace Gallery.Filters
              var logMessage = $"Bозникло исключение: \n {exceptionMessage} \n {exceptionStack}";
              Logger.Error(logMessage);
             
-        }*/
+        }
     }
 }

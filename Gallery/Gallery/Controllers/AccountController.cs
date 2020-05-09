@@ -39,6 +39,9 @@ namespace Gallery.Controllers
             if (ModelState.IsValid)
             {
                 var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
+                var ipAddress = HttpContext.Request.UserHostAddress;
+                await _usersService.AddAttemptAsync(model.Email, ipAddress, canAuthorize);
+                
                 if (canAuthorize)
                 {
                    
@@ -81,7 +84,8 @@ namespace Gallery.Controllers
             {
 
                 var IfUserExist = await _usersService.IsUserExistAsync(model.Email, model.Password);
-
+                var ipAddress = HttpContext.Request.UserHostAddress;
+                await _usersService.AddAttemptAsync(model.Email, ipAddress, IfUserExist);
                 if (IfUserExist == false)
                 {
                     //Create a new user

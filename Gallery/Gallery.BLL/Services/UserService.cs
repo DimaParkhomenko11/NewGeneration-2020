@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
+using Gallery.DAL.Models;
 
 namespace Gallery.BLL.Services
 {
@@ -41,6 +42,11 @@ namespace Gallery.BLL.Services
         public string GetNameUsers(int id)
         {
             return _repository.GetNameUsers(id);
+        }
+
+        public async Task AddAttemptAsync(string email, string ipAddress, bool isSuccess)
+        {
+            await _repository.AddAttemptToDatabaseAsync(email, ipAddress, isSuccess);
         }
 
     }

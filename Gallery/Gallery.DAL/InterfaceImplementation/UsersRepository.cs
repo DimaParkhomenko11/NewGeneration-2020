@@ -51,5 +51,17 @@ namespace Gallery.DAL.InterfaceImplementation
             return dbContext.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
         }
 
+        public async Task AddAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess)
+        {
+            var user = await dbContext.Users.FirstOrDefaultAsync(p => p.Email == email);
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            Attempt attempt2 = new Attempt { Id = 1, TimeStamp = DateTime.Now, Success = isSuccess, IpAddress = ipAddress, User = user };
+            dbContext.Attempts.Add(attempt2);
+            await dbContext.SaveChangesAsync();
+        }
+
     }
 }

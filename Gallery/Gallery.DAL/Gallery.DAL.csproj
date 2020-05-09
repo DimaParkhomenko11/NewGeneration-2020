@@ -92,11 +92,24 @@
     <Compile Include="Migrations\202005072329394_Migration-v3.designer.cs">
       <DependentUpon>202005072329394_Migration-v3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005081257095_Migration-v4.cs" />
+    <Compile Include="Migrations\202005081257095_Migration-v4.designer.cs">
+      <DependentUpon>202005081257095_Migration-v4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005081424358_Migration-v5.cs" />
+    <Compile Include="Migrations\202005081424358_Migration-v5.designer.cs">
+      <DependentUpon>202005081424358_Migration-v5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
+    <Compile Include="Models\ModelConfiguration\AttemptConfiguration.cs" />
+    <Compile Include="Models\ModelConfiguration\MediaConfiguration.cs" />
+    <Compile Include="Models\ModelConfiguration\MediaTypeConfiguration.cs" />
+    <Compile Include="Models\ModelConfiguration\RoleConfiguration.cs" />
+    <Compile Include="Models\ModelConfiguration\UserConfiguration.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />
@@ -133,6 +146,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005072329394_Migration-v3.resx">
       <DependentUpon>202005072329394_Migration-v3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005081257095_Migration-v4.resx">
+      <DependentUpon>202005081257095_Migration-v4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005081424358_Migration-v5.resx">
+      <DependentUpon>202005081424358_Migration-v5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

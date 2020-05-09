@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using Gallery.DAL.Models.ModelConfiguration;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Gallery.DAL.Models
@@ -20,47 +21,11 @@ namespace Gallery.DAL.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Role>().ToTable("Roles");
-            modelBuilder.Entity<Media>().ToTable("Media");
-            modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
-
-            modelBuilder.Entity<User>().HasKey(p => p.Id);
-            modelBuilder.Entity<Role>().HasKey(p => p.Id);
-            modelBuilder.Entity<Media>().HasKey(p => p.Id);
-            modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
-
-            modelBuilder.Entity<User>().Property(p => p.Id).IsRequired();
-            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
-            modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
-
-            modelBuilder.Entity<User>().Property(p => p.Email).HasMaxLength(40);
-            modelBuilder.Entity<User>().Property(p => p.Password).HasMaxLength(50);
-            modelBuilder.Entity<Role>().Property(p => p.Name).HasMaxLength(30);
-            modelBuilder.Entity<MediaType>().Property(p => p.Type).HasMaxLength(25);
-            modelBuilder.Entity<Media>().Property(p => p.PathToMedia).HasMaxLength(25);
-
-            modelBuilder.Entity<User>().Property(p => p.Email).HasColumnType("varchar");
-            modelBuilder.Entity<User>().Property(p => p.Password).HasColumnType("varchar");
-            modelBuilder.Entity<Role>().Property(p => p.Name).HasColumnType("varchar");
-            modelBuilder.Entity<MediaType>().Property(p => p.Type).HasColumnType("varchar");
-            modelBuilder.Entity<Media>().Property(p => p.PathToMedia).HasColumnType("varchar");
-
-
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Roles)
-                .WithMany(c => c.Users);
-
-
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Media)
-                .WithRequired(p => p.User);
-            modelBuilder.Entity<MediaType>()
-                .HasMany(p => p.Media)
-                .WithRequired(p => p.MediaType);
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Attempts)
-                .WithRequired(p => p.User);
+            modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new RoleConfiguration());
+            modelBuilder.Configurations.Add(new MediaConfiguration());
+            modelBuilder.Configurations.Add(new MediaTypeConfiguration());
+            modelBuilder.Configurations.Add(new AttemptConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
