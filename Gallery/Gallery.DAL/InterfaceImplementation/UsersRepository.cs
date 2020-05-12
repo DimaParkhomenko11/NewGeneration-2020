@@ -7,14 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
+using DbContext = Gallery.DAL.Models.DbContext;
 
 namespace Gallery.DAL.InterfaceImplementation
 {
     public class UsersRepository : IRepository
     {
-        private readonly UserContext dbContext;
+        private readonly DbContext dbContext;
 
-        public UsersRepository(UserContext context)
+        public UsersRepository(DbContext context)
         {
             dbContext = context ?? throw new ArgumentNullException(nameof(context));
 

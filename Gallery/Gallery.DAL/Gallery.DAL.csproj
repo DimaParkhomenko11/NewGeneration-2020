@@ -112,7 +112,7 @@
     <Compile Include="Models\ModelConfiguration\UserConfiguration.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserContext.cs" />
+    <Compile Include="Context\DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +131,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005011536014_InitialCreate.resx">
       <DependentUpon>202005011536014_InitialCreate.cs</DependentUpon>

@@ -6,12 +6,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Gallery.DAL.Models
 {
-    public class UserContext : DbContext
+    public class DbContext : System.Data.Entity.DbContext
     {
-        public UserContext() 
+        public DbContext() 
         { }
 
-        public UserContext(string connectionString) : base(connectionString)
+        public DbContext(string connectionString) : base(connectionString)
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
