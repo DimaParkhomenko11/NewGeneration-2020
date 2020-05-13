@@ -29,9 +29,9 @@ namespace Gallery.BLL.Services
             throw new NotImplementedException();
         }
 
-        public async Task AddUserAsync(AddUserDto dto)
+        public async Task AddUserAsync(UserDto dto)
         {
-            await _repository.AddUserToDatabaseAsync(dto.Username, dto.PlainPassword);
+            await _repository.AddUserToDatabaseAsync(dto.UserEmail, dto.PlainPassword);
         }
 
         public int GetIdUsers(string username)

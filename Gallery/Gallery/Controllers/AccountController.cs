@@ -90,7 +90,7 @@ namespace Gallery.Controllers
                 {
                     //Create a new user
                     
-                    AddUserDto userDto = new AddUserDto(model.Email, model.Password);
+                    UserDto userDto = new UserDto(model.Email, model.Password);
                     await _usersService.AddUserAsync(userDto);
                     
                     var userId = _usersService.GetIdUsers(model.Email).ToString();
