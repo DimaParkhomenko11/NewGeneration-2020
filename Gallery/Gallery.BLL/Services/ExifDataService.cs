@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Gallery.BLL.Interfaces;
@@ -32,10 +29,7 @@ namespace Gallery.BLL.Services
                 ExifDataService.Title = fileInfo.Name;
 
             //DateUpload from FileInfo
-            if (fileInfo.CreationTime == null)
-                ExifDataService.DateUpload = "Data not found";
-            else
-                ExifDataService.DateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
+            ExifDataService.DateUpload = fileInfo.CreationTime == null ? "Data not found" : fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
 
             //FileSize from FileInfo
             if (fileInfo.Length >= 1024)
@@ -59,22 +53,13 @@ namespace Gallery.BLL.Services
             {
 
                 //manufacturer from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.CameraManufacturer))
-                    ExifDataService.CameraManufacturer = "Data not found";
-                else
-                    ExifDataService.CameraManufacturer = bitmapMetadata.CameraManufacturer;
+                ExifDataService.CameraManufacturer = string.IsNullOrEmpty(bitmapMetadata.CameraManufacturer) ? "Data not found" : bitmapMetadata.CameraManufacturer;
 
                 //modelOfCamera from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.CameraModel))
-                    ExifDataService.ModelOfCamera = "Data not found";
-                else
-                    ExifDataService.ModelOfCamera = bitmapMetadata.CameraModel;
+                ExifDataService.ModelOfCamera = string.IsNullOrEmpty(bitmapMetadata.CameraModel) ? "Data not found" : bitmapMetadata.CameraModel;
 
                 //DateCreation from EXIF
-                if (string.IsNullOrEmpty(bitmapMetadata.DateTaken))
-                    ExifDataService.DateCreation = "Data not found";
-                else
-                    ExifDataService.DateCreation = bitmapMetadata.DateTaken;
+                ExifDataService.DateCreation = string.IsNullOrEmpty(bitmapMetadata.DateTaken) ? "Data not found" : bitmapMetadata.DateTaken;
             }
             fileStream.Close();
 

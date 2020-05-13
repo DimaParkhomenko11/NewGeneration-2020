@@ -7,12 +7,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using FileSystemStorage;
 using Gallery.BLL.Interfaces;
 
 namespace Gallery.BLL.Services
 {
     public class ImageServices : IImagesService
     {
+        private readonly IMediaProvider _mediaProvider;
+
         public bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
         {
             if (bmp1 == null || bmp2 == null)
@@ -49,9 +52,9 @@ namespace Gallery.BLL.Services
             return result;
         }
         //modify
-        public Task UploadImageAsync(HttpPostedFileBase File)
+        public async Task UploadAsync()
         {
-            throw new NotImplementedException();
+            await _mediaProvider.UploadAsync();
         }
     }
 }
