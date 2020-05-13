@@ -96,15 +96,24 @@ namespace Gallery.Controllers
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
                         {
-                            bool IsLoad = true;
+
+                            MemoryStream memoryStream = new MemoryStream();
+                            files.InputStream.CopyTo(memoryStream);
+                            byte[] data = memoryStream.ToArray();
+
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+                            string filePath = DirPath + files.FileName;
+                            //var doneUpload = _imagesService.Upload(data,filePath);
 
+                            bool IsLoad = true;
                             // extract only the filename
                             var fileName = Path.GetFileName(files.FileName);
                             // store the file inside ~/Content/Temp folder
                             var TempPath = Path.Combine(Server.MapPath("~/Content/Temp"), fileName);
                             files.SaveAs(TempPath);
+
+
                             TempFileStream = new FileStream(TempPath, FileMode.Open);
                             BitmapSource bitmapSource = BitmapFrame.Create(TempFileStream);
                             BitmapMetadata bitmapMetadata = (BitmapMetadata)bitmapSource.Metadata;
@@ -198,7 +207,6 @@ namespace Gallery.Controllers
                 }
                 else
                 {
-
                     return View();
                 }
             }

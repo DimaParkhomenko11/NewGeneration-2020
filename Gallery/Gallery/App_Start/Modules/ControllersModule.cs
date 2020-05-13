@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FileSystemStorage;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
 using Gallery.ConfigManagement;
@@ -34,6 +35,9 @@ namespace Gallery.Modules
 
             builder.RegisterType<ConfigurationManagement>()
                 .AsSelf();
+
+            builder.RegisterType<MediaProvider>()
+                .As<IMediaProvider>();
 
         }
     }

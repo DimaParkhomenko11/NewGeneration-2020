@@ -16,6 +16,11 @@ namespace Gallery.BLL.Services
     {
         private readonly IMediaProvider _mediaProvider;
 
+        public ImageServices(IMediaProvider mediaProvider)
+        {
+            _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
+        }
+
         public bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
         {
             if (bmp1 == null || bmp2 == null)
@@ -51,10 +56,11 @@ namespace Gallery.BLL.Services
 
             return result;
         }
+
         //modify
-        public async Task UploadAsync()
+        public bool Upload(byte[] dateBytes, string path)
         {
-            await _mediaProvider.UploadAsync();
+            return _mediaProvider.Upload(dateBytes, path);
         }
     }
 }

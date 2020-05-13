@@ -23,7 +23,7 @@ namespace Gallery.ConfigManagement
             System.Configuration.Configuration configFile = null;
             if (System.Web.HttpContext.Current != null)
             {
-                configFile = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+                configFile = WebConfigurationManager.OpenWebConfiguration("~");
             }
             else
             {
