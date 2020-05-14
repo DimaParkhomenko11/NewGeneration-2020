@@ -57,10 +57,19 @@ namespace Gallery.BLL.Services
             return result;
         }
 
-        //modify
-        public bool Upload(byte[] dateBytes, string path)
+        public bool UploadFile(byte[] dateBytes, string path)
         {
             return _mediaProvider.Upload(dateBytes, path);
+        }
+
+        public byte[] ReadFile(string path)
+        {
+            return _mediaProvider.Read(path);
+        }
+
+        public bool DeleteFile(string path)
+        {
+            return _mediaProvider.Delete(path);
         }
     }
 }

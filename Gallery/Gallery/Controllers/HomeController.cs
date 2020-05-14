@@ -103,8 +103,8 @@ namespace Gallery.Controllers
 
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
-                            string filePath = DirPath + files.FileName;
-                            //var doneUpload = _imagesService.Upload(data,filePath);
+                            string filePath = Path.Combine(DirPath, files.FileName);
+                            //var doneUpload = _imagesService.UploadFile(data,filePath);
 
                             bool IsLoad = true;
                             // extract only the filename

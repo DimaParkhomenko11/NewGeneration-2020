@@ -12,7 +12,10 @@ namespace Gallery.BLL.Interfaces
     {
         bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2);
 
-        bool Upload(byte[] dateBytes, string path);
+        bool UploadFile(byte[] dateBytes, string path);
 
+        byte[] ReadFile(string path);
+
+        bool DeleteFile(string path);
     }
 }
