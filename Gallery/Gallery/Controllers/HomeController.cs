@@ -51,12 +51,16 @@ namespace Gallery.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string PathFileDelete = "")
+        public ActionResult Delete(string PathFileDelete)
         {
             try
             {
-                //var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
-                if (PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "").Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "") == _hashService.ComputeSha256Hash("Dima"))
+                
+                var userHash = PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "")
+                    .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
+
+
+                if (userHash == _hashService.ComputeSha256Hash("Dima"))
                 {
                     if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(PathFileDelete));

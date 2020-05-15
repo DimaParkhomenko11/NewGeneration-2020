@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
 
 namespace Gallery.ConfigManagement
 {
@@ -11,8 +8,8 @@ namespace Gallery.ConfigManagement
     {
         //
         //Variables for storing key data
-        public string pathToPhotos { get; } = WebConfigurationManager.AppSettings["PathToPhotos"];
-        public string fileExtensions { get; } = WebConfigurationManager.AppSettings["FileExtensions"];
+        public string pathToPhotosKey { get; } = "PathToPhotos";
+        public string fileExtensionsKey { get; } = "FileExtensions";
         //
         //Default constants
         private const string defaultValuePathToPhotos = "/Content/Images/";
@@ -20,69 +17,26 @@ namespace Gallery.ConfigManagement
 
         public string СheckValuePathToPhotos()//Adding a default value PathToPhotos
         {
-            System.Configuration.Configuration configFile = null;
-            if (System.Web.HttpContext.Current != null)
-            {
-                configFile = WebConfigurationManager.OpenWebConfiguration("~");
-            }
-            else
-            {
-                configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            }
-            var settings = configFile.AppSettings.Settings;
-            if (settings["PathToPhotos"] == null)
-            {
-                settings.Add("PathToPhotos", defaultValuePathToPhotos);
+            var appSettings = ConfigurationManager.AppSettings;
+            var path = appSettings[pathToPhotosKey];
 
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-                return defaultValuePathToPhotos;
-            }
-            else
+            if (string.IsNullOrEmpty(appSettings[pathToPhotosKey]))
             {
-                if (settings["PathToPhotos"].Value == "")
-                {
-                    settings["PathToPhotos"].Value = defaultValuePathToPhotos;
-                    return defaultValuePathToPhotos;
-                }
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-                return pathToPhotos;
+                path = defaultValuePathToPhotos;
             }
-
+            return path;
         }
 
-        public string СheckValueFileExtensions()//Adding a default value PathToPhotos
+        public string СheckValueFileExtensions()
         {
-            System.Configuration.Configuration configFile = null;
-            if (System.Web.HttpContext.Current != null)
-            {
-                configFile = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
-            }
-            else
-            {
-                configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            }
-            var settings = configFile.AppSettings.Settings;
-            if (settings["FileExtensions"] == null)
-            {
-                settings.Add("FileExtensions", defaultValueFileExtensions);
+            var appSettings = ConfigurationManager.AppSettings;
+            var permittedType = appSettings[fileExtensionsKey];
 
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-                return defaultValueFileExtensions;
-            }
-            else
+            if (string.IsNullOrEmpty(appSettings[fileExtensionsKey]))
             {
-                if (settings["FileExtensions"].Value == "")
-                {
-                    settings["FileExtensions"].Value = defaultValueFileExtensions;
-                    return defaultValueFileExtensions;
-                }
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-                return fileExtensions;
+                permittedType = defaultValueFileExtensions;
             }
+            return permittedType;
         }
 
         public static string DBConnectionString()
