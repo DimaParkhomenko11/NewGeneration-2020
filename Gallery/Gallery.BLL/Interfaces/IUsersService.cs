@@ -20,6 +20,6 @@ namespace Gallery.BLL.Interfaces
 
         string GetNameUsers(int id);
 
-        Task AddAttemptAsync(string email, string ipAddress, bool isSuccess);
+        Task AddAttemptAsync(AttemptDTO attemptDto);
     }
 }

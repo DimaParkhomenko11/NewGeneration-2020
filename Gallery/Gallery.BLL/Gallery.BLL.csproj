@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\AttemptDTO.cs" />
     <Compile Include="Contract\UserDto.cs" />
     <Compile Include="Interfaces\IExifDataService.cs" />
     <Compile Include="Interfaces\IHashService.cs" />

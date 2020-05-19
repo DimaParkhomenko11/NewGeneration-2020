@@ -40,7 +40,14 @@ namespace Gallery.Controllers
             {
                 var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
                 var ipAddress = HttpContext.Request.UserHostAddress;
-                await _usersService.AddAttemptAsync(model.Email, ipAddress, canAuthorize);
+                AttemptDTO attemptDto = new AttemptDTO
+                {
+                    Email = model.Email,
+                    IpAddress = ipAddress,
+                    IsSuccess = canAuthorize
+                };
+
+                await _usersService.AddAttemptAsync(attemptDto);
                 
                 if (canAuthorize)
                 {
@@ -85,7 +92,14 @@ namespace Gallery.Controllers
 
                 var IfUserExist = await _usersService.IsUserExistAsync(model.Email, model.Password);
                 var ipAddress = HttpContext.Request.UserHostAddress;
-                await _usersService.AddAttemptAsync(model.Email, ipAddress, IfUserExist);
+                AttemptDTO attemptDto = new AttemptDTO
+                {
+                    Email = model.Email,
+                    IpAddress = ipAddress,
+                    IsSuccess = IfUserExist
+                };
+                await _usersService.AddAttemptAsync(attemptDto);
+
                 if (IfUserExist == false)
                 {
                     //Create a new user

@@ -44,9 +44,9 @@ namespace Gallery.BLL.Services
             return _repository.GetNameUsers(id);
         }
 
-        public async Task AddAttemptAsync(string email, string ipAddress, bool isSuccess)
+        public async Task AddAttemptAsync(AttemptDTO attemptDto)
         {
-            await _repository.AddAttemptToDatabaseAsync(email, ipAddress, isSuccess);
+            await _repository.AddAttemptToDatabaseAsync(attemptDto.Email, attemptDto.IpAddress, attemptDto.IsSuccess);
         }
 
     }
