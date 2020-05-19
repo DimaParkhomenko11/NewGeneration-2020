@@ -38,7 +38,13 @@ namespace Gallery.Controllers
         {
             if (ModelState.IsValid)
             {
-                var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
+
+                UserDto userDto = new UserDto
+                {
+                    UserEmail = model.Email,
+                    UserPassword = model.Password
+                };
+                var canAuthorize = await _usersService.IsUserExistAsync(userDto);
                 var ipAddress = HttpContext.Request.UserHostAddress;
                 AttemptDTO attemptDto = new AttemptDTO
                 {
@@ -89,8 +95,12 @@ namespace Gallery.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var IfUserExist = await _usersService.IsUserExistAsync(model.Email, model.Password);
+                UserDto userDto = new UserDto
+                {
+                    UserEmail = model.Email,
+                    UserPassword = model.Password
+                };
+                var IfUserExist = await _usersService.IsUserExistAsync(userDto);
                 var ipAddress = HttpContext.Request.UserHostAddress;
                 AttemptDTO attemptDto = new AttemptDTO
                 {
@@ -104,7 +114,6 @@ namespace Gallery.Controllers
                 {
                     //Create a new user
                     
-                    UserDto userDto = new UserDto(model.Email, model.Password);
                     await _usersService.AddUserAsync(userDto);
                     
                     var userId = _usersService.GetIdUsers(model.Email).ToString();

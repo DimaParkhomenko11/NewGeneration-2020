@@ -10,11 +10,11 @@ namespace Gallery.BLL.Interfaces
 {
     public interface IUsersService
     {
-        Task<bool> IsUserExistAsync(string username, string plainPassword);
+        Task<bool> IsUserExistAsync(UserDto userDto);
 
         Task<UserDto> FindUserAsync(string username, string plainPassword);
 
-        Task AddUserAsync(UserDto dto);
+        Task AddUserAsync(UserDto userDto);
 
         int GetIdUsers(string username);
 

@@ -19,9 +19,9 @@ namespace Gallery.BLL.Services
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<bool> IsUserExistAsync(string username, string plainPassword)
+        public async Task<bool> IsUserExistAsync(UserDto userDto)
         {
-            return await _repository.IsUserExistAsync(username, plainPassword);
+            return await _repository.IsUserExistAsync(userDto.UserEmail, userDto.UserPassword);
         }
 
         public async Task<UserDto> FindUserAsync(string username, string plainPassword)
@@ -29,9 +29,9 @@ namespace Gallery.BLL.Services
             throw new NotImplementedException();
         }
 
-        public async Task AddUserAsync(UserDto dto)
+        public async Task AddUserAsync(UserDto userDto)
         {
-            await _repository.AddUserToDatabaseAsync(dto.UserEmail, dto.PlainPassword);
+            await _repository.AddUserToDatabaseAsync(userDto.UserEmail, userDto.UserPassword);
         }
 
         public int GetIdUsers(string username)

@@ -8,15 +8,9 @@ namespace Gallery.BLL.Contract
 {
     public class UserDto
     {
-        public UserDto(string username, string plainPassword)
-        {
-            UserEmail = username;
-            PlainPassword = plainPassword;
-        }
-
-        public int UserId { get; protected set; }
-        public string UserEmail { get; protected set; }
-        public string PlainPassword { get; protected set; }
-        public string UserRole { get; protected set; }
+        public int UserId { get; set; }
+        public string UserEmail { get; set; }
+        public string UserPassword { get; set; }
+        public string UserRole { get; set; }
     }
 }
