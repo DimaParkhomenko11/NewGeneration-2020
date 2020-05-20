@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Gallery.Controllers
 {
@@ -55,25 +56,27 @@ namespace Gallery.Controllers
         {
             try
             {
-                
-                var userHash = PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "")
-                    .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
-
-
-                if (userHash == _hashService.ComputeSha256Hash("Dima"))
+                var fullPath = Server.MapPath(PathFileDelete);
+                var isExists = System.IO.File.Exists(fullPath);
+                if (PathFileDelete.IsNullOrWhiteSpace() || !isExists)
                 {
-                    if (PathFileDelete != "" && Directory.Exists(Server.MapPath(PathFileDelete.Replace(Path.GetFileName(PathFileDelete), ""))))
-                        System.IO.File.Delete(Server.MapPath(PathFileDelete));
-                    else
-                    {
-                        ViewBag.Error = "File not found!";
-                        return View("Error");
-                    }
+                    ViewBag.Error = "File not found!";
+                    return View("Error");
                 }
                 else
                 {
-                    ViewBag.Error = "Authorisation Error!";
-                    return View("Error");
+                    var userHash = PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "")
+                        .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
+ 
+                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
+                     {
+                         _imagesService.DeleteFile(fullPath);
+                     }
+                     else
+                     {
+                         ViewBag.Error = "Authorisation Error!";
+                         return View("Error");
+                     }
                 }
             }
             catch (Exception err)
@@ -95,8 +98,6 @@ namespace Gallery.Controllers
                 {
                     if (_config.СheckValueFileExtensions().Contains(files.ContentType))
                     {
-                       // var userName = _usersService.GetNameUsers(Convert.ToInt32(User.Identity.Name));
-                        FileStream TempFileStream;
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
                         {
@@ -107,93 +108,9 @@ namespace Gallery.Controllers
                             //var filename = _imagesService.NameGenerator(files.FileName);
 
                             // Encrypted User's directory path
-                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             string filePath = Path.Combine(DirPath, files.FileName);
                             var doneUpload = _imagesService.UploadFile(data,filePath);
-
-                           /* bool IsLoad = true;
-                            // extract only the filename
-                            var fileName = Path.GetFileName(files.FileName);
-                            // store the file inside ~/Content/Temp folder
-                            var TempPath = Path.Combine(Server.MapPath("~/Content/Temp"), fileName);
-                            files.SaveAs(TempPath);
-
-
-                            TempFileStream = new FileStream(TempPath, FileMode.Open);
-                            BitmapSource bitmapSource = BitmapFrame.Create(TempFileStream);
-                            BitmapMetadata bitmapMetadata = (BitmapMetadata)bitmapSource.Metadata;
-                            var DateTaken = bitmapMetadata.DateTaken;
-                            TempFileStream.Close();
-
-                            if (!string.IsNullOrEmpty(DateTaken) || files.ContentType != "image/jpeg")
-                            {
-                                if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1) || files.ContentType != "image/jpeg")
-                                {
-                                    TempFileStream = new FileStream(TempPath, FileMode.Open);
-                                    Bitmap TempBmp = new Bitmap(TempFileStream);
-                                    TempBmp = new Bitmap(TempBmp, 64, 64);
-                                    TempFileStream.Close();
-
-                                    // List of all Directories names
-                                    List<string> dirsname = Directory.GetDirectories(Server.MapPath(_config.СheckValuePathToPhotos())).ToList<string>();
-
-                                    FileStream CheckFileStream;
-                                    Bitmap CheckBmp;
-
-                                    List<string> filesname;
-
-                                    // foreach inside foreach in order to check a new photo for its copies in all folders of all users
-                                    foreach (string dir in dirsname)
-                                    {
-                                        filesname = Directory.GetFiles(dir).ToList<string>();
-                                        foreach (string fl in filesname)
-                                        {
-                                            CheckFileStream = new FileStream(fl, FileMode.Open);
-                                            CheckBmp = new Bitmap(CheckFileStream);
-                                            CheckBmp = new Bitmap(CheckBmp, 64, 64);
-
-                                            CheckFileStream.Close();
-
-                                            if (_imagesService.CompareBitmapsFast(TempBmp, CheckBmp))
-                                            {
-                                                IsLoad = false;
-                                                ViewBag.Error = "Photo already exists!";
-                                                CheckBmp.Dispose();
-                                                break;
-                                            }
-                                            else
-                                                CheckBmp.Dispose();
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    ViewBag.Error = "Photo created more than a year ago!";
-                                    IsLoad = false;
-                                }
-                            }
-                            else
-                            {
-                                ViewBag.Error = "Photo creation date not found!";
-                                IsLoad = false;
-                            }
-
-                            if (IsLoad)
-                            {
-                                // extract only the filename
-                                var OriginalFileName = Path.GetFileName(files.FileName);
-                                // store the file inside User's folder
-                                var OriginalPath = Path.Combine(DirPath, OriginalFileName);
-                                //System.Windows.MessageBox.Show(OriginalPath);
-                                files.SaveAs(OriginalPath);
-                                System.IO.File.Delete(TempPath);
-                            }
-                            else
-                            {
-                                System.IO.File.Delete(TempPath);
-                                return View("Error");
-                            }*/
-
                         }
                         else
                         {
@@ -201,14 +118,12 @@ namespace Gallery.Controllers
                             return View("Error");
                         }
                         // redirect back to the index action to show the form once again
-
                     }
                     else
                     {
                         ViewBag.Error = "Inappropriate format!";
                         return View("Error");
                     }
-
                 }
                 else
                 {

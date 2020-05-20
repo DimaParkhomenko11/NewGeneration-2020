@@ -14,7 +14,7 @@
     string ImagesDirPath = Server.MapPath(Config.СheckValuePathToPhotos());
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
+    string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -100,7 +100,7 @@
                     {
                         <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == _hashService.ComputeSha256Hash("Dima"))
+                        if (dir.Replace(Server.MapPath(Config.СheckValuePathToPhotos()), "") == _hashService.ComputeSha256Hash(User.Identity.Name))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 
