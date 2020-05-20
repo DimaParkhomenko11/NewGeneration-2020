@@ -109,9 +109,9 @@ namespace Gallery.Controllers
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash("Dima");
                             string filePath = Path.Combine(DirPath, files.FileName);
-                            //var doneUpload = _imagesService.UploadFile(data,filePath);
+                            var doneUpload = _imagesService.UploadFile(data,filePath);
 
-                            bool IsLoad = true;
+                           /* bool IsLoad = true;
                             // extract only the filename
                             var fileName = Path.GetFileName(files.FileName);
                             // store the file inside ~/Content/Temp folder
@@ -192,7 +192,7 @@ namespace Gallery.Controllers
                             {
                                 System.IO.File.Delete(TempPath);
                                 return View("Error");
-                            }
+                            }*/
 
                         }
                         else
