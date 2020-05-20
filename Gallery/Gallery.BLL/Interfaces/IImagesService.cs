@@ -17,5 +17,7 @@ namespace Gallery.BLL.Interfaces
         byte[] ReadFile(string path);
 
         bool DeleteFile(string path);
+
+        string NameGenerator(string fileName);
     }
 }
