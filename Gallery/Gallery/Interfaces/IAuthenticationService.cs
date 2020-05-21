@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Gallery.BLL.Contract;
 using Gallery.DAL;
 using Microsoft.Owin;
 
@@ -13,6 +14,6 @@ namespace Gallery.BLL.Interfaces
     {
         void OwinCookieAuthentication(IOwinContext owinContext, ClaimsIdentity claim);
 
-        ClaimsIdentity ClaimTypesСreation(string userId);
+        ClaimsIdentity ClaimTypesСreation(UserDto userDto);
     }
 }

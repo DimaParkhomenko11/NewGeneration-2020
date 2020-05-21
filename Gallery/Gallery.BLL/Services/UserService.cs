@@ -26,7 +26,14 @@ namespace Gallery.BLL.Services
 
         public async Task<UserDto> FindUserAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            var user = await _repository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
+            return new UserDto
+            {
+                UserId = user.Id,
+                UserEmail = user.Email,
+                UserPassword = user.Password,
+                UserRole = user.Roles.ToList()
+            };
         }
 
         public async Task AddUserAsync(UserDto userDto)

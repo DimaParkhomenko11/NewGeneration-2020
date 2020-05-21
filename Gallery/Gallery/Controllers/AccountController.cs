@@ -14,7 +14,7 @@ namespace Gallery.Controllers
 {
     public class AccountController : Controller
     {
-        
+
         private readonly IUsersService _usersService;
         private readonly IAuthenticationService _authenticationService;
 
@@ -39,12 +39,11 @@ namespace Gallery.Controllers
             if (ModelState.IsValid)
             {
 
-                UserDto userDto = new UserDto
+                var canAuthorize = await _usersService.IsUserExistAsync(new UserDto
                 {
                     UserEmail = model.Email,
                     UserPassword = model.Password
-                };
-                var canAuthorize = await _usersService.IsUserExistAsync(userDto);
+                });
                 var ipAddress = HttpContext.Request.UserHostAddress;
                 AttemptDTO attemptDto = new AttemptDTO
                 {
@@ -53,16 +52,24 @@ namespace Gallery.Controllers
                     IsSuccess = canAuthorize
                 };
 
-                await _usersService.AddAttemptAsync(attemptDto);
-                
+                await _usersService.AddAttemptAsync(new AttemptDTO
+                {
+                    Email = model.Email,
+                    IpAddress = ipAddress,
+                    IsSuccess = canAuthorize
+                });
+
                 if (canAuthorize)
                 {
-                   
-                    var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
-                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+                    var userDto = await _usersService.FindUserAsync(new UserDto
+                    {
+                        UserEmail = model.Email,
+                        UserPassword = model.Password
+                    });
 
+
+                    var claim = _authenticationService.ClaimTypesСreation(userDto);
+                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
                     return RedirectToAction("Index", "Home");
 
@@ -95,34 +102,40 @@ namespace Gallery.Controllers
 
             if (ModelState.IsValid)
             {
-                UserDto userDto = new UserDto
+               
+                var IfUserExist = await _usersService.IsUserExistAsync(new UserDto
                 {
                     UserEmail = model.Email,
                     UserPassword = model.Password
-                };
-                var IfUserExist = await _usersService.IsUserExistAsync(userDto);
+                });
                 var ipAddress = HttpContext.Request.UserHostAddress;
-                AttemptDTO attemptDto = new AttemptDTO
+                
+                await _usersService.AddAttemptAsync(new AttemptDTO
                 {
                     Email = model.Email,
                     IpAddress = ipAddress,
                     IsSuccess = IfUserExist
-                };
-                await _usersService.AddAttemptAsync(attemptDto);
+                }); ;
 
                 if (IfUserExist == false)
                 {
                     //Create a new user
-                    
-                    await _usersService.AddUserAsync(userDto);
-                    
-                    var userId = _usersService.GetIdUsers(model.Email).ToString();
-                    
-                    var claim = _authenticationService.ClaimTypesСreation(userId);
+                    await _usersService.AddUserAsync(new UserDto
+                    {
+                        UserEmail = model.Email,
+                        UserPassword = model.Password
+                    });
+
+                    var userDto = await _usersService.FindUserAsync(new UserDto
+                    {
+                        UserEmail = model.Email,
+                        UserPassword = model.Password
+                    });
+
+                    var claim = _authenticationService.ClaimTypesСreation(userDto);
                     _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
                     return RedirectToAction("Index", "Home");
-
                 }
                 else
                 {

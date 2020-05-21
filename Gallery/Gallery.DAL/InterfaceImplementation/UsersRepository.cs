@@ -39,6 +39,11 @@ namespace Gallery.DAL.InterfaceImplementation
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<User> FindUserAsync(string userEmail, string userPassword)
+        {
+            return await dbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail && u.Password == userPassword);
+        }
+
         public int GetIdUsers(string userEmail)
         {
             return dbContext.Users.Where(u => u.Email == userEmail).Select(u => u.Id).FirstOrDefault();

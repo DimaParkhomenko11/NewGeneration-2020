@@ -10,6 +10,8 @@ namespace Gallery.DAL.Interfaces
 
         Task AddUserToDatabaseAsync(string userEmail, string plainPassword);
 
+        Task<User> FindUserAsync(string userEmail, string userPassword);
+
         int GetIdUsers(string userEmail);
 
         string GetNameUsers(int id);
