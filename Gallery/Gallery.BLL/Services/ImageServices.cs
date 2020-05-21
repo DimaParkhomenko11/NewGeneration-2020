@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using FileSystemStorage;
@@ -74,9 +75,15 @@ namespace Gallery.BLL.Services
 
         public string NameCleaner(string fileName)
         {
-            IHashService hashService = new HashService();
-            var hashName = hashService.ComputeSha256Hash(fileName);
-            return hashName;
+            try
+            {
+                return Regex.Replace(fileName, @"[^\w\.@-]", "",
+                    RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return String.Empty;
+            }
         }
     }
 }
