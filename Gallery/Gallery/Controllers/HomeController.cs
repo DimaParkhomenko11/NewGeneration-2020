@@ -105,7 +105,7 @@ namespace Gallery.Controllers
                             MemoryStream memoryStream = new MemoryStream();
                             files.InputStream.CopyTo(memoryStream);
                             byte[] data = memoryStream.ToArray();
-                            //var filename = _imagesService.NameGenerator(files.FileName);
+                            //var filename = _imagesService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);

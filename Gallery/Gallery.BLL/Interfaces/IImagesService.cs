@@ -18,6 +18,6 @@ namespace Gallery.BLL.Interfaces
 
         bool DeleteFile(string path);
 
-        string NameGenerator(string fileName);
+        string NameCleaner(string fileName);
     }
 }

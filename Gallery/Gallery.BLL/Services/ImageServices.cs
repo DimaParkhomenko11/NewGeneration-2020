@@ -72,7 +72,7 @@ namespace Gallery.BLL.Services
             return _mediaProvider.Delete(path);
         }
 
-        public string NameGenerator(string fileName)
+        public string NameCleaner(string fileName)
         {
             IHashService hashService = new HashService();
             var hashName = hashService.ComputeSha256Hash(fileName);
