@@ -16,23 +16,6 @@
     // Encrypted User's directory path
     string DirPath = Server.MapPath(Config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
 
-    // Directory path with temp files
-    string TempDirPath = Server.MapPath("~/Content/Temp");
-
-    if (!Directory.Exists(ImagesDirPath))
-    {
-        Directory.CreateDirectory(ImagesDirPath);
-    }
-
-    if (!Directory.Exists(TempDirPath))
-    {
-        Directory.CreateDirectory(TempDirPath);
-    }
-
-    if (User.Identity.IsAuthenticated)
-    {
-        Directory.CreateDirectory(DirPath);
-    }
 
     List<string> dirsname = Directory.GetDirectories(Server.MapPath(Config.СheckValuePathToPhotos())).ToList<string>();
     List<string> filesname;
