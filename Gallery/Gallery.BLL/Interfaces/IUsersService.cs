@@ -11,6 +11,7 @@ namespace Gallery.BLL.Interfaces
     public interface IUsersService
     {
         Task<bool> IsUserExistAsync(UserDto userDto);
+        Task<bool> IsUserExistByEmailAsync(UserDto userDto);
 
         Task<UserDto> FindUserAsync(UserDto userDto);
 

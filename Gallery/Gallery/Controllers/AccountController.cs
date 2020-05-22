@@ -39,44 +39,59 @@ namespace Gallery.Controllers
             if (ModelState.IsValid)
             {
 
-                var canAuthorize = await _usersService.IsUserExistAsync(new UserDto
+                var isUserExist = await _usersService.IsUserExistByEmailAsync(new UserDto
                 {
                     UserEmail = model.Email,
                     UserPassword = model.Password
                 });
-                var ipAddress = HttpContext.Request.UserHostAddress;
-                AttemptDTO attemptDto = new AttemptDTO
-                {
-                    Email = model.Email,
-                    IpAddress = ipAddress,
-                    IsSuccess = canAuthorize
-                };
 
-                await _usersService.AddAttemptAsync(new AttemptDTO
+                if (isUserExist)
                 {
-                    Email = model.Email,
-                    IpAddress = ipAddress,
-                    IsSuccess = canAuthorize
-                });
 
-                if (canAuthorize)
-                {
-                    var userDto = await _usersService.FindUserAsync(new UserDto
+                    var canAuthorize = await _usersService.IsUserExistAsync(new UserDto
                     {
                         UserEmail = model.Email,
                         UserPassword = model.Password
                     });
+                    var ipAddress = HttpContext.Request.UserHostAddress;
+                    AttemptDTO attemptDto = new AttemptDTO
+                    {
+                        Email = model.Email,
+                        IpAddress = ipAddress,
+                        IsSuccess = canAuthorize
+                    };
+
+                    await _usersService.AddAttemptAsync(new AttemptDTO
+                    {
+                        Email = model.Email,
+                        IpAddress = ipAddress,
+                        IsSuccess = canAuthorize
+                    });
 
 
-                    var claim = _authenticationService.ClaimTypesСreation(userDto);
-                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+                    if (canAuthorize)
+                    {
+                        var userDto = await _usersService.FindUserAsync(new UserDto
+                        {
+                            UserEmail = model.Email,
+                            UserPassword = model.Password
+                        });
 
-                    return RedirectToAction("Index", "Home");
 
+                        var claim = _authenticationService.ClaimTypesСreation(userDto);
+                        _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "User is not found");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "User is not found");
+                    ModelState.AddModelError("", "User not found");
                 }
             }
 
@@ -110,12 +125,7 @@ namespace Gallery.Controllers
                 });
                 var ipAddress = HttpContext.Request.UserHostAddress;
                 
-                await _usersService.AddAttemptAsync(new AttemptDTO
-                {
-                    Email = model.Email,
-                    IpAddress = ipAddress,
-                    IsSuccess = IfUserExist
-                }); ;
+                
 
                 if (IfUserExist == false)
                 {
@@ -124,6 +134,13 @@ namespace Gallery.Controllers
                     {
                         UserEmail = model.Email,
                         UserPassword = model.Password
+                    });
+
+                    await _usersService.AddAttemptAsync(new AttemptDTO
+                    {
+                        Email = model.Email,
+                        IpAddress = ipAddress,
+                        IsSuccess = true
                     });
 
                     var userDto = await _usersService.FindUserAsync(new UserDto

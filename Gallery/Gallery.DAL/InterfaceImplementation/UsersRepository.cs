@@ -21,8 +21,13 @@ namespace Gallery.DAL.InterfaceImplementation
         public async Task<bool> IsUserExistAsync(string userEmail, string plainPassword)
         {
 
-            return await dbContext.Users.AnyAsync(u => u.Email == userEmail.Trim().ToLower() && u.Password == plainPassword.Trim());
+            return await dbContext.Users.AnyAsync(u => u.Email == userEmail && u.Password == plainPassword);
 
+        }
+
+        public async Task<bool> IsUserExistByEmailAsync(string userEmail)
+        {
+            return await dbContext.Users.AnyAsync(u => u.Email == userEmail);
         }
 
         public async Task AddUserToDatabaseAsync(string userEmail, string plainPassword)

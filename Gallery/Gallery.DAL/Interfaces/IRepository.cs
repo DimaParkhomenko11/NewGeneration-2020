@@ -7,6 +7,7 @@ namespace Gallery.DAL.Interfaces
     public interface IRepository
     {
         Task<bool> IsUserExistAsync(string userEmail, string plainPassword);
+        Task<bool> IsUserExistByEmailAsync(string userEmail);
 
         Task AddUserToDatabaseAsync(string userEmail, string plainPassword);
 

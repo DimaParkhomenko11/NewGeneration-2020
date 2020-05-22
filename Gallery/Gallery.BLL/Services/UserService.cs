@@ -24,6 +24,12 @@ namespace Gallery.BLL.Services
             return await _repository.IsUserExistAsync(userDto.UserEmail, userDto.UserPassword);
         }
 
+        public async Task<bool> IsUserExistByEmailAsync(UserDto userDto)
+        {
+            return await _repository.IsUserExistByEmailAsync(userDto.UserEmail);
+        }
+
+
         public async Task<UserDto> FindUserAsync(UserDto userDto)
         {
             var user = await _repository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
