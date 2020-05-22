@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
+      "projectUniqueName": "D:\\GitHub\\NewGeneration2020\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
       "projectName": "FileSystemStorage",
-      "projectPath": "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
+      "projectPath": "D:\\GitHub\\NewGeneration2020\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
       "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage\\obj\\",
+      "outputPath": "D:\\GitHub\\NewGeneration2020\\NewGeneration2020\\Gallery\\FileSystemStorage\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",

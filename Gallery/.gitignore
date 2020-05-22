@@ -9,7 +9,7 @@
 /.vs
 /Gallery/logs
 /Gallery/Content/Images
-/FileSystemStorage.Tests/bin
-/FileSystemStorage.Tests/obj
+/Testing/FileSystemStorage.Testing/bin
+/Testing/FileSystemStorage.Testing/obj
 /Gallery/FileSystemStorage/bin
 /Gallery/FileSystemStorage/obj
