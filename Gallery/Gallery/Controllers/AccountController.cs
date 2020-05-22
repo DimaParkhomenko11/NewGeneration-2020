@@ -30,6 +30,12 @@ namespace Gallery.Controllers
             return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateModelState]
@@ -104,10 +110,7 @@ namespace Gallery.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Register()
-        {
-            return View();
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
