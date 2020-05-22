@@ -6,13 +6,15 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Gallery.DAL.Models
 {
-    public class DbContext : System.Data.Entity.DbContext
+    public class SqlDbContext : System.Data.Entity.DbContext
     {
-        public DbContext() 
+        public SqlDbContext()
+        {
+        }
+
+        public SqlDbContext(string connectionString) : base(connectionString)
         { }
 
-        public DbContext(string connectionString) : base(connectionString)
-        { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Media> Media { get; set; }
@@ -30,7 +32,8 @@ namespace Gallery.DAL.Models
 
             base.OnModelCreating(modelBuilder);
         }
-    }
 
+        
+    }
     
 }

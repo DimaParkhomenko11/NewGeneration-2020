@@ -114,7 +114,7 @@
     <Compile Include="Models\ModelConfiguration\UserConfiguration.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Context\DbContext.cs" />
+    <Compile Include="Context\SqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

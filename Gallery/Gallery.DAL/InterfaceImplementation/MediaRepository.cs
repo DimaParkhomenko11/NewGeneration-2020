@@ -10,9 +10,9 @@ namespace Gallery.DAL.InterfaceImplementation
 {
     public class MediaRepository : IMediaRepository
     {
-        private readonly DbContext dbContext;
+        private readonly SqlDbContext dbContext;
 
-        public MediaRepository(DbContext context)
+        public MediaRepository(SqlDbContext context)
         {
             dbContext = context ?? throw new ArgumentNullException(nameof(context));
         }

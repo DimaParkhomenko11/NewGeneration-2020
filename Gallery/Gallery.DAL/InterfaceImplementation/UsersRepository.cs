@@ -4,67 +4,66 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
-using DbContext = Gallery.DAL.Models.DbContext;
 
 namespace Gallery.DAL.InterfaceImplementation
 {
     public class UsersRepository : IRepository
     {
-        private readonly DbContext dbContext;
+        private readonly SqlDbContext _sqlDbContext;
 
-        public UsersRepository(DbContext context)
+        public UsersRepository(SqlDbContext context)
         {
-            dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            _sqlDbContext = context ?? throw new ArgumentNullException(nameof(context));
 
         }
 
         public async Task<bool> IsUserExistAsync(string userEmail, string plainPassword)
         {
 
-            return await dbContext.Users.AnyAsync(u => u.Email == userEmail && u.Password == plainPassword);
+            return await _sqlDbContext.Users.AnyAsync(u => u.Email == userEmail && u.Password == plainPassword);
 
         }
 
         public async Task<bool> IsUserExistByEmailAsync(string userEmail)
         {
-            return await dbContext.Users.AnyAsync(u => u.Email == userEmail);
+            return await _sqlDbContext.Users.AnyAsync(u => u.Email == userEmail);
         }
 
         public async Task AddUserToDatabaseAsync(string userEmail, string plainPassword)
         {
             User user = new User { Email = userEmail, Password = plainPassword };
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+            _sqlDbContext.Users.Add(user);
+            _sqlDbContext.SaveChanges();
 
-            Role role = dbContext.Roles.First(p => p.Name == "user");
+            Role role = _sqlDbContext.Roles.First(p => p.Name == "user");
 
             user.Roles.Add(role);
-            dbContext.SaveChanges();
+            _sqlDbContext.SaveChanges();
 
-            await dbContext.SaveChangesAsync();
+            await _sqlDbContext.SaveChangesAsync();
         }
 
         public async Task<User> FindUserAsync(string userEmail, string userPassword)
         {
-            return await dbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail && u.Password == userPassword);
+            return await _sqlDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail && u.Password == userPassword);
         }
 
         public int GetIdUsers(string userEmail)
         {
-            return dbContext.Users.Where(u => u.Email == userEmail).Select(u => u.Id).FirstOrDefault();
+            return _sqlDbContext.Users.Where(u => u.Email == userEmail).Select(u => u.Id).FirstOrDefault();
         }
 
         public string GetNameUsers(int id)
         {
-            return dbContext.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
+            return _sqlDbContext.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
         }
 
         public async Task AddAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess)
         {
-            var user = await dbContext.Users.FirstOrDefaultAsync(p => p.Email == email);
+            var user = await _sqlDbContext.Users.FirstOrDefaultAsync(p => p.Email == email);
             Attempt attempt2 = new Attempt { Id = 1, TimeStamp = DateTime.Now, Success = isSuccess, IpAddress = ipAddress, User = user };
-            dbContext.Attempts.Add(attempt2);
-            await dbContext.SaveChangesAsync();
+            _sqlDbContext.Attempts.Add(attempt2);
+            await _sqlDbContext.SaveChangesAsync();
         }
 
     }

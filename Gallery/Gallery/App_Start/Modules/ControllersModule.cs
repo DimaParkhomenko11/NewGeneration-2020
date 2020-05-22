@@ -16,7 +16,7 @@ namespace Gallery.Modules
         {
             //AccountController
             var connectionString = ConfigurationManagement.DBConnectionString();
-            builder.Register(ctx => new DbContext(connectionString)).AsSelf();
+            builder.Register(ctx => new SqlDbContext(connectionString)).AsSelf();
 
             builder.RegisterType<UsersRepository>()
                 .As<IRepository>();
