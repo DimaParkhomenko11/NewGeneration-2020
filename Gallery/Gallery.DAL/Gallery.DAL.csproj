@@ -74,7 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InterfaceImplementation\MediaRepository.cs" />
     <Compile Include="InterfaceImplementation\UsersRepository.cs" />
+    <Compile Include="Interfaces\IMediaRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\202005011536014_InitialCreate.cs" />
     <Compile Include="Migrations\202005011536014_InitialCreate.designer.cs">
