@@ -19,7 +19,7 @@ namespace Gallery.BLL.Interfaces
 
         int GetIdUsers(string username);
 
-        string GetNameUsers(int id);
+        Task<UserDto> GetUserByIdAsync(int id);
 
         Task AddAttemptAsync(AttemptDTO attemptDto);
     }

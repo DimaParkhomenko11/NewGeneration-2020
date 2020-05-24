@@ -33,13 +33,15 @@ namespace Gallery.BLL.Services
         public async Task<UserDto> FindUserAsync(UserDto userDto)
         {
             var user = await _repository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
-            return new UserDto
-            {
-                UserId = user.Id,
-                UserEmail = user.Email,
-                UserPassword = user.Password,
-                UserRole = user.Roles.ToList()
-            };
+            if (user != null)
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserPassword = user.Password,
+                    UserRole = user.Roles.ToList()
+                };
+            return null;
         }
 
         public async Task AddUserAsync(UserDto userDto)
@@ -52,9 +54,18 @@ namespace Gallery.BLL.Services
             return _repository.GetIdUsers(username);
         }
 
-        public string GetNameUsers(int id)
+        public async Task<UserDto> GetUserByIdAsync(int id)
         {
-            return _repository.GetNameUsers(id);
+            var user = await _repository.GetUserByIdAsync(id);
+            if (user != null)
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserPassword = user.Password,
+                    UserRole = user.Roles.ToList()
+                };
+            return null;
         }
 
         public async Task AddAttemptAsync(AttemptDTO attemptDto)

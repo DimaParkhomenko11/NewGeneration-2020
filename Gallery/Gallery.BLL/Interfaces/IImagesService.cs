@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Gallery.BLL.Contract;
 
 namespace Gallery.BLL.Interfaces
 {
@@ -12,7 +13,7 @@ namespace Gallery.BLL.Interfaces
     {
         bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2);
 
-        Task<bool> UploadImageAsync(byte[] dateBytes, string path);
+        Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto);
 
         byte[] ReadFile(string path);
 

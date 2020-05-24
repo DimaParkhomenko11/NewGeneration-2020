@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using FileSystemStorage;
+using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
 
@@ -18,11 +20,13 @@ namespace Gallery.BLL.Services
     {
         private readonly IMediaProvider _mediaProvider;
         private readonly IMediaRepository _mediaRepository;
+        private readonly IRepository _userRepository;
 
-        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository)
+        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository)
         {
             _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
             _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
@@ -61,7 +65,7 @@ namespace Gallery.BLL.Services
             return result;
         }
 
-        public async Task<bool> UploadImageAsync(byte[] dateBytes, string path)
+        public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto)
         {
             var isMediaExistAsync = await _mediaRepository.IsMediaExistAsync(path);
             if (isMediaExistAsync)
@@ -72,6 +76,11 @@ namespace Gallery.BLL.Services
                     await _mediaRepository.UpdateMediaDeleteStatusAsync(path, false);
                 }
             }
+            
+            var extension = Path.GetExtension(path);
+            var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
+
+
             return _mediaProvider.Upload(dateBytes, path);
         }
 

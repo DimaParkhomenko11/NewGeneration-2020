@@ -15,7 +15,7 @@ namespace Gallery.DAL.Interfaces
 
         int GetIdUsers(string userEmail);
 
-        string GetNameUsers(int id);
+        Task<User> GetUserByIdAsync(int id);
 
         Task AddAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess);
     }
