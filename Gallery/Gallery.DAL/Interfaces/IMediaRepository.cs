@@ -8,6 +8,6 @@ namespace Gallery.DAL.Interfaces
 {
     public interface IMediaRepository
     {
-
+        Task<bool> IsMediaExistAsync(string path);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,12 @@ namespace Gallery.DAL.InterfaceImplementation
         {
             dbContext = context ?? throw new ArgumentNullException(nameof(context));
         }
+
+        public async Task<bool> IsMediaExistAsync(string path)
+        {
+            return await dbContext.Media.AnyAsync(m => m.PathToMedia == path);
+        }
+
 
     }
 }
