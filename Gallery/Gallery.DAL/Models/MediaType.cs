@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL.Models
 {
-    public enum Type
-    {
-        Video,
-        Sound,
-        Image
-    }
     public class MediaType
     {
         public int Id { get; set; }
