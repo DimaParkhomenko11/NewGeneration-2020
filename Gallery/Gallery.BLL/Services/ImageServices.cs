@@ -58,7 +58,7 @@ namespace Gallery.BLL.Services
             return result;
         }
 
-        public bool UploadFile(byte[] dateBytes, string path)
+        public async Task<bool> UploadImage(byte[] dateBytes, string path)
         {
             return _mediaProvider.Upload(dateBytes, path);
         }
@@ -68,7 +68,7 @@ namespace Gallery.BLL.Services
             return _mediaProvider.Read(path);
         }
 
-        public bool DeleteFile(string path)
+        public async Task<bool> DeleteFileAsync(string path)
         {
             return _mediaProvider.Delete(path);
         }
