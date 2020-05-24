@@ -34,5 +34,18 @@ namespace Gallery.DAL.InterfaceImplementation
         {
             return await dbContext.Media.FirstOrDefaultAsync(m => m.PathToMedia == path);
         }
+
+        public async Task AddMediaToDatabaseAsync(string name, string pathToMedia, int userId, int mediaTypeId)
+        {
+            dbContext.Media.Add(new Media
+            {
+                Name = name,
+                PathToMedia = pathToMedia,
+                isDeleted = false,
+                UserId = userId,
+                MediaTypeId = mediaTypeId
+            });
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
