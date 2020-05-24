@@ -15,6 +15,8 @@ namespace Gallery.DAL.Interfaces
         Task<Media> GetMediaByPathAsync(string path);
         Task AddMediaToDatabaseAsync(string name, string pathToMedia, int userId, int mediaTypeId);
 
-
+        Task<bool> IsMediaTypeExistAsync(string extension);
+        Task AddMediaTypeToDatabaseAsync(string type);
+        Task<MediaType> GetMediaTypeAsync(string extension);
     }
 }
