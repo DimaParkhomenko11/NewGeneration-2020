@@ -1,9 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Autofac.Integration.WebApi;
 using Gallery.ConfigManagement;
 using Gallery.BLL.Interfaces;
+using Gallery.DAL.InterfaceImplementation;
+using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
 using Microsoft.Ajax.Utilities;
 
@@ -23,6 +27,7 @@ namespace Gallery.Controllers
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
+
         }
 
 
@@ -35,7 +40,7 @@ namespace Gallery.Controllers
         public ActionResult Upload()
         {
             ViewBag.Message = User.Identity.GetUserRole();
-                return View();
+            return View();
         }
 
         public ActionResult Contact()
@@ -61,16 +66,16 @@ namespace Gallery.Controllers
                 {
                     var userHash = PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "")
                         .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
- 
-                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
-                     {
-                         _imagesService.DeleteFile(fullPath);
-                     }
-                     else
-                     {
-                         ViewBag.Error = "Authorisation Error!";
-                         return View("Error");
-                     }
+
+                    if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
+                    {
+                        _imagesService.DeleteFile(fullPath);
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Authorisation Error!";
+                        return View("Error");
+                    }
                 }
             }
             catch (Exception err)
@@ -84,7 +89,7 @@ namespace Gallery.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Upload(HttpPostedFileBase files)
+        public async Task<ActionResult> Upload(HttpPostedFileBase files)
         {
             try
             {
@@ -104,7 +109,17 @@ namespace Gallery.Controllers
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             string filePath = Path.Combine(DirPath, filename);
-                            var doneUpload = _imagesService.UploadFile(data,filePath);
+
+
+
+
+                            bool doneUpload = _imagesService.UploadFile(data, filePath);
+
+
+                            ViewBag.Error = "Photo already exists";
+                            return View("Error");
+
+
                         }
                         else
                         {

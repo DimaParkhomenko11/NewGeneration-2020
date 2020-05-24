@@ -25,9 +25,14 @@ namespace Gallery.DAL.InterfaceImplementation
 
         public async Task UpdateMediaDeleteStatusAsync(string path, bool newStatus)
         {
-            var media = dbContext.Media.FirstOrDefault(m => m.PathToMedia == path);
+            var media = await dbContext.Media.FirstOrDefaultAsync(m => m.PathToMedia == path);
             media.isDeleted = newStatus;
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Media> GetMediaByPathAsync(string path)
+        {
+            return await dbContext.Media.FirstOrDefaultAsync(m => m.PathToMedia == path);
         }
     }
 }

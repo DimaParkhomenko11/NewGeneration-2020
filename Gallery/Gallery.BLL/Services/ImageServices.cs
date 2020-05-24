@@ -10,16 +10,19 @@ using System.Threading.Tasks;
 using System.Web;
 using FileSystemStorage;
 using Gallery.BLL.Interfaces;
+using Gallery.DAL.Interfaces;
 
 namespace Gallery.BLL.Services
 {
     public class ImageServices : IImagesService
     {
         private readonly IMediaProvider _mediaProvider;
+        private readonly IMediaRepository _mediaRepository;
 
-        public ImageServices(IMediaProvider mediaProvider)
+        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository)
         {
             _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
+            _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
         }
 
         public bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
@@ -58,8 +61,17 @@ namespace Gallery.BLL.Services
             return result;
         }
 
-        public async Task<bool> UploadImage(byte[] dateBytes, string path)
+        public async Task<bool> UploadImageAsync(byte[] dateBytes, string path)
         {
+            var isMediaExistAsync = await _mediaRepository.IsMediaExistAsync(path);
+            if (isMediaExistAsync)
+            {
+                var media = await _mediaRepository.GetMediaByPathAsync(path);
+                if (media.isDeleted)
+                { 
+                    await _mediaRepository.UpdateMediaDeleteStatusAsync(path, false);
+                }
+            }
             return _mediaProvider.Upload(dateBytes, path);
         }
 
