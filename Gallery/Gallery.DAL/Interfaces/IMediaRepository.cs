@@ -9,5 +9,7 @@ namespace Gallery.DAL.Interfaces
     public interface IMediaRepository
     {
         Task<bool> IsMediaExistAsync(string path);
+
+        Task UpdateMediaDeleteStatusAsync(string path, bool newStatus);
     }
 }

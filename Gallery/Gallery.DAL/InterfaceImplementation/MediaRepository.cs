@@ -23,6 +23,11 @@ namespace Gallery.DAL.InterfaceImplementation
             return await dbContext.Media.AnyAsync(m => m.PathToMedia == path);
         }
 
-
+        public async Task UpdateMediaDeleteStatusAsync(string path, bool newStatus)
+        {
+            var media = dbContext.Media.FirstOrDefault(m => m.PathToMedia == path);
+            media.isDeleted = newStatus;
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
