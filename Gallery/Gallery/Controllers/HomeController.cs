@@ -16,9 +16,9 @@ namespace Gallery.Controllers
     public class HomeController : Controller
     {
 
-        private IHashService _hashService;
-        private IImagesService _imagesService;
-        private IUsersService _usersService;
+        private readonly IHashService _hashService;
+        private readonly IImagesService _imagesService;
+        private readonly IUsersService _usersService;
         private readonly ConfigurationManagement _config;
 
         public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService)
@@ -51,7 +51,7 @@ namespace Gallery.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string PathFileDelete)
+        public async Task<ActionResult> Delete(string PathFileDelete)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Gallery.Controllers
 
                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
                     {
-                        _imagesService.DeleteFile(fullPath);
+                        await _imagesService.DeleteFileAsync(fullPath);
                     }
                     else
                     {
@@ -109,16 +109,19 @@ namespace Gallery.Controllers
                             // Encrypted User's directory path
                             string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             string filePath = Path.Combine(DirPath, filename);
+                            var userDto = await _usersService.GetUserByIdAsync(Convert.ToInt32(User.Identity.Name));
+                            if (userDto == null)
+                            {
+                                ViewBag.Error = "Oops, something went wrong.";
+                                return View("Error");
+                            }
 
-
-
-
-                            bool doneUpload = _imagesService.UploadFile(data, filePath);
-
-
-                            ViewBag.Error = "Photo already exists";
-                            return View("Error");
-
+                            bool doneUpload = await _imagesService.UploadImageAsync(data, filePath, userDto);
+                            if (!doneUpload)
+                            {
+                                ViewBag.Error = "Oops, something went wrong.";
+                                return View("Error");
+                            }
 
                         }
                         else
