@@ -106,6 +106,10 @@
     <Compile Include="Migrations\202005221555317_Added_field_Name_and_isDeleted_in_Media.designer.cs">
       <DependentUpon>202005221555317_Added_field_Name_and_isDeleted_in_Media.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005242204115_Removed_path_field_restriction_in_Media.cs" />
+    <Compile Include="Migrations\202005242204115_Removed_path_field_restriction_in_Media.designer.cs">
+      <DependentUpon>202005242204115_Removed_path_field_restriction_in_Media.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005221555317_Added_field_Name_and_isDeleted_in_Media.resx">
       <DependentUpon>202005221555317_Added_field_Name_and_isDeleted_in_Media.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005242204115_Removed_path_field_restriction_in_Media.resx">
+      <DependentUpon>202005242204115_Removed_path_field_restriction_in_Media.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
