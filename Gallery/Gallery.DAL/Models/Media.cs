@@ -14,9 +14,9 @@ namespace Gallery.DAL.Models
         public bool isDeleted { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public int MediaTypeId { get; set; }
-        public MediaType MediaType { get; set; }
+        public virtual MediaType MediaType { get; set; }
 
     }
 }
