@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemStorage", "FileSy
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7ED5CA38-1176-4C0A-9CA0-9A2EA6EAD907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystemStorage.Testing", "Testing\FileSystemStorage.Testing\FileSystemStorage.Testing.csproj", "{69531660-7813-473D-AFBB-432F09C03868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemStorage.Testing", "Testing\FileSystemStorage.Testing\FileSystemStorage.Testing.csproj", "{69531660-7813-473D-AFBB-432F09C03868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Worker", "Gallery.Worker\Gallery.Worker.csproj", "{7FF92D4F-2D8E-4C07-878C-098DC0B18A19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{69531660-7813-473D-AFBB-432F09C03868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69531660-7813-473D-AFBB-432F09C03868}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69531660-7813-473D-AFBB-432F09C03868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF92D4F-2D8E-4C07-878C-098DC0B18A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF92D4F-2D8E-4C07-878C-098DC0B18A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF92D4F-2D8E-4C07-878C-098DC0B18A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF92D4F-2D8E-4C07-878C-098DC0B18A19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
