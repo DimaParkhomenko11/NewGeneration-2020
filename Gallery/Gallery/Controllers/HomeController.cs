@@ -109,8 +109,8 @@ namespace Gallery.Controllers
                             var filename = _imagesService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
-                            var DirPath = Server.MapPath(_config.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
-                            var filePath = Path.Combine(DirPath, filename);
+                            var dirPath = Server.MapPath(_config.СheckValuePathToTempPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var filePath = Path.Combine(dirPath, filename);
                             var userDto = await _usersService.GetUserByIdAsync(Convert.ToInt32(User.Identity.Name));
                             if (userDto == null)
                             {
@@ -118,7 +118,7 @@ namespace Gallery.Controllers
                                 return View("Error");
                             }
 
-                            bool doneUpload = await _imagesService.UploadImageAsync(data, filePath, userDto);
+                            var doneUpload = await _imagesService.UploadImageAsync(data, filePath, userDto);
                             if (!doneUpload)
                             {
                                 ViewBag.Error = "Oops, something went wrong.";
