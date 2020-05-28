@@ -12,18 +12,14 @@ namespace Gallery.DAL.Models.ModelConfiguration
         public MediaConfiguration()
         {
             ToTable("Media");
-            HasKey(m => m.Id);
-
-            Property(m => m.Id)
+            HasKey(m => m.Id)
+                .Property(m => m.Id)
                 .IsRequired();
-
             Property(m => m.PathToMedia)
                 .IsRequired()
                 .HasMaxLength(500);
-
             HasIndex(m => m.PathToMedia)
                 .IsUnique();
-
             Property(m => m.isDeleted)
                 .IsRequired();
         }

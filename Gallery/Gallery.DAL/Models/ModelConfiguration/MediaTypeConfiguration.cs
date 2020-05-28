@@ -12,9 +12,7 @@ namespace Gallery.DAL.Models.ModelConfiguration
                 HasKey(p => p.Id).
                 Property(p => p.Type).HasMaxLength(25).
                 HasColumnType("varchar");
-
-           
-                HasMany(p => p.Media)
+            HasMany(p => p.Media)
                 .WithRequired(p => p.MediaType);
         }
     }

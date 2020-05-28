@@ -100,15 +100,17 @@ namespace Gallery.Controllers
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
                         {
-
-                            MemoryStream memoryStream = new MemoryStream();
-                            files.InputStream.CopyTo(memoryStream);
-                            byte[] data = memoryStream.ToArray();
+                            byte[] data;
+                            using (MemoryStream memoryStream = new MemoryStream())
+                            {
+                                files.InputStream.CopyTo(memoryStream);
+                                data = memoryStream.ToArray();
+                            }
                             var filename = _imagesService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
-                            string DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
-                            string filePath = Path.Combine(DirPath, filename);
+                            var DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var filePath = Path.Combine(DirPath, filename);
                             var userDto = await _usersService.GetUserByIdAsync(Convert.ToInt32(User.Identity.Name));
                             if (userDto == null)
                             {
