@@ -29,6 +29,14 @@ namespace Gallery.BLL.Services
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
+
+        public async Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
+        {
+
+        }
+
+
+
         public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto)
         {
             var isMediaExistAsync = await _mediaRepository.IsMediaExistAsync(path);

@@ -11,8 +11,7 @@ namespace Gallery.BLL.Interfaces
 {
     public interface IImagesService
     {
-        bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2);
-
+        Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto);
         Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto);
 
         byte[] ReadFile(string path);
