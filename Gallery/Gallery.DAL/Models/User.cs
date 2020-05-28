@@ -10,6 +10,7 @@ namespace Gallery.DAL
         public string Password { get; set; }
         public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
         public virtual ICollection<Media> Media { get; set; } = new List<Media>();
+        public virtual ICollection<TemporaryMedia> TemporaryMedia { get; set; } = new List<TemporaryMedia>();
         public virtual ICollection<Attempt> Attempts { get; set; } = new List<Attempt>();
 
     }

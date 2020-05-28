@@ -114,6 +114,10 @@
     <Compile Include="Migrations\202005251039414_Added_changes_to_Media_table.designer.cs">
       <DependentUpon>202005251039414_Added_changes_to_Media_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005282002065_New_TemporaryMedia_table_added.cs" />
+    <Compile Include="Migrations\202005282002065_New_TemporaryMedia_table_added.designer.cs">
+      <DependentUpon>202005282002065_New_TemporaryMedia_table_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
@@ -123,8 +127,10 @@
     <Compile Include="Models\ModelConfiguration\MediaConfiguration.cs" />
     <Compile Include="Models\ModelConfiguration\MediaTypeConfiguration.cs" />
     <Compile Include="Models\ModelConfiguration\RoleConfiguration.cs" />
+    <Compile Include="Models\ModelConfiguration\TemporaryMediaConfiguration.cs" />
     <Compile Include="Models\ModelConfiguration\UserConfiguration.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\TemporaryMedia.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Context\SqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005251039414_Added_changes_to_Media_table.resx">
       <DependentUpon>202005251039414_Added_changes_to_Media_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005282002065_New_TemporaryMedia_table_added.resx">
+      <DependentUpon>202005282002065_New_TemporaryMedia_table_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

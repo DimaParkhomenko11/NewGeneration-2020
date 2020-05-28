@@ -30,12 +30,10 @@ namespace Gallery.BLL.Services
         }
 
 
-        public async Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
+        public Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
         {
-
+            throw new NotImplementedException();
         }
-
-
 
         public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto)
         {

@@ -23,6 +23,9 @@ namespace Gallery.DAL.Models.ModelConfiguration
 
                 HasMany(p => p.Attempts)
                 .WithRequired(p => p.User);
+
+                HasMany(p => p.TemporaryMedia)
+                    .WithRequired(p =>p.User );
         }
     }
 }
