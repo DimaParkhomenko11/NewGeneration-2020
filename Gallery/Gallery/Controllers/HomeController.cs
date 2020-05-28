@@ -64,7 +64,7 @@ namespace Gallery.Controllers
                 }
                 else
                 {
-                    var userHash = PathFileDelete.Replace(_config.СheckValuePathToPhotos(), "")
+                    var userHash = PathFileDelete.Replace(_config.СheckValuePathToUserPhotos(), "")
                         .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
 
                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
@@ -109,7 +109,7 @@ namespace Gallery.Controllers
                             var filename = _imagesService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
-                            var DirPath = Server.MapPath(_config.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var DirPath = Server.MapPath(_config.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             var filePath = Path.Combine(DirPath, filename);
                             var userDto = await _usersService.GetUserByIdAsync(Convert.ToInt32(User.Identity.Name));
                             if (userDto == null)
