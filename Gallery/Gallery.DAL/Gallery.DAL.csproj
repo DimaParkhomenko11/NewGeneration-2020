@@ -65,6 +65,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -75,8 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InterfaceImplementation\MediaRepository.cs" />
+    <Compile Include="InterfaceImplementation\Publisher.cs" />
     <Compile Include="InterfaceImplementation\UsersRepository.cs" />
     <Compile Include="Interfaces\IMediaRepository.cs" />
+    <Compile Include="Interfaces\IPublisher.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\202005011536014_InitialCreate.cs" />
     <Compile Include="Migrations\202005011536014_InitialCreate.designer.cs">
