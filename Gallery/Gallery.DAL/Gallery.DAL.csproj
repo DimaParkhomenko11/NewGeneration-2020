@@ -121,6 +121,10 @@
     <Compile Include="Migrations\202005282002065_New_TemporaryMedia_table_added.designer.cs">
       <DependentUpon>202005282002065_New_TemporaryMedia_table_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.cs" />
+    <Compile Include="Migrations\202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.designer.cs">
+      <DependentUpon>202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005282002065_New_TemporaryMedia_table_added.resx">
       <DependentUpon>202005282002065_New_TemporaryMedia_table_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.resx">
+      <DependentUpon>202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
