@@ -16,7 +16,7 @@ namespace Gallery.DAL.Models.ModelConfiguration
                 Property(a => a.IsSuccess).
                 IsRequired();
             
-            Property(m => m.UniqueIdentificator)
+            Property(m => m.UniqueIdentName)
                 .IsRequired();
         }
     }

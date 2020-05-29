@@ -9,7 +9,7 @@ namespace Gallery.DAL.Models
     public class TemporaryMedia
     {
         public int Id { get; set; }
-        public string UniqueIdentificator { get; set; }
+        public string UniqueIdentName { get; set; }
         public bool InDuringLoading { get; set; }
         public bool IsSuccess { get; set; }
 
