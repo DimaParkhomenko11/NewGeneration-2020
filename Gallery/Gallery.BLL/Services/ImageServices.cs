@@ -21,18 +21,31 @@ namespace Gallery.BLL.Services
         private readonly IMediaProvider _mediaProvider;
         private readonly IMediaRepository _mediaRepository;
         private readonly IRepository _userRepository;
+        private readonly IPublisher _publisher;
 
-        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository)
+        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository, IPublisher publisher)
         {
             _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
             _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
 
-        public Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
+        public async Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
         {
-            throw new NotImplementedException();
+            var isTempUpload = _mediaProvider.Upload(dateBytes, path);
+            var fileName = Path.GetFileName(path);
+            var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
+            var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync("name1");
+            if (!isTempMediaExist)
+            { 
+                await _mediaRepository.AddTempMediaToDatabaseAsync("name1", true, isTempUpload, user);
+            }
+            await _mediaRepository.UpdateTempMediaProcessAsync("name1", true);
+            // _publisher.PublishMessage(dateBytes, pathMessage, "name1");
+            return isTempUpload;
+
         }
 
         public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto)
@@ -42,7 +55,7 @@ namespace Gallery.BLL.Services
             {
                 var media = await _mediaRepository.GetMediaByPathAsync(path);
                 if (media.isDeleted)
-                { 
+                {
                     await _mediaRepository.UpdateMediaDeleteStatusAsync(path, false);
                 }
             }
