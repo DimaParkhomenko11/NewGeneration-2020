@@ -42,6 +42,9 @@ namespace Gallery.Modules
             builder.RegisterType<MediaRepository>()
                 .As<IMediaRepository>();
 
+            builder.RegisterType<Publisher>()
+                .As<IPublisher>();
+
 
         }
     }
