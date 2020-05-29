@@ -49,6 +49,30 @@ namespace Gallery.DAL.InterfaceImplementation
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> IsTempMediaExistAsync(string uniqueIdentName)
+        {
+            return await dbContext.TemporaryMedia.AnyAsync(m => m.UniqueIdentName == uniqueIdentName);
+        }
+
+        public async Task UpdateTempMediaProcessAsync(string uniqueIdentName, bool newStatusLoad)
+        {
+            var tempMedia = await dbContext.TemporaryMedia.FirstOrDefaultAsync(m => m.UniqueIdentName == uniqueIdentName);
+            tempMedia.InDuringLoading = newStatusLoad;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddTempMediaToDatabaseAsync(string uniqueIdentName, bool inDuringLoading, bool isSuccess, User user)
+        {
+            dbContext.TemporaryMedia.Add(new TemporaryMedia
+            {
+                UniqueIdentName = uniqueIdentName,
+                InDuringLoading = inDuringLoading,
+                IsSuccess = isSuccess,
+                UserId = user.Id
+            });
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<bool> IsMediaTypeExistAsync(string type)
         {
             return await dbContext.MediaTypes.AnyAsync(m => m.Type == type);
