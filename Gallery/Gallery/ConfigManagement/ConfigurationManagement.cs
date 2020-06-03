@@ -8,23 +8,26 @@ namespace Gallery.ConfigManagement
     {
         //
         //Variables for storing key data
-        public string pathToUserPhotosKey { get; } = "PathToUserPhotos";
-        public string pathToTempPhotosKey { get; } = "PathToTempPhotos";
-        public string fileExtensionsKey { get; } = "FileExtensions";
+        public string PathToUserPhotosKey { get; } = "PathToUserPhotos";
+        public string PathToTempPhotosKey { get; } = "PathToTempPhotos";
+        public string FileExtensionsKey { get; } = "FileExtensions";
+        public string MessageQueuingPathKey { get; } = "MessageQueuingPath";
+
         //
         //Default constants
-        private const string defaultValuePathToUserPhotos = "/Content/Images/";
-        private const string defaultValuePathToTempPhotos = "/Content/Temp/";
-        private const string defaultValueFileExtensions = "image/jpeg;image/png";
+        private const string DefaultValuePathToUserPhotos = "/Content/Images/";
+        private const string DefaultValuePathToTempPhotos = "/Content/Temp/";
+        private const string DefaultValueFileExtensions = "image/jpeg;image/png";
+        private const string DefaultValueMessageQueuingPath = ".\\private$\\GalleryMQ";
 
         public string СheckValuePathToUserPhotos()//Adding a default value PathToPhotos
         {
             var appSettings = ConfigurationManager.AppSettings;
-            var path = appSettings[pathToUserPhotosKey];
+            var path = appSettings[PathToUserPhotosKey];
 
-            if (string.IsNullOrEmpty(appSettings[pathToUserPhotosKey]))
+            if (string.IsNullOrEmpty(appSettings[PathToUserPhotosKey]))
             {
-                path = defaultValuePathToUserPhotos;
+                path = DefaultValuePathToUserPhotos;
             }
             return path;
         }
@@ -32,24 +35,35 @@ namespace Gallery.ConfigManagement
         public string СheckValuePathToTempPhotos()//Adding a default value PathToPhotos
         {
             var appSettings = ConfigurationManager.AppSettings;
-            var path = appSettings[pathToTempPhotosKey];
+            var path = appSettings[PathToTempPhotosKey];
 
-            if (string.IsNullOrEmpty(appSettings[pathToTempPhotosKey]))
+            if (string.IsNullOrEmpty(appSettings[PathToTempPhotosKey]))
             {
-                path = defaultValuePathToTempPhotos;
+                path = DefaultValuePathToTempPhotos;
             }
             return path;
         }
 
+        public string СheckValuePathToMessageQueuing()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+            var path = appSettings[MessageQueuingPathKey];
+
+            if (string.IsNullOrEmpty(appSettings[MessageQueuingPathKey]))
+            {
+                path = DefaultValueMessageQueuingPath;
+            }
+            return path;
+        }
 
         public string СheckValueFileExtensions()
         {
             var appSettings = ConfigurationManager.AppSettings;
-            var permittedType = appSettings[fileExtensionsKey];
+            var permittedType = appSettings[FileExtensionsKey];
 
-            if (string.IsNullOrEmpty(appSettings[fileExtensionsKey]))
+            if (string.IsNullOrEmpty(appSettings[FileExtensionsKey]))
             {
-                permittedType = defaultValueFileExtensions;
+                permittedType = DefaultValueFileExtensions;
             }
             return permittedType;
         }
