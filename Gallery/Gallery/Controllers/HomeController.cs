@@ -109,7 +109,7 @@ namespace Gallery.Controllers
                             var filename = _imagesService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
-                            var dirPath = Server.MapPath(_config.СheckValuePathToTempPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var dirPath = Server.MapPath(_config.СheckValuePathToTempPhotos());
                             var directoryExists = Directory.Exists(dirPath);
                             if (!directoryExists)
                             {
