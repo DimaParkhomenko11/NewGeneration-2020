@@ -8,6 +8,6 @@ namespace Gallery.DAL.Interfaces
 {
     public interface IPublisher
     {
-        void PublishMessage(byte[] fileBytes, string queuePath, string queueName);
+        void PublishMessage(object file, string queuePath, string queueName);
     }
 }
