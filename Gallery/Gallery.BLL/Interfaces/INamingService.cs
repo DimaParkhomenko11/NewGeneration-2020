@@ -9,5 +9,6 @@ namespace Gallery.BLL.Interfaces
     public interface INamingService
     {
 
+        string NameCleaner(string fileName);
     }
 }
