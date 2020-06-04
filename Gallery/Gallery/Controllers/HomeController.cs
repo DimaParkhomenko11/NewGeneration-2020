@@ -19,15 +19,16 @@ namespace Gallery.Controllers
         private readonly IHashService _hashService;
         private readonly IImagesService _imagesService;
         private readonly IUsersService _usersService;
+        private readonly INamingService _namingService;
         private readonly ConfigurationManagement _config;
 
-        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService)
+        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService, INamingService namingService)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
-
+            _namingService = namingService ?? throw new ArgumentNullException(nameof(namingService));
         }
 
 
@@ -106,7 +107,7 @@ namespace Gallery.Controllers
                                 files.InputStream.CopyTo(memoryStream);
                                 data = memoryStream.ToArray();
                             }
-                            var filename = _imagesService.NameCleaner(files.FileName);
+                            var filename = _namingService.NameCleaner(files.FileName);
 
                             // Encrypted User's directory path
                             var dirPath = Server.MapPath(_config.СheckValuePathToTempPhotos());

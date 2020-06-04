@@ -45,6 +45,9 @@ namespace Gallery.Modules
             builder.RegisterType<Publisher>()
                 .As<IPublisher>();
 
+            builder.RegisterType<NamingService>()
+                .As<INamingService>();
+
 
         }
     }
