@@ -68,11 +68,13 @@
     <Compile Include="Interfaces\IExifDataService.cs" />
     <Compile Include="Interfaces\IHashService.cs" />
     <Compile Include="Interfaces\IImagesService.cs" />
+    <Compile Include="Interfaces\INamingService.cs" />
     <Compile Include="Interfaces\IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExifDataService.cs" />
     <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\ImageServices.cs" />
+    <Compile Include="Services\NamingService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
