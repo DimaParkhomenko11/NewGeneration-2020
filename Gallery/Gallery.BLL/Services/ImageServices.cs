@@ -93,18 +93,5 @@ namespace Gallery.BLL.Services
         {
             return _mediaProvider.Read(path);
         }
-
-        public string NameCleaner(string fileName)
-        {
-            try
-            {
-                return Regex.Replace(fileName, @"[^\w\.@-]", "",
-                    RegexOptions.None, TimeSpan.FromSeconds(1.5));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return String.Empty;
-            }
-        }
     }
 }

@@ -17,7 +17,5 @@ namespace Gallery.BLL.Interfaces
         byte[] ReadFile(string path);
 
         Task<bool> DeleteFileAsync(string path);
-
-        string NameCleaner(string fileName);
     }
 }
