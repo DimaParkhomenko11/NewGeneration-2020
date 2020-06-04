@@ -37,12 +37,13 @@ namespace Gallery.BLL.Services
             var isTempUpload = _mediaProvider.Upload(dateBytes, path);
             var fileName = Path.GetFileName(path);
             var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
-            var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync("name1");
+            var uniqueIdentName = Guid.NewGuid();
+            var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync(uniqueIdentName.ToString());
             if (!isTempMediaExist)
             { 
-                await _mediaRepository.AddTempMediaToDatabaseAsync("name1", true, isTempUpload, user);
+                await _mediaRepository.AddTempMediaToDatabaseAsync(uniqueIdentName.ToString(), true, isTempUpload, user);
             }
-            await _mediaRepository.UpdateTempMediaProcessAsync("name1", true);
+            await _mediaRepository.UpdateTempMediaProcessAsync(uniqueIdentName.ToString(), true);
             // _publisher.PublishMessage(dateBytes, pathMessage, "name1");
             return isTempUpload;
 
