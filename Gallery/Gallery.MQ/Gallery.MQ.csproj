@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InterfaceImplementation\ConsumerMQ.cs" />
     <Compile Include="InterfaceImplementation\PublisherMQ.cs" />
+    <Compile Include="Interfaces\IConsumerMQ.cs" />
     <Compile Include="Interfaces\IPublisherMQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
