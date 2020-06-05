@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7TaeyPQpfLPwn1hYgYEB30wegIfCdl4b+ehJLPuGwyAoyAu/Xeuq46ouZoWfd+85k0Au7XGLZiaRS8tKjPetuw==",
+  "dgSpecHash": "Eln9+PnU5q5AyYdjHyCbV9KWbzvvnObO5PxUk01E5383L85D73dnt4wM9PBYMskm3S7izn5LtFRvjFET+WsQgg==",
   "success": true,
-  "projectFilePath": "D:\\GitHub\\NewGeneration2020\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
+  "projectFilePath": "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage\\FileSystemStorage.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Acer\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Acer\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
