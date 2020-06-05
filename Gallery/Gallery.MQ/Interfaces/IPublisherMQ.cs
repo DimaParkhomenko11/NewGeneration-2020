@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gallery.DAL.Interfaces
+namespace Gallery.MQ.Interfaces
 {
-    public interface IPublisher
+    public interface IPublisherMQ
     {
         void PublishMessage(object file, string queuePath, string queueName);
     }

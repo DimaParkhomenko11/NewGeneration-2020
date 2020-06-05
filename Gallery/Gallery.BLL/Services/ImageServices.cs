@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using FileSystemStorage;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
+using Gallery.MQ.Interfaces;
 
 namespace Gallery.BLL.Services
 {
@@ -21,9 +14,9 @@ namespace Gallery.BLL.Services
         private readonly IMediaProvider _mediaProvider;
         private readonly IMediaRepository _mediaRepository;
         private readonly IRepository _userRepository;
-        private readonly IPublisher _publisher;
+        private readonly IPublisherMQ _publisher;
 
-        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository, IPublisher publisher)
+        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository, IPublisherMQ publisher)
         {
             _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
             _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));

@@ -1,10 +1,13 @@
-﻿using System;
-using System.Messaging;
-using Gallery.DAL.Interfaces;
+﻿using Gallery.MQ.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Gallery.DAL.InterfaceImplementation
+namespace Gallery.MQ.InterfaceImplementation
 {
-    public class Publisher: IPublisher
+    public class PublisherMQ : IPublisherMQ
     {
         public void PublishMessage(object file, string queuePath, string queueName)
         {

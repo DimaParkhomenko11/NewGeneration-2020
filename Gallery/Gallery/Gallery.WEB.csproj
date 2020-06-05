@@ -271,6 +271,10 @@
       <Project>{5e2f7b68-9a3d-4218-80cf-5b5b4e61430c}</Project>
       <Name>Gallery.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.MQ\Gallery.MQ.csproj">
+      <Project>{471ae6f5-c8ec-40bb-bae8-cb5d56cf8f7b}</Project>
+      <Name>Gallery.MQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
