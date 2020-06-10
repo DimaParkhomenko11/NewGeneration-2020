@@ -16,3 +16,5 @@
 /Gallery/Content/Temp
 /Gallery.MQ/bin
 /Gallery.MQ/obj
+/Gallery.Worker/obj
+/Gallery.Worker/bin
