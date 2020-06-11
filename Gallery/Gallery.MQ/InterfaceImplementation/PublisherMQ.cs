@@ -23,10 +23,6 @@ namespace Gallery.MQ.InterfaceImplementation
             var myMessage = new Message(file, new BinaryMessageFormatter());
             queue.Send(myMessage);
 
-            /*  using (var queue = MessageQueue.Create(queuePath))
-              {
-                  queue.Send(file, queueName);
-              }*/
         }
     }
 }
