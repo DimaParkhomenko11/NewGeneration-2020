@@ -13,9 +13,10 @@ namespace Gallery.MQ.InterfaceImplementation
         public Message ReadMessage(string path)
         {
             var queue = new MessageQueue(path);
-            queue.Formatter = new BinaryMessageFormatter();
-            Message message = queue.Receive();
+            queue.Formatter = new XmlMessageFormatter(
+                new Type[] { typeof(string), typeof(byte) });
+            var message = queue.Receive();
+            return message;
         }
-
     }
 }

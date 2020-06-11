@@ -10,8 +10,6 @@ namespace Gallery.MQ.InterfaceImplementation
 {
     public class PublisherMQ : IPublisherMQ
     {
-
-
         public void PublishMessage(object file, string queuePath, string queueName)
         {
 
@@ -20,8 +18,7 @@ namespace Gallery.MQ.InterfaceImplementation
                 MessageQueue.Create(queuePath);
             }
             var queue = new MessageQueue(queuePath);
-            var myMessage = new Message(file, new BinaryMessageFormatter());
-            queue.Send(myMessage);
+            queue.Send(file, queueName);
 
         }
     }
