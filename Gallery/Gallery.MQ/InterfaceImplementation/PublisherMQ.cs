@@ -10,12 +10,23 @@ namespace Gallery.MQ.InterfaceImplementation
 {
     public class PublisherMQ : IPublisherMQ
     {
+
+
         public void PublishMessage(object file, string queuePath, string queueName)
         {
-            using (var queue = MessageQueue.Create(queuePath))
+
+            if (!MessageQueue.Exists(queuePath))
             {
-                queue.Send(file, queueName);
+                MessageQueue.Create(queuePath);
             }
+            var queue = new MessageQueue(queuePath);
+            var myMessage = new Message(file, new BinaryMessageFormatter());
+            queue.Send(myMessage);
+
+            /*  using (var queue = MessageQueue.Create(queuePath))
+              {
+                  queue.Send(file, queueName);
+              }*/
         }
     }
 }

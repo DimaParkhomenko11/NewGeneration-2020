@@ -8,6 +8,6 @@ namespace Gallery.MQ.Interfaces
 {
     public interface IConsumerMQ
     {
-
+        void ReadMessage(string path);
     }
 }
