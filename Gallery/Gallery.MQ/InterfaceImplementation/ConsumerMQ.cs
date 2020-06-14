@@ -14,7 +14,7 @@ namespace Gallery.MQ.InterfaceImplementation
         {
             var queue = new MessageQueue(path);
             queue.Formatter = new XmlMessageFormatter(
-                new Type[] { typeof(string), typeof(byte) });
+                new Type[] { typeof(string), typeof(byte[]) });
             var message = queue.Receive();
             return message;
         }
