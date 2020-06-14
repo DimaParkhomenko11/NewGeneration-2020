@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Autofac.Integration.WebApi;
+using Gallery.BLL.Contract;
 using Gallery.ConfigManagement;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
+using Gallery.MQ.Interfaces;
 using Microsoft.Ajax.Utilities;
 
 namespace Gallery.Controllers
@@ -21,14 +23,16 @@ namespace Gallery.Controllers
         private readonly IUsersService _usersService;
         private readonly INamingService _namingService;
         private readonly ConfigurationManagement _config;
+        private readonly IPublisherMQ _publisher;
 
-        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService, INamingService namingService)
+        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService, INamingService namingService, IPublisherMQ publisher)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
             _namingService = namingService ?? throw new ArgumentNullException(nameof(namingService));
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
 
@@ -108,15 +112,18 @@ namespace Gallery.Controllers
                                 data = memoryStream.ToArray();
                             }
                             var filename = _namingService.NameCleaner(files.FileName);
-
+                            var uniqueIdentName = Guid.NewGuid();
+                            var extension = Path.GetExtension(files.FileName);
                             // Encrypted User's directory path
-                            var dirPath = Server.MapPath(_config.СheckValuePathToTempPhotos());
-                            var directoryExists = Directory.Exists(dirPath);
+                            var tempDirPath = Server.MapPath(_config.СheckValuePathToTempPhotos());
+                            var userDirPath = Server.MapPath(_config.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var directoryExists = Directory.Exists(tempDirPath);
                             if (!directoryExists)
                             {
-                                Directory.CreateDirectory(dirPath);
+                                Directory.CreateDirectory(tempDirPath);
                             }
-                            var filePath = Path.Combine(dirPath, filename);
+                            var tempFilePath = Path.Combine(tempDirPath, uniqueIdentName.ToString() + extension);
+                            var userFilePath = Path.Combine(userDirPath, filename);
                             var userDto = await _usersService.GetUserByIdAsync(Convert.ToInt32(User.Identity.Name));
                             if (userDto == null)
                             {
@@ -124,13 +131,14 @@ namespace Gallery.Controllers
                                 return View("Error");
                             }
 
-                            var doneUpload = await _imagesService.UploadTempImageAsync(data, filePath, userDto);
+                            var doneUpload = await _imagesService.UploadTempImageAsync(data, tempFilePath, userDto, userFilePath);
                             if (!doneUpload)
                             {
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-
+                            var queuePath = _config.СheckValuePathToMessageQueuing();
+                            _publisher.PublishMessage(data, queuePath, uniqueIdentName.ToString());
                         }
                         else
                         {
