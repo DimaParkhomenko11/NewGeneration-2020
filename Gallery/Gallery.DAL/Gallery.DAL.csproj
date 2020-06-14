@@ -123,6 +123,10 @@
     <Compile Include="Migrations\202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.designer.cs">
       <DependentUpon>202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006121329172_Added_new_UserPathImages_field_in_TemporaryMedia.cs" />
+    <Compile Include="Migrations\202006121329172_Added_new_UserPathImages_field_in_TemporaryMedia.designer.cs">
+      <DependentUpon>202006121329172_Added_new_UserPathImages_field_in_TemporaryMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attempt.cs" />
     <Compile Include="Models\IdentityExtensions.cs" />
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.resx">
       <DependentUpon>202005291254282_Renamed_the_UniqueIdentificator_field_to_UniqueIdentName_in_TemporaryMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006121329172_Added_new_UserPathImages_field_in_TemporaryMedia.resx">
+      <DependentUpon>202006121329172_Added_new_UserPathImages_field_in_TemporaryMedia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

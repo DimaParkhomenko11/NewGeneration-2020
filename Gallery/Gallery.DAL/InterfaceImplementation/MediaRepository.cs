@@ -61,15 +61,29 @@ namespace Gallery.DAL.InterfaceImplementation
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddTempMediaToDatabaseAsync(string uniqueIdentName, bool inDuringLoading, bool isSuccess, User user)
+        public async Task AddTempMediaToDatabaseAsync(string uniqueIdentName, bool inDuringLoading, bool isSuccess, User user, string userPathImages)
         {
             dbContext.TemporaryMedia.Add(new TemporaryMedia
             {
                 UniqueIdentName = uniqueIdentName,
                 InDuringLoading = inDuringLoading,
                 IsSuccess = isSuccess,
+                UserPathImages = userPathImages,
                 UserId = user.Id
             });
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<TemporaryMedia> GetTempMediaByLabelAndProgressLoadingAsync(string name, bool progressStatus)
+        {
+            return await dbContext.TemporaryMedia.FirstOrDefaultAsync(tm =>
+                tm.UniqueIdentName == name && tm.InDuringLoading == progressStatus);
+        }
+
+        public async Task UpdateTemporaryMediaAsync(TemporaryMedia oldTemporaryMedia, TemporaryMedia newTemporaryMedia)
+        {
+            oldTemporaryMedia = newTemporaryMedia;
+            dbContext.Entry(oldTemporaryMedia).State = EntityState.Modified;
             await dbContext.SaveChangesAsync();
         }
 
