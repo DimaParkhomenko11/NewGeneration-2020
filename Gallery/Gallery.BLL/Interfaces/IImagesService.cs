@@ -11,7 +11,7 @@ namespace Gallery.BLL.Interfaces
 {
     public interface IImagesService
     {
-        Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto);
+        Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto, string userPathImages);
         Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto);
 
         byte[] ReadFile(string path);

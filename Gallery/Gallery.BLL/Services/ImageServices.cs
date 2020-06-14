@@ -14,30 +14,28 @@ namespace Gallery.BLL.Services
         private readonly IMediaProvider _mediaProvider;
         private readonly IMediaRepository _mediaRepository;
         private readonly IRepository _userRepository;
-        private readonly IPublisherMQ _publisher;
 
-        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository, IPublisherMQ publisher)
+        public ImageServices(IMediaProvider mediaProvider, IMediaRepository mediaRepository, IRepository userRepository)
         {
             _mediaProvider = mediaProvider ?? throw new ArgumentNullException(nameof(mediaProvider));
             _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
 
-        public async Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto)
+        public async Task<bool> UploadTempImageAsync(byte[] dateBytes, string path, UserDto userDto, string userPathImages)
         {
             var isTempUpload = _mediaProvider.Upload(dateBytes, path);
             var fileName = Path.GetFileName(path);
+            var extension = Path.GetExtension(fileName);
+            var uniqueIdentName = fileName.Replace(extension, "");
             var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
-            var uniqueIdentName = Guid.NewGuid();
-            var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync(uniqueIdentName.ToString());
+            var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync(uniqueIdentName);
             if (!isTempMediaExist)
             { 
-                await _mediaRepository.AddTempMediaToDatabaseAsync(uniqueIdentName.ToString(), true, isTempUpload, user);
+                await _mediaRepository.AddTempMediaToDatabaseAsync(uniqueIdentName, true, isTempUpload, user, userPathImages);
             }
-            await _mediaRepository.UpdateTempMediaProcessAsync(uniqueIdentName.ToString(), true);
-            // _publisher.PublishMessage(dateBytes, pathMessage, "name1");
+            await _mediaRepository.UpdateTempMediaProcessAsync(uniqueIdentName, true);
             return isTempUpload;
 
         }
@@ -57,6 +55,10 @@ namespace Gallery.BLL.Services
             {
                 var typeExtension = Path.GetExtension(path);
                 var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
+                if (user == null)
+                {
+                    return false;
+                }
                 var isMediaTypeExist = await _mediaRepository.IsMediaTypeExistAsync(typeExtension);
                 if (!isMediaTypeExist)
                 {
