@@ -12,6 +12,7 @@ namespace Gallery.DAL.Models
         public string UniqueIdentName { get; set; }
         public bool InDuringLoading { get; set; }
         public bool IsSuccess { get; set; }
+        public string UserPathImages { get; set; }
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
