@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +19,19 @@ namespace Gallery.Worker
 {
     class Program
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+
         static async Task Main(string[] args)
         {
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
+
 
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
               var saveImageWork = new SaveImageWork(
@@ -35,8 +47,8 @@ namespace Gallery.Worker
 
             var wrapper = new WorkerWrapper(saveImageWork);
                 await wrapper.StartAsync();
-                Console.ReadKey();
-                await wrapper.StopAsync();
+               
+                Console.Read();
 
         }
     }
