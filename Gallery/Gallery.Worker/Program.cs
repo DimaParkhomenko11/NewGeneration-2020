@@ -14,42 +14,41 @@ using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
 using Gallery.Worker.InterfaceImplementation;
 using Gallery.Worker.Wrapper;
+using Topshelf;
 
 namespace Gallery.Worker
 {
     class Program
     {
-        [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
-
-        [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        const int SW_HIDE = 0;
-
         static async Task Main(string[] args)
         {
-            var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_HIDE);
-
-
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
-              var saveImageWork = new SaveImageWork(
-            new ConsumerMQ(),
-            new UserService(new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
-            new ImageServices(
-                new MediaProvider(),
-                new MediaRepository(new SqlDbContext(connectionString.ConnectionString)),
-                new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
-            new MediaRepository(
-                new SqlDbContext(connectionString.ConnectionString)));
+            var saveImageWork = new SaveImageWork(
+                new ConsumerMQ(),
+                new UserService(new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
+                new ImageServices(
+                    new MediaProvider(),
+                    new MediaRepository(new SqlDbContext(connectionString.ConnectionString)),
+                    new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
+                new MediaRepository(
+                    new SqlDbContext(connectionString.ConnectionString)));
 
+            var exitCode = HostFactory.Run(x =>
+            {
+                x.Service<WorkerWrapper>(s =>
+                {
+                    s.ConstructUsing(workWrapper => new WorkerWrapper(saveImageWork));
+                    s.WhenStarted(async st => await st.StartAsync());
+                    s.WhenStopped(async sp => await sp.StopAsync());
+                });
+                x.RunAsLocalSystem();
+                x.SetDisplayName("Worker Wrapper Service");
+                x.SetServiceName("WorkerWrapperService");
+                x.SetDescription("This service for Gallery Worker.");
+            });
 
-            var wrapper = new WorkerWrapper(saveImageWork);
-                await wrapper.StartAsync();
-               
-                Console.Read();
-
+            var exitCodeValue = (int)Convert.ChangeType(exitCode, exitCode.GetTypeCode());
+            Environment.ExitCode = exitCodeValue;
         }
     }
 }
