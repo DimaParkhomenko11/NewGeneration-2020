@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationMQ.cs" />
     <Compile Include="InterfaceImplementation\ConsumerMQ.cs" />
     <Compile Include="InterfaceImplementation\PublisherMQ.cs" />
     <Compile Include="Interfaces\IConsumerMQ.cs" />
@@ -54,5 +55,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
