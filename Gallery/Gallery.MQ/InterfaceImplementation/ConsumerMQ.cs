@@ -1,22 +1,25 @@
 ﻿using Gallery.MQ.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Messaging;
 using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Gallery.MQ.InterfaceImplementation
 {
     public class ConsumerMQ : IConsumerMQ
     {
-        public Message ReadMessage(string path)
+        public T ReadMessage<T>(string path)
         {
             var queue = new MessageQueue(path);
-            queue.Formatter = new XmlMessageFormatter(
-                new Type[] { typeof(string), typeof(byte[]) });
-            var message = queue.Receive();
+            queue.Formatter = new BinaryMessageFormatter();
+            var messageReceive = queue.Receive();
+            var message = Deserialize<T>(DeserializeToString((byte[])messageReceive.Body));
             return message;
         }
+
+        private string DeserializeToString(byte[] obj) =>
+            Encoding.UTF8.GetString(obj);
+
+        private static T Deserialize<T>(string obj) =>
+            JsonConvert.DeserializeObject<T>(obj);
     }
 }
