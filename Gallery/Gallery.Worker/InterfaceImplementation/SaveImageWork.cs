@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FileSystemStorage;
+using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
 using Gallery.MQ.Interfaces;
@@ -36,21 +37,20 @@ namespace Gallery.Worker.InterfaceImplementation
             while (!_cancellationToken.IsCancellationRequested)
             {
                 var queuePath = ConfigurationManager.AppSettings["MessageQueuingPath"] ?? @".\private$\GalleryMQ";
-                var message = _consumer.ReadMessage(queuePath);
+                var message = _consumer.ReadMessage<MessageDto>(queuePath);
                 if (message == null)
                     return;
-                var fileBody = (byte[])message.Body;
-                var name = message.Label;
-                var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.Label);
+                var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.UniqueName);
                 if (isMediaUploadAttemptExist)
                 {
-                    var tempMedia = await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(message.Label, true);
+                    var tempMedia = await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(message.UniqueName, true);
                     var newTempMedia = tempMedia;
                     newTempMedia.InDuringLoading = false;
                     newTempMedia.IsSuccess = true;
                     await _mediaRepository.UpdateTemporaryMediaAsync(tempMedia, newTempMedia);
                     var userDto = await _usersService.GetUserByIdAsync(tempMedia.UserId);
-                    await _imagesService.UploadImageAsync(fileBody, tempMedia.UserPathImages, userDto);
+                    var file = _imagesService.ReadFile(message.TempPath);
+                    await _imagesService.UploadImageAsync(file, tempMedia.UserPathImages, userDto);
                 }
                 await Task.Delay(_timeSpan);
             }

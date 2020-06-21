@@ -138,7 +138,15 @@ namespace Gallery.Controllers
                                 return View("Error");
                             }
                             var queuePath = _config.СheckValuePathToMessageQueuing();
-                            _publisher.PublishMessage(data, queuePath, uniqueIdentName.ToString());
+
+                            var messageDto = new MessageDto
+                            {
+                                UniqueName = uniqueIdentName.ToString(),
+                                TempPath = tempFilePath,
+                                UserId = userDto.UserId,
+                                UserPath = userFilePath
+                            };
+                            _publisher.PublishMessage(messageDto, queuePath, uniqueIdentName.ToString());
                         }
                         else
                         {
