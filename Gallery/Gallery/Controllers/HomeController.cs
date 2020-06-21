@@ -5,8 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac.Integration.WebApi;
 using Gallery.BLL.Contract;
-using Gallery.ConfigManagement;
 using Gallery.BLL.Interfaces;
+using Gallery.Configurations.Management;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
@@ -22,14 +22,12 @@ namespace Gallery.Controllers
         private readonly IImagesService _imagesService;
         private readonly IUsersService _usersService;
         private readonly INamingService _namingService;
-        private readonly ConfigurationManagement _config;
         private readonly IPublisherMQ _publisher;
 
-        public HomeController(IImagesService imageService, IHashService hashService, ConfigurationManagement config, IUsersService usersService, INamingService namingService, IPublisherMQ publisher)
+        public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, IPublisherMQ publisher)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
-            _config = config ?? throw new ArgumentNullException(nameof(config));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
             _namingService = namingService ?? throw new ArgumentNullException(nameof(namingService));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
@@ -69,7 +67,7 @@ namespace Gallery.Controllers
                 }
                 else
                 {
-                    var userHash = PathFileDelete.Replace(_config.СheckValuePathToUserPhotos(), "")
+                    var userHash = PathFileDelete.Replace(ConfigurationManagement.СheckValuePathToUserPhotos(), "")
                         .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
 
                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
@@ -100,7 +98,7 @@ namespace Gallery.Controllers
             {
                 if (files != null)
                 {
-                    if (_config.СheckValueFileExtensions().Contains(files.ContentType))
+                    if (ConfigurationManagement.СheckValueFileExtensions().Contains(files.ContentType))
                     {
                         // Verify that the user selected a file and User is logged in
                         if (files.ContentLength > 0)
@@ -115,8 +113,8 @@ namespace Gallery.Controllers
                             var uniqueIdentName = Guid.NewGuid();
                             var extension = Path.GetExtension(files.FileName);
                             // Encrypted User's directory path
-                            var tempDirPath = Server.MapPath(_config.СheckValuePathToTempPhotos());
-                            var userDirPath = Server.MapPath(_config.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var tempDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToTempPhotos());
+                            var userDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             var directoryExists = Directory.Exists(tempDirPath);
                             if (!directoryExists)
                             {
@@ -137,7 +135,7 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePath = _config.СheckValuePathToMessageQueuing();
+                            var queuePath = ConfigurationManagement.СheckValuePathToMessageQueuing();
 
                             var messageDto = new MessageDto
                             {

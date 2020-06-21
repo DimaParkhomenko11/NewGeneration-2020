@@ -181,7 +181,6 @@
     <Compile Include="App_Start\Modules\ControllersModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="ConfigManagement\ConfigurationManagement.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
@@ -266,6 +265,10 @@
     <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
       <Project>{1c1497c5-c9e9-4a17-bb85-18425c6d31c3}</Project>
       <Name>Gallery.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gallery.Configurations\Gallery.Configurations.csproj">
+      <Project>{2af7d5e5-df55-4b2c-863a-5e72ae8a64cd}</Project>
+      <Name>Gallery.Configurations</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gallery.DAL\Gallery.DAL.csproj">
       <Project>{5e2f7b68-9a3d-4218-80cf-5b5b4e61430c}</Project>

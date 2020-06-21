@@ -2,7 +2,7 @@
 using FileSystemStorage;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
-using Gallery.ConfigManagement;
+using Gallery.Configurations.Management;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
