@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Security.RightsManagement;
-using System.Threading.Tasks;
 using System.Web.Http;
+using Gallery.MQ.InterfaceImplementation;
+using Gallery.MQ.Interfaces;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
@@ -22,6 +22,8 @@ namespace Gallery.App_Start
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
             DIConfig.Configure(new HttpConfiguration());
+            var parser = new ParserMQ().Parser();
+            new InitializerMQ().Initializer(parser);
 
         }
     }
