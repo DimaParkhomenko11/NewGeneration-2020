@@ -22,6 +22,7 @@ namespace Gallery.Configurations.Management
         public static string СheckValuePathToUserPhotos()//Adding a default value PathToPhotos
         {
             var appSettings = ConfigurationManager.AppSettings;
+
             var path = appSettings[PathToUserPhotosKey];
 
             if (string.IsNullOrEmpty(appSettings[PathToUserPhotosKey]))
@@ -33,23 +34,11 @@ namespace Gallery.Configurations.Management
 
         public static string СheckValuePathToTempPhotos()//Adding a default value PathToPhotos
         {
-            
             var path = ConfigurationManager.AppSettings[PathToTempPhotosKey];
 
             if (string.IsNullOrEmpty(ConfigurationManager.AppSettings[PathToTempPhotosKey]))
             {
                 path = DefaultValuePathToTempPhotos;
-            }
-            return path;
-        }
-
-        public static string СheckValuePathToMessageQueuing()
-        {
-            var path = ConfigurationManager.AppSettings[MessageQueuingPathKey];
-
-            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings[MessageQueuingPathKey]))
-            {
-                path = DefaultValueMessageQueuingPath;
             }
             return path;
         }
