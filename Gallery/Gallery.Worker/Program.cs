@@ -39,7 +39,7 @@ namespace Gallery.Worker
                 {
                     s.ConstructUsing(workWrapper => new WorkerWrapper(saveImageWork));
                     s.WhenStarted(async st => await st.StartAsync());
-                    s.WhenStopped(async sp => await sp.StopAsync());
+                    s.WhenStopped( sp =>  sp.Stop());
                 });
                 x.RunAsLocalSystem();
                 x.SetDisplayName("Worker Wrapper Service");

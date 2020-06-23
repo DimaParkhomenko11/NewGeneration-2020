@@ -27,7 +27,7 @@ namespace Gallery.Worker.Wrapper
             }
         }
 
-        public async Task StopAsync()
+        public void Stop()
         {
             _cancellationToken.Cancel();
         }

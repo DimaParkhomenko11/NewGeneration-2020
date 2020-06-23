@@ -57,7 +57,7 @@ namespace Gallery.Worker.InterfaceImplementation
             }
         }
 
-        public async Task StopAsync()
+        public void Stop()
         {
             _cancellationToken.Cancel();
         }
