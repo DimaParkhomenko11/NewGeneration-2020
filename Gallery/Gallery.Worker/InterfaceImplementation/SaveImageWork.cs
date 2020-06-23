@@ -10,6 +10,7 @@ using FileSystemStorage;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
+using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
 using Gallery.Worker.Interfaces;
 
@@ -36,8 +37,8 @@ namespace Gallery.Worker.InterfaceImplementation
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                var queuePath = ConfigurationManager.AppSettings["MessageQueuingPath"] ?? @".\private$\GalleryMQ";
-                var message = _consumer.ReadMessage<MessageDto>(queuePath);
+                var queues = new ParserMQ().Parser();
+                var message = _consumer.ReadMessage<MessageDto>(queues[0]);
                 if (message == null)
                     return;
                 var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.UniqueName);

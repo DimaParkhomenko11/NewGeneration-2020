@@ -10,6 +10,7 @@ using Gallery.Configurations.Management;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
+using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
 using Microsoft.Ajax.Utilities;
 
@@ -135,7 +136,7 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePath = ConfigurationManagement.СheckValuePathToMessageQueuing();
+                            var queuePath = new ParserMQ().Parser();
 
                             var messageDto = new MessageDto
                             {
@@ -144,7 +145,7 @@ namespace Gallery.Controllers
                                 UserId = userDto.UserId,
                                 UserPath = userFilePath
                             };
-                            _publisher.PublishMessage(messageDto, queuePath, uniqueIdentName.ToString());
+                            _publisher.PublishMessage(messageDto, queuePath[0], uniqueIdentName.ToString());
                         }
                         else
                         {
