@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Web.Http;
+using Gallery.Configurations.Management;
 using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
+using Gallery.MQ.RabbitMQ.Implementation;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
@@ -22,8 +24,12 @@ namespace Gallery.App_Start
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
             DIConfig.Configure(new HttpConfiguration());
-            var parser = new ParserMQ().Parser();
-            new InitializerMQ().Initializer(parser);
+            var parserMsmq = new ParserMQ().ParserMSMQ();
+            var parserRmq = new ParserRMQ().ParserMSMQ();
+            new InitializerMQ().Initializer(parserMsmq);
+            var connectionString = ConfigurationManagement.RabbitMqConnectionString();
+            new InitializerRMQ(connectionString).Initializer(parserRmq);
+            
 
         }
     }
