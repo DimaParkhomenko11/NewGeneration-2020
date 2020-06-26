@@ -11,6 +11,7 @@ namespace Gallery.Configurations.Management
         private const string PathToTempPhotosKey = "PathToTempPhotos";
         private const string FileExtensionsKey = "FileExtensions";
         private const string MessageQueuingPathKey = "MessageQueuingPath";
+        private const string RabbitMqKey = "RabbitMQ";
 
         //
         //Default constants
@@ -57,6 +58,12 @@ namespace Gallery.Configurations.Management
         public static string DBConnectionString()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
+            return connectionString.ConnectionString;
+        }
+
+        public static string RabbitMqConnectionString()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("RabbitMQ");
             return connectionString.ConnectionString;
         }
     }
