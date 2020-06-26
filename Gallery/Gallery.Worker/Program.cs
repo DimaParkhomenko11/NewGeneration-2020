@@ -12,6 +12,7 @@ using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Models;
 using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
+using Gallery.MQ.RabbitMQ.Implementation;
 using Gallery.Worker.InterfaceImplementation;
 using Gallery.Worker.Wrapper;
 using Topshelf;
@@ -23,8 +24,8 @@ namespace Gallery.Worker
         static async Task Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
-            var saveImageWork = new SaveImageWork(
-                new ConsumerMQ(),
+            var rabbitMqConnectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("SQL");
+            var saveImageWork = new SaveImageWork(new ConsumerRMQ(rabbitMqConnectionString.ConnectionString), 
                 new UserService(new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
                 new ImageServices(
                     new MediaProvider(),
