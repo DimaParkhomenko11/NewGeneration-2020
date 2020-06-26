@@ -8,6 +8,7 @@ using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
 using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
+using Gallery.MQ.RabbitMQ.Implementation;
 using Gallery.Services;
 
 namespace Gallery.Modules
@@ -44,8 +45,11 @@ namespace Gallery.Modules
             builder.RegisterType<MediaRepository>()
                 .As<IMediaRepository>();
 
-            builder.RegisterType<PublisherMQ>()
-                .As<IPublisherMQ>();
+            var rabbitMqConnectionString = ConfigurationManagement.RabbitMqConnectionString();
+            builder.Register(ctx => new PublisherRMQ(rabbitMqConnectionString)).As<IPublisherMQ>();
+
+            /*builder.RegisterType<PublisherMQ>()
+                .As<IPublisherMQ>();*/
 
             builder.RegisterType<NamingService>()
                 .As<INamingService>();
