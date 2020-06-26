@@ -11,15 +11,15 @@ namespace Gallery.MQ.InterfaceImplementation
 {
     public class PublisherMQ : IPublisherMQ
     {
-        public void PublishMessage<T>(T message, string queue, string queueName)
+        public void PublishMessage<T>(T message, string queueName)
         {
-            var messageQueue = new MessageQueue(queue);
+            var messageQueue = new MessageQueue(queueName);
             messageQueue.Formatter = new BinaryMessageFormatter();
             var bytes = SerializeToBytes(SerializeToJson(message));
-            messageQueue.Send(bytes, queueName);
+            messageQueue.Send(bytes);
         }
 
-        private byte[] SerializeToBytes(string obj) =>
+        private static byte[] SerializeToBytes(string obj) =>
             Encoding.UTF8.GetBytes(obj);
 
         private static string SerializeToJson<T>(T obj) =>

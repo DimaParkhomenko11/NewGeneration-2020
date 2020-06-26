@@ -9,6 +9,6 @@ namespace Gallery.MQ.Interfaces
 {
     public interface IConsumerMQ
     {
-        T ReadMessage<T>(string path);
+        T ReadMessage<T>(string queue);
     }
 }

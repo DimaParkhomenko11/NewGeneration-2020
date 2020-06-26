@@ -8,6 +8,6 @@ namespace Gallery.MQ.Interfaces
 {
     public interface IParserMQ
     {
-        string[] Parser();
+        string[] ParserMSMQ();
     }
 }

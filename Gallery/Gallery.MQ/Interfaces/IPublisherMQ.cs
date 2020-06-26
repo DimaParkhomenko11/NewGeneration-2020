@@ -8,6 +8,6 @@ namespace Gallery.MQ.Interfaces
 {
     public interface IPublisherMQ
     {
-        void PublishMessage<T>(T message, string queue, string queueName);
+        void PublishMessage<T>(T message, string queueName);
     }
 }

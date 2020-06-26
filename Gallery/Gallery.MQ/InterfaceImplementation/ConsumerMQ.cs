@@ -7,9 +7,9 @@ namespace Gallery.MQ.InterfaceImplementation
 {
     public class ConsumerMQ : IConsumerMQ
     {
-        public T ReadMessage<T>(string path)
+        public T ReadMessage<T>(string queueName)
         {
-            var queue = new MessageQueue(path);
+            var queue = new MessageQueue(queueName);
             queue.Formatter = new BinaryMessageFormatter();
             var messageReceive = queue.Receive();
             var message = Deserialize<T>(DeserializeToString((byte[])messageReceive.Body));

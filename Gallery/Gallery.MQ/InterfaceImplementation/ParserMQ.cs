@@ -6,7 +6,7 @@ namespace Gallery.MQ.InterfaceImplementation
 {
     public class ParserMQ : IParserMQ
     {
-        public string[] Parser()
+        public string[] ParserMSMQ()
         {
             var queues = ConfigurationManager.AppSettings["MessageQueuingPath"] ?? throw new ArgumentException();
             return queues.Split(',');

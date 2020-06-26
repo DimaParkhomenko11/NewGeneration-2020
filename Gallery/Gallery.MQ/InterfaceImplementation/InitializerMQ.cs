@@ -1,5 +1,6 @@
 ﻿using System.Messaging;
 using Gallery.MQ.Interfaces;
+using RabbitMQ.Client;
 
 namespace Gallery.MQ.InterfaceImplementation
 {
@@ -15,5 +16,6 @@ namespace Gallery.MQ.InterfaceImplementation
                 }
             }
         }
+        
     }
 }
