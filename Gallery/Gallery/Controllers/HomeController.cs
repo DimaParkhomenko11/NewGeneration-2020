@@ -12,6 +12,7 @@ using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
 using Gallery.MQ.InterfaceImplementation;
 using Gallery.MQ.Interfaces;
+using Gallery.MQ.RabbitMQ.Implementation;
 using Microsoft.Ajax.Utilities;
 
 namespace Gallery.Controllers
@@ -24,6 +25,7 @@ namespace Gallery.Controllers
         private readonly IUsersService _usersService;
         private readonly INamingService _namingService;
         private readonly IPublisherMQ _publisher;
+        
 
         public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, IPublisherMQ publisher)
         {
@@ -136,8 +138,8 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePath = new ParserMQ().Parser();
-
+                            var queuePathMsmq = new ParserMQ().ParserMSMQ();
+                            var queueNameRmq = new ParserRMQ().ParserMSMQ();
                             var messageDto = new MessageDto
                             {
                                 UniqueName = uniqueIdentName.ToString(),
@@ -145,7 +147,8 @@ namespace Gallery.Controllers
                                 UserId = userDto.UserId,
                                 UserPath = userFilePath
                             };
-                            _publisher.PublishMessage(messageDto, queuePath[0], uniqueIdentName.ToString());
+                            //_publisher.PublishMessage(messageDto, queuePathMsmq[0]);
+                            _publisher.PublishMessage(messageDto, queueNameRmq[0]);
                         }
                         else
                         {
