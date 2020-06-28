@@ -34,35 +34,31 @@ namespace Gallery.Worker.InterfaceImplementation
             _imagesService = imagesService ?? throw new ArgumentNullException(nameof(imagesService));
             _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
         }
-        
+
         public async Task StartAsync()
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
                 var queues = new ParserRMQ().ParserMSMQ();
-                
-                var messages = _consumer.ReadMessage<MessageDto>(queues[0]);
-                
-                if (messages == null)
+
+                var message = _consumer.ReadMessage<MessageDto>(queues[0]);
+
+                if (message == null)
                     return;
-                var collection = (IList<MessageDto>)messages;
-                foreach (var message in collection)
+
+                var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.UniqueName);
+                if (isMediaUploadAttemptExist)
                 {
-                    var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.UniqueName);
-                    if (isMediaUploadAttemptExist)
-                    {
-                        var tempMedia =
-                            await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(message.UniqueName, true);
-                        var newTempMedia = tempMedia;
-                        newTempMedia.InDuringLoading = false;
-                        newTempMedia.IsSuccess = true;
-                        await _mediaRepository.UpdateTemporaryMediaAsync(tempMedia, newTempMedia);
-                        var userDto = await _usersService.GetUserByIdAsync(tempMedia.UserId);
-                        var file = _imagesService.ReadFile(message.TempPath);
-                        await _imagesService.UploadImageAsync(file, tempMedia.UserPathImages, userDto);
-                    }
+                    var tempMedia =
+                        await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(message.UniqueName, true);
+                    var newTempMedia = tempMedia;
+                    newTempMedia.InDuringLoading = false;
+                    newTempMedia.IsSuccess = true;
+                    await _mediaRepository.UpdateTemporaryMediaAsync(tempMedia, newTempMedia);
+                    var userDto = await _usersService.GetUserByIdAsync(tempMedia.UserId);
+                    var file = _imagesService.ReadFile(message.TempPath);
+                    await _imagesService.UploadImageAsync(file, tempMedia.UserPathImages, userDto);
                 }
-                
                 await Task.Delay(_timeSpan);
             }
         }

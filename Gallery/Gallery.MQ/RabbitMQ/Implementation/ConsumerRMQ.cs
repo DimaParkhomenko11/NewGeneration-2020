@@ -13,36 +13,38 @@ namespace Gallery.MQ.RabbitMQ.Implementation
 {
     public class ConsumerRMQ : IConsumerMQ
     {
-        private readonly Uri _uri;
+        private readonly string _connectionString;
+        private readonly TimeSpan _delay = TimeSpan.FromSeconds(3);
+
         public ConsumerRMQ(string connectionString)
         {
-            _uri = new Uri(connectionString);
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString)); ;
         }
-        static object locker = new object();
+
         public T ReadMessage<T>(string queueName)
         {
-            T mesegeReturn = default(T);
-            lock (locker)
+            T messageReturn;
+            var factory = new ConnectionFactory
             {
-                var factory = new ConnectionFactory()
+                Uri = new Uri(_connectionString)
+            };
+            using (var connection = factory.CreateConnection())
+            using (var model = connection.CreateModel())
+            {
+                while (true)
                 {
-                    Uri = _uri
-                };
-                using (var connection = factory.CreateConnection())
-                using (var channel = connection.CreateModel())
-                {
-                    var consumer = new EventingBasicConsumer(channel);
-                    consumer.Received += (model, ea) =>
+                    var msgCount = model.MessageCount(queueName);
+                    if (msgCount > 0)
                     {
-                        var body = ea.Body.ToArray();
-                        var message = Deserialize<T>(DeserializeToString(body));
-                        mesegeReturn = message;
-                    };
-                    channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
-                    Thread.Sleep(1000);
+                        var getResult = model.BasicGet(queueName, true);
+                        var body = getResult.Body.ToArray();
+                        messageReturn = Deserialize<T>(DeserializeToString(body));
+                        break;
+                    }
+                    Thread.Sleep(_delay);
                 }
             }
-            return mesegeReturn;
+            return messageReturn;
         }
 
         private static string DeserializeToString(byte[] obj) =>
