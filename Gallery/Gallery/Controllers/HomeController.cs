@@ -138,8 +138,8 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePathMsmq = new ParserMQ().ParserMSMQ();
-                            var queueNameRmq = new ParserRMQ().ParserMSMQ();
+                            var queuePathMsmq = new ParserMSMQ().ParserMQ();
+                            var queueNameRmq = new ParserRMQ().ParserMQ();
                             var messageDto = new MessageDto
                             {
                                 UniqueName = uniqueIdentName.ToString(),
@@ -147,7 +147,6 @@ namespace Gallery.Controllers
                                 UserId = userDto.UserId,
                                 UserPath = userFilePath
                             };
-                            //_publisher.PublishMessage(messageDto, queuePathMsmq[0]);
                             _publisher.PublishMessage(messageDto, queueNameRmq[0]);
                         }
                         else

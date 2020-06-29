@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MQ", "Gallery.MQ\Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Configurations", "Gallery.Configurations\Gallery.Configurations.csproj", "{2AF7D5E5-DF55-4B2C-863A-5E72AE8A64CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Autofac", "Gallery.Autofac\Gallery.Autofac.csproj", "{50ADF3AC-F427-4360-B4D7-AD2FEBC218D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{2AF7D5E5-DF55-4B2C-863A-5E72AE8A64CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AF7D5E5-DF55-4B2C-863A-5E72AE8A64CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AF7D5E5-DF55-4B2C-863A-5E72AE8A64CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50ADF3AC-F427-4360-B4D7-AD2FEBC218D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50ADF3AC-F427-4360-B4D7-AD2FEBC218D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50ADF3AC-F427-4360-B4D7-AD2FEBC218D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50ADF3AC-F427-4360-B4D7-AD2FEBC218D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
