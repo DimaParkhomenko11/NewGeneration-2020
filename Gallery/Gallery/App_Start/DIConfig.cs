@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Gallery.BLL.Interfaces;
-using Gallery.BLL.Services;
-using Gallery.DAL.InterfaceImplementation;
-using Gallery.DAL.Interfaces;
-using Gallery.DAL.Models;
+using Gallery.Autofac.Modules;
 using Gallery.Modules;
 
 namespace Gallery.App_Start
@@ -25,7 +17,18 @@ namespace Gallery.App_Start
 
             builder.RegisterModule<ControllersModule>();
 
+            builder.RegisterModule<FileSystemStorageModule>();
+
+            builder.RegisterModule<RabbitMQModule>();
+
+            builder.RegisterModule<RepositorysModule>();
+
+            builder.RegisterModule<ServicesModule>();
+
+            /*builder.RegisterModule<MSMQModule>();*/
+
             var container = builder.Build();
+
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }

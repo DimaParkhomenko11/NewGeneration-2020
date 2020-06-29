@@ -24,8 +24,8 @@ namespace Gallery.App_Start
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
             DIConfig.Configure(new HttpConfiguration());
-            var parserMsmq = new ParserMQ().ParserMSMQ();
-            var parserRmq = new ParserRMQ().ParserMSMQ();
+            var parserMsmq = new ParserMSMQ().ParserMQ();
+            var parserRmq = new ParserRMQ().ParserMQ();
             new InitializerMQ().Initializer(parserMsmq);
             var connectionString = ConfigurationManagement.RabbitMqConnectionString();
             new InitializerRMQ(connectionString).Initializer(parserRmq);
