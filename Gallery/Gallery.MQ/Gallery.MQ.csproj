@@ -89,7 +89,7 @@
   <ItemGroup>
     <Compile Include="InterfaceImplementation\ConsumerMQ.cs" />
     <Compile Include="InterfaceImplementation\InitializerMQ.cs" />
-    <Compile Include="InterfaceImplementation\ParserMQ.cs" />
+    <Compile Include="InterfaceImplementation\ParserMSMQ.cs" />
     <Compile Include="InterfaceImplementation\PublisherMQ.cs" />
     <Compile Include="Interfaces\IConsumerMQ.cs" />
     <Compile Include="Interfaces\IInitializerMQ.cs" />

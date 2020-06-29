@@ -10,7 +10,7 @@ namespace Gallery.MQ.RabbitMQ.Implementation
 {
     public class ParserRMQ : IParserMQ
     {
-        public string[] ParserMSMQ()
+        public string[] ParserMQ()
         {
             var queues = ConfigurationManager.AppSettings["RabbitMessageQueuing"] ?? throw new ArgumentException();
             return queues.Split(',');
