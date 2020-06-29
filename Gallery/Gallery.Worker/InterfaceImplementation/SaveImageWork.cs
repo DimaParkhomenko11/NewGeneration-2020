@@ -39,7 +39,7 @@ namespace Gallery.Worker.InterfaceImplementation
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                var queues = new ParserRMQ().ParserMSMQ();
+                var queues = new ParserRMQ().ParserMQ();
 
                 var message = _consumer.ReadMessage<MessageDto>(queues[0]);
 
