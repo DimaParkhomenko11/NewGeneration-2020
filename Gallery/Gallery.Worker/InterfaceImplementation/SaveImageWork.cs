@@ -23,16 +23,13 @@ namespace Gallery.Worker.InterfaceImplementation
         private readonly CancellationTokenSource _cancellationToken = new CancellationTokenSource();
         private readonly TimeSpan _timeSpan = TimeSpan.FromSeconds(1);
         private readonly IConsumerMQ _consumer;
-        private readonly IUsersService _usersService;
         private readonly IImagesService _imagesService;
-        private readonly IMediaRepository _mediaRepository;
+        
 
-        public SaveImageWork(IConsumerMQ consumer, IUsersService usersService, IImagesService imagesService, IMediaRepository mediaRepository)
+        public SaveImageWork(IConsumerMQ consumer, IImagesService imagesService)
         {
             _consumer = consumer ?? throw new ArgumentNullException(nameof(consumer));
-            _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
             _imagesService = imagesService ?? throw new ArgumentNullException(nameof(imagesService));
-            _mediaRepository = mediaRepository ?? throw new ArgumentNullException(nameof(mediaRepository));
         }
 
         public async Task StartAsync()

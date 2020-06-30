@@ -25,14 +25,12 @@ namespace Gallery.Worker
         {
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
             var rabbitMqConnectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("SQL");
-            var saveImageWork = new SaveImageWork(new ConsumerRMQ(rabbitMqConnectionString.ConnectionString), 
-                new UserService(new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
+            var saveImageWork = new SaveImageWork(
+                new ConsumerRMQ(rabbitMqConnectionString.ConnectionString),
                 new ImageServices(
                     new MediaProvider(),
                     new MediaRepository(new SqlDbContext(connectionString.ConnectionString)),
-                    new UsersRepository(new SqlDbContext(connectionString.ConnectionString))),
-                new MediaRepository(
-                    new SqlDbContext(connectionString.ConnectionString)));
+                    new UsersRepository(new SqlDbContext(connectionString.ConnectionString))));
 
             var exitCode = HostFactory.Run(x =>
             {
