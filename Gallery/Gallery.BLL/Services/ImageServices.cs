@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using FileSystemStorage;
 using Gallery.BLL.Contract;
@@ -32,7 +33,7 @@ namespace Gallery.BLL.Services
             var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
             var isTempMediaExist = await _mediaRepository.IsTempMediaExistAsync(uniqueIdentName);
             if (!isTempMediaExist)
-            { 
+            {
                 await _mediaRepository.AddTempMediaToDatabaseAsync(uniqueIdentName, true, isTempUpload, user, userPathImages);
             }
             await _mediaRepository.UpdateTempMediaProcessAsync(uniqueIdentName, true);
@@ -40,7 +41,7 @@ namespace Gallery.BLL.Services
 
         }
 
-        public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, UserDto userDto)
+        public async Task<bool> UploadImageAsync(byte[] dateBytes, string path, int userId)
         {
             var isMediaExistAsync = await _mediaRepository.IsMediaExistAsync(path);
             if (isMediaExistAsync)
@@ -54,7 +55,7 @@ namespace Gallery.BLL.Services
             else
             {
                 var typeExtension = Path.GetExtension(path);
-                var user = await _userRepository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
+                var user = await _userRepository.GetUserByIdAsync(userId);
                 if (user == null)
                 {
                     return false;
@@ -69,6 +70,36 @@ namespace Gallery.BLL.Services
                 await _mediaRepository.AddMediaToDatabaseAsync(fileName, path, user, mediaType);
             }
             return _mediaProvider.Upload(dateBytes, path);
+        }
+
+        public async Task UploadTempToUserDirectory(MessageDto messageDto)
+        {
+            var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(messageDto.UniqueName);
+            if (isMediaUploadAttemptExist)
+            {
+                var move = await MoveFileAsync(messageDto.UserPath, messageDto.TempPath, messageDto.UserId);
+                if (move)
+                {
+                    await UpdateTemporaryMediaAsync(messageDto.UniqueName);
+                }
+            }
+        }
+
+        public async Task UpdateTemporaryMediaAsync(string uniqueName)
+        {
+            var tempMedia =
+                await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(uniqueName, true);
+            var newTempMedia = tempMedia;
+            newTempMedia.InDuringLoading = false;
+            newTempMedia.IsSuccess = true;
+            await _mediaRepository.UpdateTemporaryMediaAsync(tempMedia, newTempMedia);
+
+        }
+
+        public async Task<bool> MoveFileAsync(string pathSave, string pathRead, int userId)
+        {
+            var file = ReadFile(pathRead);
+            return await UploadImageAsync(file, pathSave, userId);
         }
 
         public async Task<bool> DeleteFileAsync(string path)

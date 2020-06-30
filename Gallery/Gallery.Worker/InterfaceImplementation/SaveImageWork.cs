@@ -46,19 +46,8 @@ namespace Gallery.Worker.InterfaceImplementation
                 if (message == null)
                     return;
 
-                var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(message.UniqueName);
-                if (isMediaUploadAttemptExist)
-                {
-                    var tempMedia =
-                        await _mediaRepository.GetTempMediaByLabelAndProgressLoadingAsync(message.UniqueName, true);
-                    var newTempMedia = tempMedia;
-                    newTempMedia.InDuringLoading = false;
-                    newTempMedia.IsSuccess = true;
-                    await _mediaRepository.UpdateTemporaryMediaAsync(tempMedia, newTempMedia);
-                    var userDto = await _usersService.GetUserByIdAsync(tempMedia.UserId);
-                    var file = _imagesService.ReadFile(message.TempPath);
-                    await _imagesService.UploadImageAsync(file, tempMedia.UserPathImages, userDto);
-                }
+                await _imagesService.UploadTempToUserDirectory(message);
+
                 await Task.Delay(_timeSpan);
             }
         }
