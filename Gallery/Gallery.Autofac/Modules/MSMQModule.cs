@@ -1,6 +1,5 @@
 ﻿using Autofac;
-using Gallery.MQ.InterfaceImplementation;
-using Gallery.MQ.Interfaces;
+using Gallery.MQ.Abstraction;
 
 namespace Gallery.Autofac.Modules
 {
@@ -9,7 +8,7 @@ namespace Gallery.Autofac.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<PublisherMQ>()
-                .As<IPublisherMQ>();
+                .As<PublisherMQ>();
         }
     }
 }

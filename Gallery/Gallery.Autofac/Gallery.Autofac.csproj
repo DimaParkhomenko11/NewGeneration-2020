@@ -85,6 +85,10 @@
       <Project>{471ae6f5-c8ec-40bb-bae8-cb5d56cf8f7b}</Project>
       <Name>Gallery.MQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.RMQ\Gallery.RMQ.csproj">
+      <Project>{390A6F2E-7471-4E43-AF4E-67AF630442C0}</Project>
+      <Name>Gallery.RMQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -116,6 +116,14 @@
       <Project>{471ae6f5-c8ec-40bb-bae8-cb5d56cf8f7b}</Project>
       <Name>Gallery.MQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.MSMQ\Gallery.MSMQ.csproj">
+      <Project>{4ceb5e09-ce97-400e-a8fb-267fac31de12}</Project>
+      <Name>Gallery.MSMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gallery.RMQ\Gallery.RMQ.csproj">
+      <Project>{390a6f2e-7471-4e43-af4e-67af630442c0}</Project>
+      <Name>Gallery.RMQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

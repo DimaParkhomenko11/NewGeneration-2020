@@ -10,9 +10,11 @@ using Gallery.Configurations.Management;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
-using Gallery.MQ.InterfaceImplementation;
-using Gallery.MQ.Interfaces;
-using Gallery.MQ.RabbitMQ.Implementation;
+using Gallery.MQ.Abstraction;
+using Gallery.MSMQ;
+using Gallery.MSMQ.Implementation;
+using Gallery.RMQ;
+using Gallery.RMQ.Implementation;
 using Microsoft.Ajax.Utilities;
 
 namespace Gallery.Controllers
@@ -24,10 +26,10 @@ namespace Gallery.Controllers
         private readonly IImagesService _imagesService;
         private readonly IUsersService _usersService;
         private readonly INamingService _namingService;
-        private readonly IPublisherMQ _publisher;
+        private readonly PublisherMQ _publisher;
         
 
-        public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, IPublisherMQ publisher)
+        public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, PublisherMQ publisher)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
@@ -138,8 +140,8 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePathMsmq = new ParserMSMQ().ParserMQ();
-                            var queueNameRmq = new ParserRMQ().ParserMQ();
+                            var queuePathMsmq = new ParserMSMQ().ParserMq();
+                            var queueNameRmq = new ParserRMQ().ParserMq();
                             var messageDto = new MessageDto
                             {
                                 UniqueName = uniqueIdentName.ToString(),

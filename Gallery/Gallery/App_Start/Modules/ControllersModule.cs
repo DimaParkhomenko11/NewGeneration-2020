@@ -7,9 +7,7 @@ using Gallery.Controllers;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
 using Gallery.DAL.Models;
-using Gallery.MQ.InterfaceImplementation;
-using Gallery.MQ.Interfaces;
-using Gallery.MQ.RabbitMQ.Implementation;
+using Gallery.MQ.Abstraction;
 using Gallery.Services;
 
 namespace Gallery.Modules
@@ -26,7 +24,7 @@ namespace Gallery.Modules
                     h.Resolve<IHashService>(),
                     h.Resolve<IUsersService>(),
                     h.Resolve<INamingService>(),
-                    h.Resolve<IPublisherMQ>()))
+                    h.Resolve<PublisherMQ>()))
                 .InstancePerRequest();
 
             builder.Register(a =>

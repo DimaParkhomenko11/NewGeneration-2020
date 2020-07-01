@@ -6,7 +6,6 @@ using FileSystemStorage;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;
-using Gallery.MQ.Interfaces;
 
 namespace Gallery.BLL.Services
 {
