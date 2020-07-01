@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Configuration;
-using Gallery.MQ.Interfaces;
+using Gallery.MQ.Abstraction;
 
-namespace Gallery.MQ.InterfaceImplementation
+namespace Gallery.MSMQ.Implementation
 {
-    public class ParserMSMQ : IParserMQ
+    public class ParserMSMQ : ParserMQ
     {
-        public string[] ParserMQ()
+        public override string[] ParserMq()
         {
             var queues = ConfigurationManager.AppSettings["MessageQueuingPath"] ?? throw new ArgumentException();
             return queues.Split(',');

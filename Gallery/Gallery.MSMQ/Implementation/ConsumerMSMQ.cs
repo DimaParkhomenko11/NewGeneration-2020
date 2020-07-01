@@ -1,13 +1,13 @@
-﻿using Gallery.MQ.Interfaces;
-using System.Messaging;
+﻿using System.Messaging;
 using System.Text;
+using Gallery.MQ.Abstraction;
 using Newtonsoft.Json;
 
-namespace Gallery.MQ.InterfaceImplementation
+namespace Gallery.MSMQ.Implementation
 {
-    public class ConsumerMQ : IConsumerMQ
+    public class ConsumerMSMQ : ConsumerMQ
     {
-        public T ReadMessage<T>(string queueName)
+        public override T ReadMessage<T>(string queueName)
         {
             var queue = new MessageQueue(queueName);
             queue.Formatter = new BinaryMessageFormatter();

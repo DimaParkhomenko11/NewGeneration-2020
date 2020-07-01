@@ -1,12 +1,11 @@
 ﻿using System.Messaging;
-using Gallery.MQ.Interfaces;
-using RabbitMQ.Client;
+using Gallery.MQ.Abstraction;
 
-namespace Gallery.MQ.InterfaceImplementation
+namespace Gallery.MSMQ.Implementation
 {
-    public class InitializerMQ : IInitializerMQ
+    public class InitializerMSMQ : InitializerMQ
     {
-        public void Initializer(string[] queues)
+        public override void Initializer(string[] queues)
         {
             foreach (var queuePath in queues)
             {

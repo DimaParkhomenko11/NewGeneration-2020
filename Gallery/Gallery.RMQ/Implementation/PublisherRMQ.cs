@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Text;
-using Gallery.MQ.Interfaces;
+using Gallery.MQ.Abstraction;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace Gallery.MQ.RabbitMQ.Implementation
+namespace Gallery.RMQ.Implementation
 {
-    public class PublisherRMQ : IPublisherMQ
+    public class PublisherRMQ : PublisherMQ
     {
-        private readonly Uri _uri;
+        private readonly string _connectionString;
 
         public PublisherRMQ(string connectionString)
         {
-            _uri = new Uri(connectionString);
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
-        public void PublishMessage<T>(T message, string queueName)
+        public override void PublishMessage<T>(T message, string queueName)
         {
             var factory = new ConnectionFactory()
             {
-                Uri = _uri
+                Uri = new Uri(_connectionString)
             };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())

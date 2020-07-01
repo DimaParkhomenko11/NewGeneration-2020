@@ -1,17 +1,13 @@
-﻿using Gallery.MQ.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Messaging;
+﻿using System.Messaging;
 using System.Text;
-using System.Threading.Tasks;
+using Gallery.MQ.Abstraction;
 using Newtonsoft.Json;
 
-namespace Gallery.MQ.InterfaceImplementation
+namespace Gallery.MSMQ.Implementation
 {
-    public class PublisherMQ : IPublisherMQ
+    public class PublisherMSMQ : PublisherMQ
     {
-        public void PublishMessage<T>(T message, string queueName)
+        public override void PublishMessage<T>(T message, string queueName)
         {
             var messageQueue = new MessageQueue(queueName);
             messageQueue.Formatter = new BinaryMessageFormatter();

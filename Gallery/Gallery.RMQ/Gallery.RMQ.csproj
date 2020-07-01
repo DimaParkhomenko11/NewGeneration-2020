@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{471AE6F5-C8EC-40BB-BAE8-CB5D56CF8F7B}</ProjectGuid>
+    <ProjectGuid>{390A6F2E-7471-4E43-AF4E-67AF630442C0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gallery.MQ</RootNamespace>
-    <AssemblyName>Gallery.MQ</AssemblyName>
+    <RootNamespace>Gallery.RMQ</RootNamespace>
+    <AssemblyName>Gallery.RMQ</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,7 +51,6 @@
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="System.Messaging" />
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -87,11 +86,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstraction\ConsumerMQ.cs" />
-    <Compile Include="Abstraction\InitializerMQ.cs" />
-    <Compile Include="Abstraction\ParserMQ.cs" />
-    <Compile Include="Abstraction\PublisherMQ.cs" />
+    <Compile Include="Implementation\ConsumerRMQ.cs" />
+    <Compile Include="Implementation\InitializerRMQ.cs" />
+    <Compile Include="Implementation\ParserRMQ.cs" />
+    <Compile Include="Implementation\PublisherRMQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gallery.MQ\Gallery.MQ.csproj">
+      <Project>{471ae6f5-c8ec-40bb-bae8-cb5d56cf8f7b}</Project>
+      <Name>Gallery.MQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

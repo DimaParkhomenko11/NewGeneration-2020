@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Gallery.MQ.Interfaces;
+using Gallery.MQ.Abstraction;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
-namespace Gallery.MQ.RabbitMQ.Implementation
+namespace Gallery.RMQ.Implementation
 {
-    public class ConsumerRMQ : IConsumerMQ
+    public class ConsumerRMQ : ConsumerMQ
     {
         private readonly string _connectionString;
         private readonly TimeSpan _delay = TimeSpan.FromSeconds(3);
 
         public ConsumerRMQ(string connectionString)
         {
-            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString)); ;
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
-        public T ReadMessage<T>(string queueName)
+        public override T ReadMessage<T>(string queueName)
         {
             T messageReturn;
             var factory = new ConnectionFactory

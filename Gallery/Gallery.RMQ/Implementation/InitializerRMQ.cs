@@ -1,22 +1,22 @@
 ﻿using System;
-using Gallery.MQ.Interfaces;
+using Gallery.MQ.Abstraction;
 using RabbitMQ.Client;
 
-namespace Gallery.MQ.RabbitMQ.Implementation
+namespace Gallery.RMQ.Implementation
 {
-    public class InitializerRMQ : IInitializerMQ
+    public class InitializerRMQ : InitializerMQ
     {
-        private readonly Uri _uri;
+        private readonly string _connectionString;
 
         public InitializerRMQ(string connectionString)
         {
-            _uri = new Uri(connectionString);
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
-        public void Initializer(string[] queues)
+        public override void Initializer(string[] queues)
         {
             var factory = new ConnectionFactory()
             {
-                Uri = _uri
+                Uri = new Uri(_connectionString)
             };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
