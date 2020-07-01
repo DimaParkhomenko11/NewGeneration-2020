@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Gallery.MQ.Interfaces
 {
-    public interface IPublisherMQ
+    public abstract class InitializerMQ
     {
-        void PublishMessage<T>(T message, string queueName);
+        public abstract void Initializer(string[] queues);
     }
 }

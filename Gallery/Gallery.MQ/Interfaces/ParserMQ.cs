@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Gallery.MQ.Interfaces
 {
-    public interface IParserMQ
+    public abstract class ParserMQ
     {
-        string[] ParserMQ();
+        public abstract string[] ParserMq();
     }
 }

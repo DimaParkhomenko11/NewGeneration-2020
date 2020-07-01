@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Gallery.MQ.Interfaces
 {
-    public interface IInitializerMQ
+    public abstract class ConsumerMQ
     {
-        void Initializer(string[] queues);
+       public abstract T ReadMessage<T>(string queue);
     }
 }
