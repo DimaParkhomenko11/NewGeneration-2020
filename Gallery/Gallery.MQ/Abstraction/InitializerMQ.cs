@@ -1,7 +1,9 @@
-﻿namespace Gallery.MQ.Abstraction
+﻿using System.Collections.Generic;
+
+namespace Gallery.MQ.Abstraction
 {
     public abstract class InitializerMQ
     {
-        public abstract void Initializer(string[] queues);
+        public abstract void Initializer(Dictionary<string, string> queues);
     }
 }
