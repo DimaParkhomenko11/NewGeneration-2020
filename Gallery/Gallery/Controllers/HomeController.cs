@@ -140,8 +140,7 @@ namespace Gallery.Controllers
                                 ViewBag.Error = "Oops, something went wrong.";
                                 return View("Error");
                             }
-                            var queuePathMsmq = new ParserMSMQ().ParserMq();
-                            var queueNameRmq = new ParserRMQ().ParserMq();
+                            var parserQueue = new ParserMQ().ParserMq();
                             var messageDto = new MessageDto
                             {
                                 UniqueName = uniqueIdentName.ToString(),
@@ -149,7 +148,7 @@ namespace Gallery.Controllers
                                 UserId = userDto.UserId,
                                 UserPath = userFilePath
                             };
-                            _publisher.PublishMessage(messageDto, queueNameRmq[0]);
+                            _publisher.PublishMessage(messageDto, parserQueue["queue:upload-image"]);
                         }
                         else
                         {

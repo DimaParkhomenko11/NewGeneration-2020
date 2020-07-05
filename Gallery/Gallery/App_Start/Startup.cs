@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Gallery.Configurations.Management;
+using Gallery.MQ.Abstraction;
 using Gallery.MSMQ;
 using Gallery.MSMQ.Implementation;
 using Gallery.RMQ;
@@ -25,11 +26,10 @@ namespace Gallery.App_Start
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
             DIConfig.Configure(new HttpConfiguration());
-            var parserMsmq = new ParserMSMQ().ParserMq();
-            var parserRmq = new ParserRMQ().ParserMq();
-            new InitializerMSMQ().Initializer(parserMsmq);
+            var parserQueue = new ParserMQ().ParserMq();
+            new InitializerMSMQ().Initializer(parserQueue);
             var connectionString = ConfigurationManagement.RabbitMqConnectionString();
-            new InitializerRMQ(connectionString).Initializer(parserRmq);
+            new InitializerRMQ(connectionString).Initializer(parserQueue);
             
 
         }
