@@ -108,7 +108,6 @@
   <ItemGroup>
     <Compile Include="Implementation\ConsumerRMQ.cs" />
     <Compile Include="Implementation\InitializerRMQ.cs" />
-    <Compile Include="Implementation\ParserRMQ.cs" />
     <Compile Include="Implementation\PublisherRMQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

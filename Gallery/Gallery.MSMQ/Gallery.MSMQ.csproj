@@ -87,7 +87,6 @@
   <ItemGroup>
     <Compile Include="Implementation\ConsumerMSMQ.cs" />
     <Compile Include="Implementation\InitializerMSMQ.cs" />
-    <Compile Include="Implementation\ParserMSMQ.cs" />
     <Compile Include="Implementation\PublisherMSMQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
