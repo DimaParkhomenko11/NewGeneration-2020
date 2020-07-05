@@ -36,9 +36,9 @@ namespace Gallery.Worker.InterfaceImplementation
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                var queues = new ParserRMQ().ParserMq();
+                var queues = new ParserMQ().ParserMq();
 
-                var message = _consumer.ReadMessage<MessageDto>(queues[0]);
+                var message = _consumer.ReadMessage<MessageDto>(queues["queue:upload-image"]);
 
                 if (message == null)
                     return;
