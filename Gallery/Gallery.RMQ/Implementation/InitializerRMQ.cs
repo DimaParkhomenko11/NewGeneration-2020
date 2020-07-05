@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Gallery.MQ.Abstraction;
 using RabbitMQ.Client;
 
@@ -12,7 +13,7 @@ namespace Gallery.RMQ.Implementation
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
-        public override void Initializer(string[] queues)
+        public override void Initializer(Dictionary<string, string> queues)
         {
             var factory = new ConnectionFactory()
             {
@@ -23,7 +24,7 @@ namespace Gallery.RMQ.Implementation
             {
                 foreach (var queueName in queues)
                 {
-                    channel.QueueDeclare(queue: queueName,
+                    channel.QueueDeclare(queue: queueName.Value,
                         durable: false,
                         exclusive: false,
                         autoDelete: false,

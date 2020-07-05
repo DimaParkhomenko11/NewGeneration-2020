@@ -1,17 +1,19 @@
-﻿using System.Messaging;
+﻿using System.Collections.Generic;
+using System.Messaging;
 using Gallery.MQ.Abstraction;
 
 namespace Gallery.MSMQ.Implementation
 {
     public class InitializerMSMQ : InitializerMQ
     {
-        public override void Initializer(string[] queues)
+        public override void Initializer(Dictionary<string, string> queues)
         {
-            foreach (var queuePath in queues)
+            foreach (var queueName in queues)
             {
-                if (!MessageQueue.Exists(queuePath))
+                var path = @".\private$\" + queueName.Value;
+                if (!MessageQueue.Exists(path))
                 {
-                    MessageQueue.Create(queuePath);
+                    MessageQueue.Create(path);
                 }
             }
         }
