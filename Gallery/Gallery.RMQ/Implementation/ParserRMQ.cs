@@ -8,7 +8,7 @@ namespace Gallery.RMQ.Implementation
     {
         public override string[] ParserMq()
         {
-            var queues = ConfigurationManager.AppSettings["RabbitMessageQueuing"] ?? throw new ArgumentException();
+            var queues = ConfigurationManager.AppSettings["queue:upload-image"] ?? throw new ArgumentException();
             return queues.Split(',');
         }
     }
