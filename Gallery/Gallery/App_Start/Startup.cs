@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Gallery.ASQ.Implementation;
 using Gallery.Configurations.Management;
 using Gallery.MQ.Abstraction;
 using Gallery.MSMQ;
@@ -27,11 +28,11 @@ namespace Gallery.App_Start
             });
             DIConfig.Configure(new HttpConfiguration());
             var parserQueue = new ParserMQ().ParserMq();
+            var rabbitConnectionString = ConfigurationManagement.RabbitMqConnectionString();
+            var azureConnectionString = ConfigurationManagement.AzureMqConnectionString();
             new InitializerMSMQ().Initializer(parserQueue);
-            var connectionString = ConfigurationManagement.RabbitMqConnectionString();
-            new InitializerRMQ(connectionString).Initializer(parserQueue);
-            
-
+            new InitializerRMQ(rabbitConnectionString).Initializer(parserQueue);
+            new InitializerASQ(azureConnectionString).Initializer(parserQueue);
         }
     }
 }
