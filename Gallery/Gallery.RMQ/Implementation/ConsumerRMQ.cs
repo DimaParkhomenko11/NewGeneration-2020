@@ -17,7 +17,7 @@ namespace Gallery.RMQ.Implementation
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
-        public override T ReadMessage<T>(string queueName)
+        public override void ReadMessage<T>(string queueName, Action<T> action)
         {
             T messageReturn;
             var factory = new ConnectionFactory
@@ -35,12 +35,13 @@ namespace Gallery.RMQ.Implementation
                         var getResult = model.BasicGet(queueName, true);
                         var body = getResult.Body.ToArray();
                         messageReturn = Deserialize<T>(DeserializeToString(body));
+                        action(messageReturn);
                         break;
                     }
                     Thread.Sleep(_delay);
                 }
             }
-            return messageReturn;
+            
         }
 
         private static string DeserializeToString(byte[] obj) =>
