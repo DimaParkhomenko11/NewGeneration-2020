@@ -19,13 +19,15 @@ namespace Gallery.App_Start
 
             builder.RegisterModule<FileSystemStorageModule>();
 
-            builder.RegisterModule<RabbitMQModule>();
+            //builder.RegisterModule<RabbitMQModule>();
 
             builder.RegisterModule<RepositorysModule>();
 
             builder.RegisterModule<ServicesModule>();
 
-            /*builder.RegisterModule<MSMQModule>();*/
+            //builder.RegisterModule<MSMQModule>();
+
+            builder.RegisterModule<AzureSQModule>();
 
             var container = builder.Build();
 
