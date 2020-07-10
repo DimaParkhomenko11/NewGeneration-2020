@@ -284,6 +284,10 @@
       <Project>{e85c83c3-dde6-4e77-89bd-ef9a912de449}</Project>
       <Name>FileSystemStorage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.ASQ\Gallery.ASQ.csproj">
+      <Project>{f8e0a0a0-4c50-42ec-b81e-0188088d11cd}</Project>
+      <Name>Gallery.ASQ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.Autofac\Gallery.Autofac.csproj">
       <Project>{50adf3ac-f427-4360-b4d7-ad2febc218d7}</Project>
       <Name>Gallery.Autofac</Name>
