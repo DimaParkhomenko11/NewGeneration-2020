@@ -73,14 +73,18 @@ namespace Gallery.BLL.Services
 
         public async Task UploadTempToUserDirectory(MessageDto messageDto)
         {
-            var isMediaUploadAttemptExist = await _mediaRepository.IsTempMediaExistAsync(messageDto.UniqueName);
-            if (isMediaUploadAttemptExist)
+            var isTempMediaUploadExist = await _mediaRepository.IsTempMediaExistAsync(messageDto.UniqueName);
+            if (isTempMediaUploadExist)
             {
                 var move = await MoveFileAsync(messageDto.UserPath, messageDto.TempPath, messageDto.UserId);
                 if (move)
                 {
                     await UpdateTemporaryMediaAsync(messageDto.UniqueName);
                 }
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(isTempMediaUploadExist));
             }
         }
 
