@@ -144,6 +144,10 @@
       <Project>{e85c83c3-dde6-4e77-89bd-ef9a912de449}</Project>
       <Name>FileSystemStorage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.ASQ\Gallery.ASQ.csproj">
+      <Project>{f8e0a0a0-4c50-42ec-b81e-0188088d11cd}</Project>
+      <Name>Gallery.ASQ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
       <Project>{1c1497c5-c9e9-4a17-bb85-18425c6d31c3}</Project>
       <Name>Gallery.BLL</Name>
