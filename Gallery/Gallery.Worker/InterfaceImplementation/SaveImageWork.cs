@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FileSystemStorage;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
-using Gallery.DAL.Interfaces;
 using Gallery.MQ.Abstraction;
-using Gallery.RMQ;
-using Gallery.RMQ.Implementation;
 using Gallery.Worker.Interfaces;
 
 namespace Gallery.Worker.InterfaceImplementation
@@ -37,14 +27,9 @@ namespace Gallery.Worker.InterfaceImplementation
             while (!_cancellationToken.IsCancellationRequested)
             {
                 var queues = new ParserMQ().ParserMq();
-
-                var message = _consumer.ReadMessage<MessageDto>(queues["queue:upload-image"]);
-
-                if (message == null)
-                    return;
-
-                await _imagesService.UploadTempToUserDirectory(message);
-
+               
+                _consumer.ReadMessage<MessageDto>(queues["queue:upload-image"], async dto => await _imagesService.UploadTempToUserDirectory(dto));
+                
                 await Task.Delay(_timeSpan);
             }
         }

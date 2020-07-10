@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using FileSystemStorage;
+using Gallery.ASQ.Implementation;
 using Gallery.BLL.Services;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Models;
-using Gallery.RMQ;
-using Gallery.RMQ.Implementation;
 using Gallery.Worker.InterfaceImplementation;
 using Gallery.Worker.Wrapper;
 using Topshelf;
@@ -23,9 +17,10 @@ namespace Gallery.Worker
         static async Task Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
-            var rabbitMqConnectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("SQL");
+            var rabbitMqConnectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("RabbitMQ");
+            var azureConnectionString = ConfigurationManager.ConnectionStrings["AzureStorageConnectionString"] ?? throw new ArgumentException("AzureStorageConnectionString");
             var saveImageWork = new SaveImageWork(
-                new ConsumerRMQ(rabbitMqConnectionString.ConnectionString),
+                new ConsumerASQ(azureConnectionString.ConnectionString), 
                 new ImageServices(
                     new MediaProvider(),
                     new MediaRepository(new SqlDbContext(connectionString.ConnectionString)),
