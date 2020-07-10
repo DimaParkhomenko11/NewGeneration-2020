@@ -10,15 +10,12 @@ namespace Gallery.Configurations.Management
         private const string PathToUserPhotosKey = "PathToUserPhotos";
         private const string PathToTempPhotosKey = "PathToTempPhotos";
         private const string FileExtensionsKey = "FileExtensions";
-        private const string MessageQueuingPathKey = "MessageQueuingPath";
-        private const string RabbitMqKey = "RabbitMQ";
 
         //
         //Default constants
         private const string DefaultValuePathToUserPhotos = "/Content/Images/";
         private const string DefaultValuePathToTempPhotos = "/Content/Temp/";
         private const string DefaultValueFileExtensions = "image/jpeg;image/png";
-        private const string DefaultValueMessageQueuingPath = @".\private$\GalleryMQ";
 
         public static string СheckValuePathToUserPhotos()//Adding a default value PathToPhotos
         {
@@ -64,6 +61,12 @@ namespace Gallery.Configurations.Management
         public static string RabbitMqConnectionString()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("RabbitMQ");
+            return connectionString.ConnectionString;
+        }
+
+        public static string AzureMqConnectionString()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["AzureStorageConnectionString"] ?? throw new ArgumentException("RabbitMQ");
             return connectionString.ConnectionString;
         }
     }
