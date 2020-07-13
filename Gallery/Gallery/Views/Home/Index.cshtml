@@ -9,30 +9,7 @@
    
     IHashService _hashService = new HashService();
     IExifDataService _exifDataService = new ExifDataService();
-   
-    // Directory path with all User's directories
-    string ImagesDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos());
 
-    // Encrypted User's directory path
-    string DirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
-
-    // Directory path with temp files
-    string TempDirPath = Server.MapPath("~/Content/Temp");
-
-    if (!Directory.Exists(ImagesDirPath))
-    {
-        Directory.CreateDirectory(ImagesDirPath);
-    }
-
-    if (!Directory.Exists(TempDirPath))
-    {
-        Directory.CreateDirectory(TempDirPath);
-    }
-
-    if (User.Identity.IsAuthenticated)
-    {
-        Directory.CreateDirectory(DirPath);
-    }
 
     List<string> dirsname = Directory.GetDirectories(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos())).ToList<string>();
     List<string> filesname;
