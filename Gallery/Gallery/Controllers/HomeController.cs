@@ -39,18 +39,6 @@ namespace Gallery.Controllers
         }
 
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Upload()
-        {
-            ViewBag.Message = User.Identity.GetUserRole();
-            return View();
-        }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -176,6 +164,47 @@ namespace Gallery.Controllers
 
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            var pathToPhotos = ConfigurationManagement.СheckValuePathToUserPhotos();
+            var pathToTempPhotos = ConfigurationManagement.СheckValuePathToTempPhotos();
+
+            var fullPathToPhotos = Server.MapPath(pathToPhotos);
+            var fullPathToTempPhotos = Server.MapPath(pathToTempPhotos);
+
+            if (!Directory.Exists(fullPathToPhotos))
+            {
+                Directory.CreateDirectory(fullPathToPhotos);
+            }
+            if (!Directory.Exists(fullPathToTempPhotos))
+            {
+                Directory.CreateDirectory(fullPathToTempPhotos);
+            }
+
+            if (Request.IsAuthenticated)
+            {
+                string fullPathToUserPhotos = fullPathToPhotos + _hashService.ComputeSha256Hash(User.Identity.Name);
+                if (!Directory.Exists(fullPathToUserPhotos))
+                {
+                    Directory.CreateDirectory(fullPathToUserPhotos);
+                }
+                var userId = Convert.ToInt32(User.Identity.Name);
+                var user = await _usersService.GetUserByIdAsync(userId);
+                ViewData["Name"] = _namingService.UserNameCleaner(user.UserEmail);
+            }
+
+            return View();
+        }
+
+        [Authorize]
+        public async Task<ActionResult> Upload()
+        {
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var user = await _usersService.GetUserByIdAsync(userId);
+            ViewData["Name"] = _namingService.UserNameCleaner(user.UserEmail);
+            return View();
         }
     }
 }
