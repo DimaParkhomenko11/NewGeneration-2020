@@ -10,5 +10,6 @@ namespace Gallery.BLL.Interfaces
     {
 
         string NameCleaner(string fileName);
+        string UserNameCleaner(string email);
     }
 }
