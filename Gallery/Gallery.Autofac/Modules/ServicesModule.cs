@@ -16,6 +16,8 @@ namespace Gallery.Autofac.Modules
                 .As<IHashService>();
             builder.RegisterType<NamingService>()
                 .As<INamingService>();
+            builder.RegisterType<ExifDataService>()
+                .As<IExifDataService>();
         }
     }
 }
