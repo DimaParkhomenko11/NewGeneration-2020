@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Autofac.Integration.WebApi;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
+using Gallery.BLL.Services;
 using Gallery.Configurations.Management;
 using Gallery.DAL.InterfaceImplementation;
 using Gallery.DAL.Interfaces;
@@ -27,15 +29,17 @@ namespace Gallery.Controllers
         private readonly IUsersService _usersService;
         private readonly INamingService _namingService;
         private readonly PublisherMQ _publisher;
+        private readonly IExifDataService _exifDataService;
         
 
-        public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, PublisherMQ publisher)
+        public HomeController(IImagesService imageService, IHashService hashService, IUsersService usersService, INamingService namingService, PublisherMQ publisher, IExifDataService exifDataService)
         {
             _imagesService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
             _namingService = namingService ?? throw new ArgumentNullException(nameof(namingService));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+            _exifDataService = exifDataService ?? throw new ArgumentNullException(nameof(exifDataService));
         }
 
 
@@ -60,7 +64,7 @@ namespace Gallery.Controllers
                 }
                 else
                 {
-                    var userHash = PathFileDelete.Replace(ConfigurationManagement.СheckValuePathToUserPhotos(), "")
+                    var userHash = PathFileDelete.Replace(ConfigurationManagement.СheckValuePathToPhotos(), "")
                         .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
 
                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
@@ -107,7 +111,7 @@ namespace Gallery.Controllers
                             var extension = Path.GetExtension(files.FileName);
                             // Encrypted User's directory path
                             var tempDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToTempPhotos());
-                            var userDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
+                            var userDirPath = Server.MapPath(ConfigurationManagement.СheckValuePathToPhotos()) + _hashService.ComputeSha256Hash(User.Identity.Name);
                             var directoryExists = Directory.Exists(tempDirPath);
                             if (!directoryExists)
                             {
@@ -168,7 +172,7 @@ namespace Gallery.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var pathToPhotos = ConfigurationManagement.СheckValuePathToUserPhotos();
+            var pathToPhotos = ConfigurationManagement.СheckValuePathToPhotos();
             var pathToTempPhotos = ConfigurationManagement.СheckValuePathToTempPhotos();
 
             var fullPathToPhotos = Server.MapPath(pathToPhotos);
@@ -194,7 +198,22 @@ namespace Gallery.Controllers
                 var user = await _usersService.GetUserByIdAsync(userId);
                 ViewData["Name"] = _namingService.UserNameCleaner(user.UserEmail);
             }
+            var imgDirsNames = Directory.GetDirectories(fullPathToPhotos);
+            foreach (var dir in imgDirsNames)
+            {
+                var fileName = Directory.GetFiles(dir);
+                foreach (var fl in fileName)
+                {
+                   await _exifDataService.LoadExifDataAsync(fl);
+                }
+            }
 
+            ViewBag.Titles = ExifDataService.Title;
+            ViewBag.CameraManufacturer = ExifDataService.CameraManufacturer;
+            ViewBag.ModelOfCamera = ExifDataService.ModelOfCamera;
+            ViewBag.FileSize = ExifDataService.FileSize;
+            ViewBag.DateCreation = ExifDataService.DateCreation;
+            ViewBag.DateUpload = ExifDataService.DateUpload;
             return View();
         }
 
