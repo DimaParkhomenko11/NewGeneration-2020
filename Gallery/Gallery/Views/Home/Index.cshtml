@@ -2,18 +2,10 @@
     ViewBag.Title = "Home Page";
 }
 
-@using Gallery.BLL.Interfaces
 @using Gallery.BLL.Services
 @using Gallery.Configurations.Management
 @{
-   
-    IHashService _hashService = new HashService();
-    IExifDataService _exifDataService = new ExifDataService();
 
-
-    List<string> dirsname = Directory.GetDirectories(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos())).ToList<string>();
-    List<string> filesname;
-    int i = 0;
 
     //The Modal
 
@@ -32,52 +24,57 @@
             modal.style.display = "none";
         }
     </script>
-    foreach (string dir in dirsname)
-    {
-        filesname = Directory.GetFiles(dir).ToList<string>();
 
-        foreach (string fl in filesname)
+    var pathToPhotos = ConfigurationManagement.СheckValuePathToPhotos();
+    var fullPathToPhotos = Server.MapPath(pathToPhotos);
+    var userPhotoDirectories = Directory.GetDirectories(fullPathToPhotos);
+    var i = 0;
+    foreach (string directory in userPhotoDirectories)
+    {
+        var fileName = Directory.GetFiles(directory);
+
+        foreach (string file in fileName)
         {
-            i++;
-            _exifDataService.LoadExifDataAsync(fl);
+            var userHashDirectory = directory.Replace(fullPathToPhotos, "");
+            var fullPathToFile = pathToPhotos + userHashDirectory + "/" + Path.GetFileName(file);
 
             <div class="body">
                 <div class="bodyT">
 
                     <p class="textT">
-                        <b>Photo title: @ExifDataService.Title</b>
+                        <b>Photo title: @ViewBag.Titles[i]</b>
                     </p>
                     <p class="textT">
-                        <b>Manufacturer of the camera: @ExifDataService.CameraManufacturer</b>
+                        <b>Manufacturer of the camera: @ViewBag.CameraManufacturer[i]</b>
                     </p>
                     <p class="textT">
-                        <b>Model of the camera: @ExifDataService.ModelOfCamera</b>
+                        <b>Model of the camera: @ViewBag.ModelOfCamera[i]</b>
                     </p>
                     <p class="textT">
-                        <b>File size: @ExifDataService.FileSize</b>
+                        <b>File size: @ViewBag.FileSize[i]</b>
                     </p>
                     <p class="textT">
-                        <b>Date of creation of the photo: @ExifDataService.DateCreation</b>
+                        <b>Date of creation of the photo: @ViewBag.DateCreation[i]</b>
                     </p>
                     <p class="textT">
-                        <b>Date of uploading of the photo: @ExifDataService.DateUpload</b>
+                        <b>Date of uploading of the photo: @ViewBag.DateUpload[i]</b>
                     </p>
                 </div>
 
                 <div class="hov">
                     <a class="picture">
-                        <img id="@i" class="pictureIMG" src="~/Content/Images/@dir.Replace(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
+                        <img id="@i" class="pictureIMG" src="@fullPathToFile" alt="@Path.GetFileName(file)">
                     </a>
                     <ul class="pictureDownload">
-                        <a href="~/Content/Images/@dir.Replace(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" download>
+                        <a href="@fullPathToFile" download>
                             <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
                         </a>
                     </ul>
                     @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { enctype = "string" }))
                     {
-                        <input type="text" name="PathFileDelete" value="~/Content/Images/@dir.Replace(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
+                        <input type="text" name="PathFileDelete" value="@fullPathToFile" hidden />
 
-                        if (dir.Replace(Server.MapPath(ConfigurationManagement.СheckValuePathToUserPhotos()), "") == _hashService.ComputeSha256Hash(User.Identity.Name))
+                        if (Request.IsAuthenticated)
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 
@@ -90,20 +87,18 @@
                 </div>
 
                 <script>
-            // Get the image and insert it inside the modal - use its "alt" text as a caption
-            var img = document.getElementById("@i");
-            var modalImg = document.getElementById("img01");
-            var captionText = document.getElementById("caption");
-            img.onclick = function () {
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-            }
+                    // Get the image and insert it inside the modal - use its "alt" text as a caption
+                    var img = document.getElementById("@i");
+                    var modalImg = document.getElementById("img01");
+                    var captionText = document.getElementById("caption");
+                    img.onclick = function () {
+                        modal.style.display = "block";
+                        modalImg.src = this.src;
+                        captionText.innerHTML = this.alt;
+                    }
                 </script>
-
-
-
             </div>
+            i++;
         }
     }
 }
