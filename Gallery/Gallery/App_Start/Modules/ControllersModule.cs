@@ -24,7 +24,8 @@ namespace Gallery.Modules
                     h.Resolve<IHashService>(),
                     h.Resolve<IUsersService>(),
                     h.Resolve<INamingService>(),
-                    h.Resolve<PublisherMQ>()))
+                    h.Resolve<PublisherMQ>(),
+                    h.Resolve<IExifDataService>()))
                 .InstancePerRequest();
 
             builder.Register(a =>
