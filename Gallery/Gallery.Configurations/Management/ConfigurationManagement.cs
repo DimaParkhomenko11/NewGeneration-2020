@@ -7,25 +7,25 @@ namespace Gallery.Configurations.Management
     {
         //
         //Variables for storing key data
-        private const string PathToUserPhotosKey = "PathToUserPhotos";
+        private const string PathToPhotosKey = "PathToPhotos";
         private const string PathToTempPhotosKey = "PathToTempPhotos";
         private const string FileExtensionsKey = "FileExtensions";
 
         //
         //Default constants
-        private const string DefaultValuePathToUserPhotos = "/Content/Images/";
+        private const string DefaultValuePathToPhotos = "/Content/Images/";
         private const string DefaultValuePathToTempPhotos = "/Content/Temp/";
         private const string DefaultValueFileExtensions = "image/jpeg;image/png";
 
-        public static string СheckValuePathToUserPhotos()//Adding a default value PathToPhotos
+        public static string СheckValuePathToPhotos()//Adding a default value PathToPhotos
         {
             var appSettings = ConfigurationManager.AppSettings;
 
-            var path = appSettings[PathToUserPhotosKey];
+            var path = appSettings[PathToPhotosKey];
 
-            if (string.IsNullOrEmpty(appSettings[PathToUserPhotosKey]))
+            if (string.IsNullOrEmpty(appSettings[PathToPhotosKey]))
             {
-                path = DefaultValuePathToUserPhotos;
+                path = DefaultValuePathToPhotos;
             }
             return path;
         }
