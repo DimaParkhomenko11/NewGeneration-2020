@@ -8,6 +8,12 @@ namespace Gallery.BLL.Interfaces
 {
     public interface IExifDataService
     {
-        Task LoadExifDataAsync(string loadExifPath);
+        string GetTitle(string loadExifPath);
+        string GetDateUpload(string loadExifPath);
+        string GetFileSize(string loadExifPath);
+        string GetDateCreation(string loadExifPath);
+        string GetCameraManufacturer(string loadExifPath);
+        string GetModelOfCamera(string loadExifPath);
+        
     }
 }
