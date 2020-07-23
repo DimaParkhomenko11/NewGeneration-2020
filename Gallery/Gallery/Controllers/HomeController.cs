@@ -199,21 +199,12 @@ namespace Gallery.Controllers
                 ViewData["Name"] = _namingService.UserNameCleaner(user.UserEmail);
             }
             var imgDirsNames = Directory.GetDirectories(fullPathToPhotos);
-            foreach (var dir in imgDirsNames)
-            {
-                var fileName = Directory.GetFiles(dir);
-                foreach (var fl in fileName)
-                {
-                   await _exifDataService.LoadExifDataAsync(fl);
-                }
-            }
-
-            ViewBag.Titles = ExifDataService.Title;
-            ViewBag.CameraManufacturer = ExifDataService.CameraManufacturer;
-            ViewBag.ModelOfCamera = ExifDataService.ModelOfCamera;
-            ViewBag.FileSize = ExifDataService.FileSize;
-            ViewBag.DateCreation = ExifDataService.DateCreation;
-            ViewBag.DateUpload = ExifDataService.DateUpload;
+            ViewBag.Titles = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetTitle(file)).ToList();
+            ViewBag.DateUpload = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetDateUpload(file)).ToList();
+            ViewBag.FileSize = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetFileSize(file)).ToList();
+            ViewBag.ModelOfCamera = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetModelOfCamera(file)).ToList();
+            ViewBag.DateCreation = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetDateCreation(file)).ToList();
+            ViewBag.CameraManufacturer = (from directory in imgDirsNames from file in Directory.GetFiles(directory) select _exifDataService.GetCameraManufacturer(file)).ToList();
             return View();
         }
 
