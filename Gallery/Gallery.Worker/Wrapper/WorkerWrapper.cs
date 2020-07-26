@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Gallery.Worker.Interfaces;
+using NLog;
 
 namespace Gallery.Worker.Wrapper
 {
@@ -12,6 +13,7 @@ namespace Gallery.Worker.Wrapper
     {
         private readonly CancellationTokenSource _cancellationToken = new CancellationTokenSource();
         private readonly IReadOnlyCollection<IWork> _works;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public WorkerWrapper(params IWork[] works)
         {
@@ -20,6 +22,7 @@ namespace Gallery.Worker.Wrapper
 
         public async Task StartAsync()
         {
+            _logger.Info("All works are stopping.");
             foreach (var work in _works)
             {
                 await Task.Factory.StartNew(work.StartAsync, _cancellationToken.Token, TaskCreationOptions.LongRunning, 
@@ -30,6 +33,7 @@ namespace Gallery.Worker.Wrapper
         public void Stop()
         {
             _cancellationToken.Cancel();
+            _logger.Info("All works stopped");
         }
     }
 }
