@@ -5,6 +5,7 @@ using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.MQ.Abstraction;
 using Gallery.Worker.Interfaces;
+using NLog;
 
 namespace Gallery.Worker.InterfaceImplementation
 {
@@ -14,7 +15,8 @@ namespace Gallery.Worker.InterfaceImplementation
         private readonly TimeSpan _timeSpan = TimeSpan.FromSeconds(1);
         private readonly ConsumerMQ _consumer;
         private readonly IImagesService _imagesService;
-        
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
 
         public SaveImageWork(ConsumerMQ consumer, IImagesService imagesService)
         {
@@ -24,11 +26,14 @@ namespace Gallery.Worker.InterfaceImplementation
 
         public async Task StartAsync()
         {
+            _logger.Info("Started " + nameof(SaveImageWork) + ".");
             while (!_cancellationToken.IsCancellationRequested)
             {
                 var queues = new ParserMQ().ParserMq();
                
                 _consumer.ReadMessage<MessageDto>(queues["queue:upload-image"], async dto => await _imagesService.UploadTempToUserDirectory(dto));
+               
+                _logger.Info("Image uploaded successfully.");
                 
                 await Task.Delay(_timeSpan);
             }
@@ -37,6 +42,7 @@ namespace Gallery.Worker.InterfaceImplementation
         public void Stop()
         {
             _cancellationToken.Cancel();
+            _logger.Info("Stoped " + nameof(SaveImageWork) + "successfully.");
         }
     }
 }
