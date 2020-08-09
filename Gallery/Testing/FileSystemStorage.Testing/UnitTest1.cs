@@ -8,10 +8,13 @@ namespace FileSystemStorage.Tests
     [TestFixture]
     public class Tests
     {
-
         [SetUp]
         public void Setup()
         {
+        }
+        private MediaProvider MakeMediaProvider()
+        {
+            return new MediaProvider();
         }
 
         [Test]
@@ -21,7 +24,8 @@ namespace FileSystemStorage.Tests
                 "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage.Tests\\Files\\FileTest.png";
             byte[] bytes = new byte[] { };
 
-            MediaProvider mediaProvider = new MediaProvider();
+            MediaProvider mediaProvider = MakeMediaProvider();
+
             var result = mediaProvider.Upload(bytes, path);
 
             Assert.IsTrue(result);
@@ -34,7 +38,7 @@ namespace FileSystemStorage.Tests
                 "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage.Tests\\Files\\";
             byte[] bytes = new byte[] { };
 
-            MediaProvider mediaProvider = new MediaProvider();
+            MediaProvider mediaProvider = MakeMediaProvider();
 
             Assert.Throws<DirectoryNotFoundException>(() => mediaProvider.Upload(bytes, path));
         }
@@ -45,7 +49,7 @@ namespace FileSystemStorage.Tests
             string path = null;
             byte[] bytes = new byte[] { };
 
-            MediaProvider mediaProvider = new MediaProvider();
+            MediaProvider mediaProvider = MakeMediaProvider();
 
             Assert.Throws<ArgumentNullException>(() => mediaProvider.Upload(bytes, path));
         }
