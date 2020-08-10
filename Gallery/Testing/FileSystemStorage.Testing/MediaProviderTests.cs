@@ -6,12 +6,9 @@ using NUnit.Framework;
 namespace FileSystemStorage.Tests
 {
     [TestFixture]
-    public class Tests
+    public class MediaProviderTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+        
         private MediaProvider MakeMediaProvider()
         {
             return new MediaProvider();
@@ -21,8 +18,8 @@ namespace FileSystemStorage.Tests
         public void Upload_CorrectValue_ReturnTrue()
         {
             string path =
-                "D:\\GitHub\\NewGeneration\\NewGeneration2020\\Gallery\\FileSystemStorage.Tests\\Files\\FileTest.png";
-            byte[] bytes = new byte[] { };
+                @"D:\GitHub\NewGeneration2020\Gallery\Testing\FileSystemStorage.Testing\UploadTestingFiles\TestFile.png";
+            byte[] bytes = new byte[]{};
 
             MediaProvider mediaProvider = MakeMediaProvider();
 

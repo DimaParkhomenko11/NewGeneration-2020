@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Gallery.BLL\Gallery.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadTestingFiles\" />
+  </ItemGroup>
+
 </Project>
