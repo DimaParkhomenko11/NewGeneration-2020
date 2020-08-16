@@ -5,4 +5,8 @@
     <Configurations>Debug;Release;Testing;Staging</Configurations>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.IO.Abstractions" Version="12.1.1" />
+  </ItemGroup>
+
 </Project>

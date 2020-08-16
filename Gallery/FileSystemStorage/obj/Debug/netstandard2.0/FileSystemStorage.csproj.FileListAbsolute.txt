@@ -22,6 +22,6 @@ D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\bin\Debug\netstandard2.0\F
 D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.csprojAssemblyReference.cache
 D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.AssemblyInfoInputs.cache
 D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.AssemblyInfo.cs
-D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.csproj.CoreCompileInputs.cache
 D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.dll
 D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.pdb
+D:\GitHub\NewGeneration2020\Gallery\FileSystemStorage\obj\Debug\netstandard2.0\FileSystemStorage.csproj.CoreCompileInputs.cache

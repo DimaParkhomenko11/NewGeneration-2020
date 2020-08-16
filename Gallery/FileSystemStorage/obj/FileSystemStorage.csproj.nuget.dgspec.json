@@ -43,6 +43,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "System.IO.Abstractions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
             }
           },
           "imports": [

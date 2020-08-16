@@ -103,10 +103,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileSystemStorage\FileSystemStorage.csproj">
-      <Project>{e85c83c3-dde6-4e77-89bd-ef9a912de449}</Project>
-      <Name>FileSystemStorage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Gallery.DAL\Gallery.DAL.csproj">
       <Project>{5e2f7b68-9a3d-4218-80cf-5b5b4e61430c}</Project>
       <Name>Gallery.DAL</Name>

@@ -280,10 +280,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileSystemStorage\FileSystemStorage.csproj">
-      <Project>{e85c83c3-dde6-4e77-89bd-ef9a912de449}</Project>
-      <Name>FileSystemStorage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Gallery.ASQ\Gallery.ASQ.csproj">
       <Project>{f8e0a0a0-4c50-42ec-b81e-0188088d11cd}</Project>
       <Name>Gallery.ASQ</Name>

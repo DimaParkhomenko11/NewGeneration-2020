@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO.Abstractions;
 
 namespace FileSystemStorage
 {
     public class MediaProvider : IMediaProvider
     {
+        private readonly IFile _file;
+
+        public MediaProvider(IFile file)
+        {
+            _file = file ?? throw new ArgumentNullException(nameof(file));
+        }
+
         public bool Upload(byte[] dateBytes, string path)
         {
             if (dateBytes == null)
@@ -17,7 +22,7 @@ namespace FileSystemStorage
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
             
-            File.WriteAllBytes(path, dateBytes);
+            _file.WriteAllBytes(path, dateBytes);
             return File.Exists(path);
         }
 
@@ -28,7 +33,7 @@ namespace FileSystemStorage
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
             
-            return File.ReadAllBytes(path);
+            return _file.ReadAllBytes(path);
         }
 
         public bool Delete(string path)
@@ -38,8 +43,8 @@ namespace FileSystemStorage
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
 
-            File.Delete(path);
-            return File.Exists(path);
+            _file.Delete(path);
+            return _file.Exists(path);
         }
     }
 }
