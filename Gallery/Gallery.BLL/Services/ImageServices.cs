@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using FileSystemStorage;
+using FileSystemStorage.Interfaces;
 using Gallery.BLL.Contract;
 using Gallery.BLL.Interfaces;
 using Gallery.DAL.Interfaces;

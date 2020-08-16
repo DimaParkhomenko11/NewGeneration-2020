@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using FileSystemStorage;
 using Gallery.BLL.Interfaces;
 using Gallery.BLL.Services;
 using Gallery.Configurations.Management;

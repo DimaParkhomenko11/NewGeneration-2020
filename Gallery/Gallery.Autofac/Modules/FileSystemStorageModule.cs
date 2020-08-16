@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using FileSystemStorage;
+using FileSystemStorage.Implementation;
+using FileSystemStorage.Interfaces;
 
 namespace Gallery.Autofac.Modules
 {

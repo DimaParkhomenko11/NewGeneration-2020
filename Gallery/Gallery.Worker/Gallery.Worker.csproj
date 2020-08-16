@@ -152,6 +152,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FileSystemStorage\FileSystemStorage.csproj">
+      <Project>{8BFCD851-3C4A-4D36-BDC9-83FB8F0456B2}</Project>
+      <Name>FileSystemStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.ASQ\Gallery.ASQ.csproj">
       <Project>{f8e0a0a0-4c50-42ec-b81e-0188088d11cd}</Project>
       <Name>Gallery.ASQ</Name>

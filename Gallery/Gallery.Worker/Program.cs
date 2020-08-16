@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Threading.Tasks;
-using FileSystemStorage;
+using FileSystemStorage.Implementation;
 using Gallery.ASQ.Implementation;
 using Gallery.BLL.Services;
 using Gallery.DAL.InterfaceImplementation;
