@@ -37,7 +37,6 @@ namespace FileSystemStorage.Implementation
 
         public bool Delete(string path)
         {
-            
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
             if (!_file.Exists(path))
