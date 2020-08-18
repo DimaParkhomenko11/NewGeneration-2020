@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Threading.Tasks;
 using FileSystemStorage.Implementation;
 using Gallery.ASQ.Implementation;
@@ -9,6 +10,7 @@ using Gallery.DAL.Models;
 using Gallery.Worker.InterfaceImplementation;
 using Gallery.Worker.Wrapper;
 using Topshelf;
+using System.IO.Abstractions;
 
 namespace Gallery.Worker
 {
@@ -19,10 +21,11 @@ namespace Gallery.Worker
             var connectionString = ConfigurationManager.ConnectionStrings["SQLDB"] ?? throw new ArgumentException("SQL");
             var rabbitMqConnectionString = ConfigurationManager.ConnectionStrings["RabbitMQ"] ?? throw new ArgumentException("RabbitMQ");
             var azureConnectionString = ConfigurationManager.ConnectionStrings["AzureStorageConnectionString"] ?? throw new ArgumentException("AzureStorageConnectionString");
+            
             var saveImageWork = new SaveImageWork(
                 new ConsumerASQ(azureConnectionString.ConnectionString), 
                 new ImageServices(
-                    new MediaProvider(),
+                    new MediaProvider(new FileSystem().File),
                     new MediaRepository(new SqlDbContext(connectionString.ConnectionString)),
                     new UsersRepository(new SqlDbContext(connectionString.ConnectionString))));
 
