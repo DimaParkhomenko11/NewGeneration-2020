@@ -20,19 +20,15 @@ namespace FileSystemStorage.Implementation
         {
             if (dateBytes == null)
                 throw new ArgumentNullException(nameof(dateBytes));
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
-            var file = new FileSystem();
+            
             _file.WriteAllBytes(path, dateBytes);
             return _file.Exists(path);
         }
 
         public byte[] Read(string path)
         {
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
 
@@ -41,13 +37,14 @@ namespace FileSystemStorage.Implementation
 
         public bool Delete(string path)
         {
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
+            
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Argument_EmptyPath", nameof(path));
+            if (!_file.Exists(path))
+                throw new FileNotFoundException(nameof(path));
 
             _file.Delete(path);
-            return _file.Exists(path);
+            return !_file.Exists(path);
         }
     }
 }
