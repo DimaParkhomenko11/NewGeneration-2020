@@ -65,7 +65,6 @@ namespace Gallery.Controllers
                 {
                     var userHash = PathFileDelete.Replace(ConfigurationManagement.СheckValuePathToPhotos(), "")
                         .Replace(Path.GetFileName(PathFileDelete), "").Replace("/", "");
-
                     if (userHash == _hashService.ComputeSha256Hash(User.Identity.Name))
                     {
                         await _imagesService.DeleteFileAsync(fullPath);
