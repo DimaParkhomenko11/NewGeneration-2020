@@ -53,7 +53,6 @@ namespace Gallery.Controllers
 
                 if (isUserExist)
                 {
-
                     var canAuthorize = await _usersService.IsUserExistAsync(new UserDto
                     {
                         UserEmail = model.Email,
